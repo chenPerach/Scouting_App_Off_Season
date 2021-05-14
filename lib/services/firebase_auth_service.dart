@@ -98,7 +98,6 @@ class FirebaseAuthService implements AuthService {
 
 
   @override
-  // TODO: implement onAuthStateChanged
   Stream<User> get onAuthStateChanged => throw UnimplementedError();
 }
 
