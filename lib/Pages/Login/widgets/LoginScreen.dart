@@ -1,21 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MyCustomForm extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  LoginState createState() {
+    return LoginState();
   }
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class LoginState extends State<Login> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+  // Note: This is a GlobalKey<FormState>,
+  // not a GlobalKey<LoginState>.
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -24,8 +23,140 @@ class MyCustomFormState extends State<MyCustomForm> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Add TextFormFields and ElevatedButton here.
+          TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: 'איך קוראים לך',
+                  labelText: 'שם משתמש',
+            ),
+            validator: (name) {
+              if (name == null || name.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              return null;
+            },
+          ),
+                    TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.payments_sharp),
+                  hintText: 'מה הססמא שלך',
+                  labelText: 'ססמא',
+            ),
+            validator: (pass) {
+              if (pass == null || pass.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                if (_formKey.currentState.validate()) {
+                  // If the form is valid, display a snackbar. In the real world,
+                  // you'd often call a server or save the information in a database.
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                }
+              },
+              child: Text('Submit'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class register extends StatefulWidget {
+  @override
+  registerState createState() {
+    return registerState();
+  }
+}
+
+class registerState extends State<Login> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a GlobalKey<FormState>,
+  // not a GlobalKey<LoginState>.
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: 'איך קוראים לך',
+                  labelText: 'שם פרטי ומשפחה',
+            ),
+            validator: (name) {
+              if (name == null || name.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              return null;
+            },
+            
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: 'מה הכינוי שלך',
+                  labelText: 'שם משתמש',
+            ),
+            validator: (User) {
+              if (User == null || User.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              if(User.length < 4){
+                return 'בחר שם משתמש ארוך יותר';
+              }
+              return null;
+            },
+            
+          ),
+                    TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.payments_sharp),
+                  hintText: 'בחר ססמא',
+                  labelText: 'ססמא',
+            ),
+            validator: (pass) {
+              if (pass == null || pass.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              if (pass.length < 6){
+                return 'ססמא ארוכה יותר בבקשה';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                if (_formKey.currentState.validate()) {
+                  // If the form is valid, display a snackbar. In the real world,
+                  // you'd often call a server or save the information in a database.
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                }
+              },
+              child: Text('Submit'),
+            ),
+          ),
         ],
       ),
     );
@@ -33,8 +164,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 }
 
 // ignore: camel_case_types
-class changePage extends StatelessWidget {
-  //const changePage({Key? key}) : super(key: key);
+class ChangePage extends StatelessWidget {
+  //const ChangePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +177,7 @@ class changePage extends StatelessWidget {
       controller: controller,
       children: <Widget>[
         Center(
-          child:SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("Login"),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Email",
-                    hintText: "enter your email"
-                  ),
-                ),
-          ],
-          ),
-
-        ),
+          child: Login(),
         ),
         Center(
           child: Text('Second Page'),
@@ -71,13 +188,13 @@ class changePage extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class Login extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: 
-        changePage(),
+        ChangePage(),
     );
   }
 }
