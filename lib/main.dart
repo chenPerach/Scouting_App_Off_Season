@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:scouting_app_off_season/Pages/Home/Home.dart';
-import 'package:scouting_app_off_season/Pages/Login/widgets/LoginScreen.dart';
-import 'package:scouting_app_off_season/services/firebase_auth_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:scouting_app_2/Pages/Home/Home.dart';
+import 'package:scouting_app_2/Pages/Login/widgets/LoginScreen.dart';
+import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

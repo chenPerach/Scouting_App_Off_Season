@@ -1,6 +1,6 @@
 {
-    "name": "scouting_app_off_season",
-    "short_name": "scouting_app_off_season",
+    "name": "scouting_app_2",
+    "short_name": "scouting_app_2",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
