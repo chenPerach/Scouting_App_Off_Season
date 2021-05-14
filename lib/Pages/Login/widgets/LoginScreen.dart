@@ -98,7 +98,7 @@ class RegisterState extends State<Login> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-TextFormField(
+        TextFormField(
             decoration: const InputDecoration(
                   icon: Icon(Icons.person),
                   hintText: 'איך קוראים לך',
@@ -107,6 +107,24 @@ TextFormField(
             validator: (name) {
               if (name == null || name.isEmpty) {
                 return 'צריך לכתוב משהו פה';
+              }
+              return null;
+            },
+            
+          ),
+                  TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: 'מה המייל שלך?',
+                  labelText: 'מייל',
+            ),
+            // ignore: missing_return
+            validator: (mail) {
+              if (mail == null || mail.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail)){
+                return 'מייל לא תקין';
               }
               return null;
             },
