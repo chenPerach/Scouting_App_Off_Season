@@ -72,14 +72,14 @@ class LoginState extends State<Login> {
   }
 }
 
-class register extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  registerState createState() {
-    return registerState();
+  RegisterState createState() {
+    return RegisterState();
   }
 }
 
-class registerState extends State<Login> {
+class RegisterState extends State<Login> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -115,6 +115,7 @@ TextFormField(
                   hintText: 'מה הכינוי שלך',
                   labelText: 'שם משתמש',
             ),
+            // ignore: non_constant_identifier_names
             validator: (User) {
               if (User == null || User.isEmpty) {
                 return 'צריך לכתוב משהו פה';
@@ -180,7 +181,7 @@ class ChangePage extends StatelessWidget {
           child: Login(),
         ),
         Center(
-          child: register(),
+          child: Register(),
         ),
       ],
     );
