@@ -97,8 +97,6 @@ class FirebaseAuthService implements AuthService {
   }
 
 
-  @override
-  Stream<User> get onAuthStateChanged => throw UnimplementedError();
 }
 
 final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
