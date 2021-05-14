@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 class Login extends StatefulWidget {
   @override
   LoginState createState() {
@@ -65,6 +66,8 @@ class LoginState extends State<Login> {
               },
               child: Text('Submit'),
             ),
+            
+
           ),
         ],
       ),
@@ -158,6 +161,19 @@ TextFormField(
               child: Text('Submit'),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPass()),
+                  );
+              },
+              child: Text('שכחתי ססמא כי אני טיפש'),
+            ),
+          ),
         ],
       ),
     );
@@ -196,6 +212,47 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: 
         ChangePage(),
+    );
+  }
+}
+
+class ForgotPass extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("שכחתי ססמא"),
+      ),
+      body: Center(
+        child: Column(children: [
+          TextFormField(
+            decoration: const InputDecoration(
+                  icon: Icon(Icons.payments_sharp),
+                  hintText: 'מה המייל שלך',
+                  labelText: 'מייל',
+            ),
+              onSaved: (mail) {
+                //בדוק עם השרת וכו
+            },
+            validator: (mail) {
+              if (mail == null || mail.isEmpty) {
+                return 'צריך לכתוב משהו פה';
+              }
+              if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail)){
+                return 'מייל לא תקין';
+              }
+              return null;
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('חזור חזרה'),
+          ),          
+        ],)
+
+      ),
     );
   }
 }
