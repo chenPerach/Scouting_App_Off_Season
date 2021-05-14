@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:scouting_app_off_season/Models/User.dart';
 
 
 
 abstract class AuthService {
-  Future<User> currentUser();
   Future<User> signInWithEmailAndPassword(String email, String password);
   Future<User> createUserWithEmailAndPassword(String email, String password);
   void sendPasswordResetEmail(String email);
@@ -16,11 +15,17 @@ abstract class AuthService {
     @required bool handleCodeInApp,
     @required String iOSBundleID,
     @required String androidPackageName,
-    @required bool androidInstallIfNotAvailable,
+    @required bool androidInstallApp,
     @required String androidMinimumVersion,
   });
-  Future<User> signInWithGoogle();
+  // Future<User> signInWithGoogle();
   void signOut();
-  Stream<User> get onAuthStateChanged;
   void dispose();
+
+  Stream<User> authState(); 
+}
+
+class AuthExeption implements Exception{
+  String message;
+  AuthExeption( this.message);
 }
