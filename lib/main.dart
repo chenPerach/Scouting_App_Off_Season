@@ -25,7 +25,7 @@ class _AppState extends State<App> {
           if (snapshot.connectionState == ConnectionState.done)
             return HandleAuth();
           else
-            return _WatingApp();
+            return _WaitingApp();
         },
       ),
     );
@@ -44,7 +44,7 @@ class HandleAuth extends StatelessWidget {
   }
 }
 
-class _WatingApp extends StatelessWidget {
+class _WaitingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
