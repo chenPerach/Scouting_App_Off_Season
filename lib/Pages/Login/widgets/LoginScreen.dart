@@ -180,7 +180,7 @@ class ChangePage extends StatelessWidget {
           child: Login(),
         ),
         Center(
-          child: Text('Second Page'),
+          child: register(),
         ),
       ],
     );
