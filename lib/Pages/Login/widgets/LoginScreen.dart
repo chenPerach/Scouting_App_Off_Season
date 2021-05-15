@@ -11,8 +11,6 @@ class ChangePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController controller = PageController(initialPage: 0);
     return PageView(
-      /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-      /// Use [Axis.vertical] to scroll vertically.
       scrollDirection: Axis.horizontal,
       controller: controller,
       children: <Widget>[
@@ -22,6 +20,7 @@ class ChangePage extends StatelessWidget {
         Center(
           child: Register(),
         ),
+        Text("data")
       ],
     );
   }

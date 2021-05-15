@@ -26,18 +26,25 @@ class RegisterState extends State<Login> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.person),
-              hintText: 'איך קוראים לך',
-              labelText: 'שם פרטי ומשפחה',
+          const Image(
+            image: NetworkImage(
+                'https://i.pinimg.com/originals/79/3d/c9/793dc92fc5b0e5fc85c9a1e31efa0749.jpg'),
+          ),
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'איך קוראים לך',
+                labelText: 'שם פרטי ומשפחה',
+              ),
+              validator: (name) {
+                if (name == null || name.isEmpty) {
+                  return 'empty';
+                }
+                return null;
+              },
             ),
-            validator: (name) {
-              if (name == null || name.isEmpty) {
-                return 'empty';
-              }
-              return null;
-            },
           ),
           TextFormField(
             decoration: const InputDecoration(
@@ -58,67 +65,93 @@ class RegisterState extends State<Login> {
               return null;
             },
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.person),
-              hintText: 'מה הכינוי שלך',
-              labelText: 'שם משתמש',
-            ),
-            // ignore: non_constant_identifier_names
-            validator: (User) {
-              if (User == null || User.isEmpty) {
-                return 'empty';
-              }
-              if (User.length < 4) {
-                return 'בחר שם משתמש ארוך יותר';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            obscureText: true,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.payments_sharp),
-              hintText: 'בחר ססמא',
-              labelText: 'ססמא',
-            ),
-            validator: (pass) {
-              if (pass == null || pass.isEmpty) {
-                return 'empty';
-              }
-              if (RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")
-                  .hasMatch(pass)) {
-                return 'ססמא עם לפחות מספר אחד ואות אחת ושישה תווים';
-              }
-              return null;
-            },
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+            padding: EdgeInsets.all(15),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'מה הכינוי שלך',
+                labelText: 'שם משתמש',
+              ),
+              // ignore: non_constant_identifier_names
+              validator: (User) {
+                if (User == null || User.isEmpty) {
+                  return 'empty';
                 }
+                if (User.length < 4) {
+                  return 'בחר שם משתמש ארוך יותר';
+                }
+                return null;
               },
-              child: Text('Submit'),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ForgotPass()),
-                );
+            padding: EdgeInsets.all(15),
+            child: TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                icon: Icon(Icons.payments_sharp),
+                hintText: 'בחר ססמא',
+                labelText: 'ססמא',
+              ),
+              validator: (pass) {
+                if (pass == null || pass.isEmpty) {
+                  return 'empty';
+                }
+                if (RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")
+                    .hasMatch(pass)) {
+                  return 'ססמא עם לפחות מספר אחד ואות אחת ושישה תווים';
+                }
+                return null;
               },
-              child: Text('שכחתי ססמא כי אני טיפש'),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: FlatButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Processing Data')));
+                      }
+                    },
+                    child: Text('Submit'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: FlatButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ForgotPass()),
+                      );
+                    },
+                    child: Text('שכחתי ססמא כי אני טיפש'),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
