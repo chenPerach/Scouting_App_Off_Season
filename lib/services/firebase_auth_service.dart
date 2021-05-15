@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:scouting_app_2/services/auth_service.dart';
+
+import 'auth_service.dart';
 
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -31,9 +32,8 @@ class FirebaseAuthService implements AuthService {
           break;
       }
     }
-
-    
   }
+
   @override
   Stream<User> authState() => _firebaseAuth.authStateChanges();
   @override
@@ -60,13 +60,12 @@ class FirebaseAuthService implements AuthService {
       String androidMinimumVersion}) {
     _firebaseAuth.sendSignInLinkToEmail(
       actionCodeSettings: ActionCodeSettings(
-        url: url,
-        iOSBundleId: iOSBundleID,
-        androidInstallApp: androidInstallApp,
-        androidPackageName: androidPackageName,
-        androidMinimumVersion: androidMinimumVersion,
-        handleCodeInApp: handleCodeInApp
-      ),
+          url: url,
+          iOSBundleId: iOSBundleID,
+          androidInstallApp: androidInstallApp,
+          androidPackageName: androidPackageName,
+          androidMinimumVersion: androidMinimumVersion,
+          handleCodeInApp: handleCodeInApp),
       email: email,
     );
   }
@@ -95,8 +94,6 @@ class FirebaseAuthService implements AuthService {
   void signOut() {
     _firebaseAuth.signOut();
   }
-
-
 }
 
 final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
