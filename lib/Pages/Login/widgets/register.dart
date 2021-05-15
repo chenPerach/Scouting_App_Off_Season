@@ -11,12 +11,21 @@ class Register extends StatefulWidget {
 }
 
 class RegisterState extends State<Login> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<LoginState>.
   final _formKey = GlobalKey<FormState>();
+
+  final pass = TextEditingController();
+  final user = TextEditingController();
+  final name = TextEditingController();
+  final mail = TextEditingController();
+
+  @override
+  void dispose() {
+    pass.dispose();
+    user.dispose();
+    mail.dispose();
+    name.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +42,7 @@ class RegisterState extends State<Login> {
           Padding(
             padding: EdgeInsets.all(15),
             child: TextFormField(
+              controller: name,
               decoration: const InputDecoration(
                 icon: Icon(Icons.person),
                 hintText: 'איך קוראים לך',
@@ -46,28 +56,33 @@ class RegisterState extends State<Login> {
               },
             ),
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.person),
-              hintText: 'מה המייל שלך?',
-              labelText: 'מייל',
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: TextFormField(
+              controller: mail,
+              decoration: const InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'מה המייל שלך?',
+                labelText: 'מייל',
+              ),
+              // ignore: missing_return
+              validator: (mail) {
+                if (mail == null || mail.isEmpty) {
+                  return 'empty';
+                }
+                if (RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(mail)) {
+                  return 'מייל לא תקין';
+                }
+                return null;
+              },
             ),
-            // ignore: missing_return
-            validator: (mail) {
-              if (mail == null || mail.isEmpty) {
-                return 'empty';
-              }
-              if (RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                  .hasMatch(mail)) {
-                return 'מייל לא תקין';
-              }
-              return null;
-            },
           ),
           Padding(
             padding: EdgeInsets.all(15),
             child: TextFormField(
+              controller: name,
               decoration: const InputDecoration(
                 icon: Icon(Icons.person),
                 hintText: 'מה הכינוי שלך',
@@ -88,6 +103,7 @@ class RegisterState extends State<Login> {
           Padding(
             padding: EdgeInsets.all(15),
             child: TextFormField(
+              controller: pass,
               obscureText: true,
               decoration: const InputDecoration(
                 icon: Icon(Icons.payments_sharp),

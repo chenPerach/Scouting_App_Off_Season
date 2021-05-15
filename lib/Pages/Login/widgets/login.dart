@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -11,14 +12,21 @@ class LoginState extends State<Login> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
 
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<LoginState>.
+  final pass = TextEditingController();
+  final user = TextEditingController();
+
+
+  @override
+  void dispose() {
+    pass.dispose();
+    user.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    var icons = Icons;
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -32,6 +40,7 @@ class LoginState extends State<Login> {
             Padding(
               padding: EdgeInsets.all(15),
               child: TextFormField(
+                controller: user,
                 decoration: const InputDecoration(
                   hintText: 'name',
                   labelText: 'user name',
@@ -48,6 +57,7 @@ class LoginState extends State<Login> {
             Padding(
               padding: EdgeInsets.all(15),
               child: TextFormField(
+                controller: pass,
                 obscureText: true,
                 decoration: const InputDecoration(
                   hintText: 'password',
