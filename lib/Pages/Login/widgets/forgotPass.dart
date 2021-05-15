@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ForgotPass extends StatelessWidget {
+class ForgotPass extends StatefulWidget {
+  @override
+  ForgotPassState createState() {
+    return ForgotPassState();
+  }
+}
+
+class ForgotPassState extends State<ForgotPass> {
+  final mail = TextEditingController();
+
+  @override
+  void dispose() {
+    mail.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +32,7 @@ class ForgotPass extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(15),
             child: TextFormField(
+              controller: mail,
               decoration: const InputDecoration(
                 icon: Icon(Icons.payments_sharp),
                 hintText: 'מה המייל שלך',
