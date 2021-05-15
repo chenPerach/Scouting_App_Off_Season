@@ -12,40 +12,50 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
-  
+
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<LoginState>.
+  final TextEditingController _email = TextEditingController(),
+      _password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Scaffold(
-      body: Form(
+    return Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _email,
               decoration: const InputDecoration(
-                hintText: 'name',
-                labelText: 'user name',
+                hintText: 'email',
+                labelText: 'enter your email',
               ),
               validator: (name) {
                 if (name == null || name.isEmpty) {
-                  return 'please enter your name';
+                  return 'please enter your password';
                 }
                 return null;
               },
             ),
             TextFormField(
+              controller: _password,
+              keyboardType: TextInputType.text,
+              obscureText: true,
               decoration: const InputDecoration(
                 hintText: 'password',
-                labelText: 'password',
+                labelText: 'enter your password',
               ),
               validator: (pass) {
                 if (pass == null || pass.isEmpty) {
-                  return 'צריך לכתוב משהו פה';
+                  return "please enter password";
+                }
+                RegExp reg = RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
+                if (reg.hasMatch(pass)) {
+                  return "invalid password";
                 }
                 return null;
               },
@@ -58,8 +68,8 @@ class LoginState extends State<Login> {
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Processing Data')));
+
+                    //TODO: preform firebase auth login
                   }
                 },
                 child: Text('Submit'),
@@ -67,9 +77,15 @@ class LoginState extends State<Login> {
             ),
           ],
         ),
-      ),
+      
     );
   }
+  @override
+    void dispose() {
+      _email.dispose();
+      _password.dispose();
+      super.dispose();
+    }
 }
 
 class Register extends StatefulWidget {
@@ -79,7 +95,7 @@ class Register extends StatefulWidget {
   }
 }
 
-class RegisterState extends State<Login> {
+class RegisterState extends State<Register> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -97,20 +113,7 @@ class RegisterState extends State<Login> {
         children: <Widget>[
           TextFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.person),
-              hintText: 'איך קוראים לך',
-              labelText: 'שם פרטי ומשפחה',
-            ),
-            validator: (name) {
-              if (name == null || name.isEmpty) {
-                return 'צריך לכתוב משהו פה';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.email),
               hintText: 'מה המייל שלך?',
               labelText: 'מייל',
             ),
@@ -146,7 +149,7 @@ class RegisterState extends State<Login> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.payments_sharp),
+              icon: Icon(Icons.circle),
               hintText: 'בחר ססמא',
               labelText: 'ססמא',
             ),
@@ -176,8 +179,8 @@ class RegisterState extends State<Login> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextButton(
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
                 Navigator.push(
@@ -185,7 +188,7 @@ class RegisterState extends State<Login> {
                   MaterialPageRoute(builder: (context) => ForgotPass()),
                 );
               },
-              child: Text('שכחתי ססמא כי אני טיפש'),
+              child: Text('forgot password'),
             ),
           ),
         ],

@@ -38,7 +38,7 @@ class HandleAuth extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuthService.instance.authState(),
       builder: (context, snapshot) {
-        return snapshot.data == null ? Login() : Home();
+        return snapshot.data == null ? LoginScreen() : Home();
       },
     );
   }
