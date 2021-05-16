@@ -5,7 +5,7 @@ class ForgotPass extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("שכחתי ססמא"),
+        title: Text("forgot password"),
       ),
       body: Center(
           child: Column(
@@ -19,8 +19,8 @@ class ForgotPass extends StatelessWidget {
             child: TextFormField(
               decoration: const InputDecoration(
                 icon: Icon(Icons.payments_sharp),
-                hintText: 'מה המייל שלך',
-                labelText: 'מייל',
+                hintText: 'email',
+                labelText: 'myEmail@Email.com',
               ),
               onSaved: (mail) {
                 //בדוק עם השרת וכו
@@ -32,7 +32,7 @@ class ForgotPass extends StatelessWidget {
                 if (RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                     .hasMatch(mail)) {
-                  return 'מייל לא תקין';
+                  return 'invalid email';
                 }
                 return null;
               },
@@ -51,7 +51,7 @@ class ForgotPass extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('חזור חזרה'),
+                    child: Text('return'),
                   ),
                 ),
               ),

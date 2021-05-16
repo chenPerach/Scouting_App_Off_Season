@@ -8,7 +8,9 @@ class FirebaseAuthService implements AuthService {
 
   static FirebaseAuthService instance = FirebaseAuthService();
   User get user => _firebaseAuth.currentUser;
-
+  static FirebaseAuthService getInstance() {
+    return instance;
+  }
   @override
   Future<User> createUserWithEmailAndPassword(String email, String password,
       {String name, String photoUrl}) async {
@@ -84,8 +86,11 @@ class FirebaseAuthService implements AuthService {
       print("signing in with mail");
       result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-    } catch (PlatformException) {
-      throw Exception("unable to login");
+    } on FirebaseAuthException catch(e) {
+      print("Failed to login with error code: ${e.code}");
+      throw AuthExeption("wrong email or password!");
+    } on PlatformException catch (e) {
+      print("User does not exist");
     }
     return result.user;
   }
