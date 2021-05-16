@@ -19,7 +19,6 @@ class ChangePage extends StatelessWidget {
         Center(
           child: Register(),
         ),
-        Text("data")
       ],
     );
   }

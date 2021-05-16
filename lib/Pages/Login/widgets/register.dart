@@ -10,7 +10,7 @@ class Register extends StatefulWidget {
   }
 }
 
-class RegisterState extends State<Login> {
+class RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
 
   final pass = TextEditingController();
