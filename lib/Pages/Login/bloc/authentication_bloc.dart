@@ -37,5 +37,8 @@ class AuthenticationBloc
         yield AuthError(e);
       }
     }
+    if(event is AuthForgotPassword){
+      FirebaseAuthService.instance.sendPasswordResetEmail(event.email);
+    }
   }
 }
