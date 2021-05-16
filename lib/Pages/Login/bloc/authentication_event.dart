@@ -18,3 +18,10 @@ class AuthLogin extends AuthenticationEvent{
     @required this.password
   });
 }
+
+class AuthForgotPassword extends AuthenticationEvent{
+  final String email;
+  AuthForgotPassword({
+    @required this.email,
+  });
+}

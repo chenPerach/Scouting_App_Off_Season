@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
@@ -11,13 +13,14 @@ class FirebaseAuthService implements AuthService {
   static FirebaseAuthService getInstance() {
     return instance;
   }
+
   @override
   Future<User> createUserWithEmailAndPassword(String email, String password,
       {String name, String photoUrl}) async {
+    UserCredential result = null;
     try {
-      UserCredential result = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .catchError((e) => print(e));
+      result = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "weak-password":
@@ -34,6 +37,9 @@ class FirebaseAuthService implements AuthService {
           break;
       }
     }
+    User u = result.user;
+    await u.updateProfile(displayName: name,photoURL: photoUrl);   
+    return this.user;
   }
 
   @override
@@ -86,7 +92,7 @@ class FirebaseAuthService implements AuthService {
       print("signing in with mail");
       result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       print("Failed to login with error code: ${e.code}");
       throw AuthExeption("wrong email or password!");
     } on PlatformException catch (e) {

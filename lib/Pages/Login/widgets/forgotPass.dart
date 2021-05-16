@@ -20,7 +20,7 @@ class ForgotPass extends StatelessWidget {
               decoration: const InputDecoration(
                 icon: Icon(Icons.payments_sharp),
                 hintText: 'email',
-                labelText: 'myEmail@Email.com',
+                labelText: 'example@Email.com',
               ),
               onSaved: (mail) {
                 //בדוק עם השרת וכו
@@ -29,7 +29,7 @@ class ForgotPass extends StatelessWidget {
                 if (mail == null || mail.isEmpty) {
                   return 'empty';
                 }
-                if (RegExp(
+                if (!RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                     .hasMatch(mail)) {
                   return 'invalid email';
