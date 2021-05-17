@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_off_season/Pages/Home/widget/matchTile.dart';
 
 import 'matchTile.dart';
 
-class matchList extends StatefulWidget {
-  List<Map> matches;
-  matchList(this.matches);
+class MatchList extends StatefulWidget {
+  final List<Map> matches;
+  MatchList(this.matches);
   @override
   State<StatefulWidget> createState() => _MatchListState(matches);
 }
 
-class _MatchListState extends State<matchList> {
+class _MatchListState extends State<MatchList> {
   List<Map> matches;
   _MatchListState(this.matches);
 

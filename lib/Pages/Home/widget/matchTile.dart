@@ -5,17 +5,18 @@ class _CustomText extends Text {
   final String SText; //team from database
   //final bool isFavourite;
   final bool teamA;
-  Widgetbuile(BuildContext context) {
+  Widget build(BuildContext context) {
     if (!teamA) {
       return Text(SText, style: TextStyle(color: Colors.blue, fontSize: 15));
+    } else {
+      return Text(SText, style: TextStyle(color: Colors.red, fontSize: 15));
     }
-    return Text(SText, style: TextStyle(color: Colors.red, fontSize: 15));
   }
 }
 
 class MatchTile extends StatelessWidget {
   final Map match;
-  int matchNum = 0;
+  final int matchNum;
   MatchTile(this.match, this.matchNum);
   Widget build(BuildContext context) {
     return Container(
