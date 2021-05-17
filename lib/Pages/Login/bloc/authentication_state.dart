@@ -12,6 +12,6 @@ class Authenticated extends AuthenticationState {
 }
 
 class AuthError extends AuthenticationState {
-  final AuthExeption exeption;
-  AuthError(this.exeption);
+  final AuthException exception;
+  AuthError(this.exception);
 }

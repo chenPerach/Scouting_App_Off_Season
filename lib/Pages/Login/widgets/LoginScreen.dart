@@ -5,20 +5,8 @@ import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/login.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/register.dart';
 
-// ignore: camel_case_types
-class BlocHandler extends StatelessWidget {
-  final PageController controller = PageController(initialPage: 0);
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthenticationBloc(),
-      child: ChangePage(controller: controller),
-    );
-  }
-}
-
 class ChangePage extends StatelessWidget {
-  const ChangePage({
+  ChangePage({
     Key key,
     @required this.controller,
   }) : super(key: key);
@@ -45,16 +33,13 @@ class ChangePage extends StatelessWidget {
             );
           }
           if (state is AuthError) {
+            var e = state.exception;
             return PageView(
               scrollDirection: Axis.horizontal,
               controller: controller,
               children: <Widget>[
-                Center(
-                  child: Login(),
-                ),
-                Center(
-                  child: Register(),
-                ),
+                Login(exception: e.happendOn == "LOGIN" ? e : null),
+                Register(exception: e.happendOn == "REGISTER" ? e : null),
               ],
             );
           }
@@ -63,12 +48,8 @@ class ChangePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               controller: controller,
               children: <Widget>[
-                Center(
-                  child: Login(),
-                ),
-                Center(
-                  child: Register(),
-                ),
+                Login(),
+                Register(),
               ],
             );
           }
@@ -79,13 +60,16 @@ class ChangePage extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final PageController controller = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocHandler(),
+      body: BlocProvider(
+        create: (_) => AuthenticationBloc(),
+        child: ChangePage(controller: controller),
+      ),
     );
   }
 }

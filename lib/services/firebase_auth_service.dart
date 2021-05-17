@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
@@ -18,26 +17,26 @@ class FirebaseAuthService implements AuthService {
       {String name, String photoUrl}) async {
     UserCredential result;
     try {
-      result = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "weak-password":
-          throw AuthExeption("the password is to weak");
+          throw AuthException(message: "the password is to weak");
           break;
         case "email-already-in-use":
-          throw AuthExeption("email already in use");
+          throw AuthException(message: "email already in use");
           break;
         case "invalid-email":
-          throw AuthExeption("email not valid");
+          throw AuthException(message: "email not valid");
           break;
         case "weak-password":
-          throw AuthExeption("password is too weak");
+          throw AuthException(message: "password is too weak");
           break;
       }
-    }
+    } catch (e) {}
     User u = result.user;
-    await u.updateProfile(displayName: name,photoURL: photoUrl);   
+    await u.updateProfile(displayName: name, photoURL: photoUrl);
     return this.user;
   }
 
@@ -93,10 +92,8 @@ class FirebaseAuthService implements AuthService {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       print("Failed to login with error code: ${e.code}");
-      throw AuthExeption("wrong email or password!");
-    } on PlatformException{
-      print("User does not exist");
-    }
+      throw AuthException(message: "wrong email or password!");
+    } catch (e) {}
     return result.user;
   }
 

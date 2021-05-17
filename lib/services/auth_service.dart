@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-
-
 abstract class AuthService {
   Future<User> signInWithEmailAndPassword(String email, String password);
   Future<User> createUserWithEmailAndPassword(String email, String password);
@@ -22,10 +20,10 @@ abstract class AuthService {
   void signOut();
   void dispose();
 
-  Stream<User> authState(); 
+  Stream<User> authState();
 }
 
-class AuthExeption implements Exception{
-  String message;
-  AuthExeption( this.message);
+class AuthException implements Exception {
+  String message, happendOn, description;
+  AuthException({this.message,this.happendOn,this.description});
 }

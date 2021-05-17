@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/CustomTextFormFields.dart';
 
-class ForgotPass extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _ForgotPassState createState() => _ForgotPassState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _ForgotPassState extends State<ForgotPass> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController email = TextEditingController();
   final key = GlobalKey<FormState>();
   @override

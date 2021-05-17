@@ -20,25 +20,30 @@ class AuthenticationBloc
     if (event is AuthLogin) {
       yield AuthLoading();
       try {
-        User u = await FirebaseAuthService.instance
+        User u =await FirebaseAuthService.instance
             .signInWithEmailAndPassword(event.email, event.password);
         yield Authenticated(u);
-      } on AuthExeption catch (e) {
+      } on AuthException catch(e) {
+        print("handling login exception");
+        e.happendOn = "LOGIN";
         yield AuthError(e);
       }
     }
-
+    if (event is AuthReset)
+      yield AuthenticationInitial();
     if(event is AuthRegister){
       yield AuthLoading();
       try {
         User u = await FirebaseAuthService.instance.createUserWithEmailAndPassword(event.email, event.password,name: event.name);
         yield Authenticated(u);
-      } on AuthExeption catch(e) {
+      } on AuthException catch(e) {
+        e.happendOn = "REGISTER";
         yield AuthError(e);
       }
     }
     if(event is AuthForgotPassword){
       FirebaseAuthService.instance.sendPasswordResetEmail(event.email);
+
     }
   }
 }

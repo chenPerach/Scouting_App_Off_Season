@@ -18,7 +18,8 @@ class AuthLogin extends AuthenticationEvent{
     @required this.password
   });
 }
-
+class AuthReset extends AuthenticationEvent{
+}
 class AuthForgotPassword extends AuthenticationEvent{
   final String email;
   AuthForgotPassword({
