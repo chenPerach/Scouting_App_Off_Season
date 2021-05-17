@@ -27,14 +27,6 @@ class PrimoUserService {
             value: (e) => e.value));
   }
 
-  static PrimoUser getUserFromSnapShot(User user,DataSnapshot snapshot){
-    return PrimoUser(
-        user: user,
-        favorites: Map<int,bool>.fromIterable(
-            Map<String, bool>.from(snapshot.value).entries,
-            key: (e) => int.parse(e.key),
-            value: (e) => e.value));
-  }
 
   static Future<void> addUser(PrimoUser user) async {
     var _userRef = _usersRef.child(user.user.uid);

@@ -32,8 +32,11 @@ class UserContainer extends ChangeNotifier {
   void setUpChangeListener(PrimoUser puser) {
     PrimoUserService.addListener(puser, (e) {
       print("USER CONTAINER: notifying user ${puser.user.displayName}");
-      _user = PrimoUserService.getUserFromSnapShot(_user.user, e.snapshot);
+      if(e.snapshot.key == "favorites"){
+        _user.favorites = Map<int,bool>.fromIterable(e.snapshot.value.entries,key: (e)=>int.parse(e.key),value: (e)=>e.value);
+      }
       notifyListeners();
+      print(_user.favorites);
     });
   }
 
