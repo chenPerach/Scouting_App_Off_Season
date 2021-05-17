@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Team {
   int number;
   String nickname;
@@ -7,15 +5,7 @@ class Team {
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(number: json["number"], nickname: json["nickname"]);
   }
-  Map<String,dynamic> toJson(){
-    return {
-      "number":number,
-      "nickname":nickname
-    };
-  }
 }
-
-
 
 class TeamsConsts {
   static const List<Map<String, dynamic>> teams_json = [
