@@ -7,7 +7,7 @@ import 'package:scouting_app_2/services/auth_service.dart';
 
 
 class Register extends StatefulWidget {
-  AuthException exception;
+  final AuthException exception;
   Register({this.exception});
   @override
   _RegisterState createState() {
