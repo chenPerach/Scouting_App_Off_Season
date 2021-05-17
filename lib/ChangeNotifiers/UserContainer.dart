@@ -8,7 +8,9 @@ class UserContainer extends ChangeNotifier {
 
   UserContainer() {
     FirebaseAuthService.instance.userChanges.listen((user) {
-      this.user = FirebaseAuthService.instance.toPrimoUser(user);
+      this._user = FirebaseAuthService.instance.toPrimoUser(user);
+      this._user.notifier = () => notifyListeners();
+      notifyListeners();
     });
   }
   set user(PrimoUser user) {
