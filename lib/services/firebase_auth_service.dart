@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +16,7 @@ class FirebaseAuthService implements AuthService {
   @override
   Future<User> createUserWithEmailAndPassword(String email, String password,
       {String name, String photoUrl}) async {
-    UserCredential result = null;
+    UserCredential result;
     try {
       result = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -95,7 +94,7 @@ class FirebaseAuthService implements AuthService {
     } on FirebaseAuthException catch (e) {
       print("Failed to login with error code: ${e.code}");
       throw AuthExeption("wrong email or password!");
-    } on PlatformException catch (e) {
+    } on PlatformException{
       print("User does not exist");
     }
     return result.user;

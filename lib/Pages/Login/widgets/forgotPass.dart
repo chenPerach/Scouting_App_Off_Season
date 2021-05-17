@@ -9,7 +9,7 @@ class ForgotPass extends StatefulWidget {
 }
 
 class _ForgotPassState extends State<ForgotPass> {
-  TextEditingController email;
+  TextEditingController email = TextEditingController();
   final key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,6 @@ class _ForgotPassState extends State<ForgotPass> {
   @override
   void dispose() {
     email.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 }

@@ -4,7 +4,6 @@ import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
-import 'Pages/Login/widgets/login.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
