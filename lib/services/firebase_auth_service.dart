@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 
 import 'auth_service.dart';
 
@@ -10,9 +11,11 @@ class FirebaseAuthService implements AuthService {
   static FirebaseAuthService getInstance() {
     return instance;
   }
+
   Stream<User> get userChanges => _firebaseAuth.userChanges();
   @override
-  Future<User> createUserWithEmailAndPassword(String email, String password,
+  Future<PrimoUser> createUserWithEmailAndPassword(
+      String email, String password,
       {String name, String photoUrl}) async {
     UserCredential result;
     try {
@@ -36,8 +39,8 @@ class FirebaseAuthService implements AuthService {
     } catch (e) {}
     User u = result.user;
     await u.updateProfile(displayName: name, photoURL: photoUrl);
-    
-    return u;
+
+    return toPrimoUser(u);
   }
 
   @override
@@ -55,6 +58,7 @@ class FirebaseAuthService implements AuthService {
     _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
+  PrimoUser toPrimoUser(User u) => PrimoUser(u);
   @override
   void sendSignInWithEmailLink(
       {String email,
@@ -77,14 +81,15 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<User> signInWithEmailAndLink({String email, String link}) async {
+  Future<PrimoUser> signInWithEmailAndLink({String email, String link}) async {
     UserCredential result =
         await _firebaseAuth.signInWithEmailLink(email: email, emailLink: link);
-    return result.user;
+    return toPrimoUser(result.user);
   }
 
   @override
-  Future<User> signInWithEmailAndPassword(String email, String password) async {
+  Future<PrimoUser> signInWithEmailAndPassword(
+      String email, String password) async {
     UserCredential result;
     try {
       print("signing in with mail");
@@ -94,7 +99,7 @@ class FirebaseAuthService implements AuthService {
       print("Failed to login with error code: ${e.code}");
       throw AuthException(message: "wrong email or password!");
     } catch (e) {}
-    return result.user;
+    return toPrimoUser(result.user);
   }
 
   @override

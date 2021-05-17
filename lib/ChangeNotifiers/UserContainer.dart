@@ -1,19 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 class UserContainer extends ChangeNotifier {
-  User _user;
+  PrimoUser _user;
 
   UserContainer() {
     FirebaseAuthService.instance.userChanges.listen((user) {
-      this.user = user;
+      this.user = FirebaseAuthService.instance.toPrimoUser(user);
     });
   }
-  set user(User user) {
+  set user(PrimoUser user) {
     this._user = user;
     notifyListeners();
   }
 
-  User get user => this._user;
+  PrimoUser get user => this._user;
 }

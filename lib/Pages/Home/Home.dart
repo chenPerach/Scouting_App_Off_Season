@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(uc.user?.displayName ?? "<put name here>"),
+            Text(uc.user?.firebaseUser?.displayName ?? "Loading..."),
             TextButton(onPressed: () => FirebaseAuthService.instance.signOut(), child: Text("sign out")),
             // TextButton(onPressed: () => Navigator.of(context).pushNamed("/"), child: Text("test"))
           ],

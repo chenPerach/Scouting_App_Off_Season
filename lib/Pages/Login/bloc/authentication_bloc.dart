@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/auth_service.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
@@ -20,7 +21,7 @@ class AuthenticationBloc
     if (event is AuthLogin) {
       yield AuthLoading();
       try {
-        User u =await FirebaseAuthService.instance
+        PrimoUser u =await FirebaseAuthService.instance
             .signInWithEmailAndPassword(event.email, event.password);
         yield Authenticated(u);
       } on AuthException catch(e) {
@@ -34,7 +35,7 @@ class AuthenticationBloc
     if(event is AuthRegister){
       yield AuthLoading();
       try {
-        User u = await FirebaseAuthService.instance.createUserWithEmailAndPassword(event.email, event.password,name: event.name);
+        PrimoUser u = await FirebaseAuthService.instance.createUserWithEmailAndPassword(event.email, event.password,name: event.name);
         yield Authenticated(u);
       } on AuthException catch(e) {
         e.happendOn = "REGISTER";
