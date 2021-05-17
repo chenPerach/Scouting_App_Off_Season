@@ -7,7 +7,7 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthLoading extends AuthenticationState {}
 class Authenticated extends AuthenticationState {
-  final User user;
+  final PrimoUser user;
   Authenticated(this.user);
 }
 

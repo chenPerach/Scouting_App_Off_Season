@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 
 abstract class AuthService {
-  Future<User> signInWithEmailAndPassword(String email, String password);
-  Future<User> createUserWithEmailAndPassword(String email, String password);
+  Future<PrimoUser> signInWithEmailAndPassword(String email, String password);
+  Future<PrimoUser> createUserWithEmailAndPassword(String email, String password);
   void sendPasswordResetEmail(String email);
-  Future<User> signInWithEmailAndLink({String email, String link});
+  Future<PrimoUser> signInWithEmailAndLink({String email, String link});
   Future<bool> isSignInWithEmailLink(String link);
   void sendSignInWithEmailLink({
     @required String email,
