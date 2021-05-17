@@ -61,6 +61,7 @@ class ChangePage extends StatelessWidget {
 }
 
 class LoginScreen extends StatelessWidget {
+  static const String route = '/login';
   final PageController controller = PageController(initialPage: 0);
 
   @override
