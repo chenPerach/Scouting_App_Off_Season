@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class _CustomText extends Text {
-  const _CustomText({this.SText, this.isFavourite}) : super('');
+  const _CustomText({this.SText, this.teamA}) : super('');
   final String SText; //team from database
-  final bool isFavourite;
+  //final bool isFavourite;
+  final bool teamA;
   Widgetbuile(BuildContext context) {
-    if (!isFavourite) {
+    if (!teamA) {
       return Text(SText, style: TextStyle(color: Colors.blue, fontSize: 15));
     }
-    return Text(SText,
-        style: TextStyle(
-            color: Colors.blue, fontSize: 15, backgroundColor: Colors.red));
+    return Text(SText, style: TextStyle(color: Colors.red, fontSize: 15));
   }
 }
 
@@ -31,15 +30,21 @@ class MatchTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _CustomText(SText: "team1", isFavourite: false),
-                  _CustomText(SText: "team2", isFavourite: false),
-                  _CustomText(SText: "team3", isFavourite: false)
+                  _CustomText(SText: "team1", teamA: true),
+                  _CustomText(SText: "team2", teamA: true),
+                  _CustomText(SText: "team3", teamA: true)
                 ],
               ),
+              const Divider(
+                height: 20,
+                thickness: 5,
+                indent: 20,
+                endIndent: 20,
+              ),
               Row(children: [
-                _CustomText(SText: "team4", isFavourite: false),
-                _CustomText(SText: "team5", isFavourite: false),
-                _CustomText(SText: "team6", isFavourite: false)
+                _CustomText(SText: "team4", teamA: false),
+                _CustomText(SText: "team5", teamA: false),
+                _CustomText(SText: "team6", teamA: false)
               ])
             ],
           )
