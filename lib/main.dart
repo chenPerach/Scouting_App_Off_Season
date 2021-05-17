@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/route_manager.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
@@ -47,7 +48,11 @@ class FirebaseInitilaize extends StatelessWidget {
           return StreamBuilder(
             stream: FirebaseAuthService.instance.authState(),
             builder: (context, snapshot) {
-              return snapshot.data == null ? LoginScreen() : Home();
+              if(snapshot.data == null){
+                return LoginScreen();
+              }else {
+                return Home();
+              }
             },
           );
         else
