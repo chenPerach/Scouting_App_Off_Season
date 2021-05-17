@@ -33,10 +33,11 @@ class RegisterState extends State<Register> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Image(
-                image: NetworkImage(
-                    'https://i.pinimg.com/originals/79/3d/c9/793dc92fc5b0e5fc85c9a1e31efa0749.jpg'),
+              Text(
+                "Register",
+                style: Theme.of(context).textTheme.headline2,
               ),
+              SizedBox(height: 10),
               FormEmailField(controller: email),
               SizedBox(height: 8),
               FormPasswordField(controller: password),
@@ -47,10 +48,11 @@ class RegisterState extends State<Register> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState.validate()) {
-                    BlocProvider.of<AuthenticationBloc>(context).add(AuthRegister(
-                        name: name.text,
-                        email: email.text,
-                        password: password.text));
+                    BlocProvider.of<AuthenticationBloc>(context).add(
+                        AuthRegister(
+                            name: name.text,
+                            email: email.text,
+                            password: password.text));
                   }
                 },
               ),

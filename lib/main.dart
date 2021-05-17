@@ -21,6 +21,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       home: FutureBuilder(
         future: _isInitilazed,
         builder: (context, snapshot) {
