@@ -10,7 +10,7 @@ class FirebaseAuthService implements AuthService {
   static FirebaseAuthService getInstance() {
     return instance;
   }
-
+  Stream<User> get userChanges => _firebaseAuth.userChanges();
   @override
   Future<User> createUserWithEmailAndPassword(String email, String password,
       {String name, String photoUrl}) async {
@@ -36,7 +36,8 @@ class FirebaseAuthService implements AuthService {
     } catch (e) {}
     User u = result.user;
     await u.updateProfile(displayName: name, photoURL: photoUrl);
-    return this.user;
+    
+    return u;
   }
 
   @override
