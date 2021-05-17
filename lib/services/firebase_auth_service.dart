@@ -1,39 +1,45 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:scouting_app_off_season/services/auth_service.dart';
+
+import 'auth_service.dart';
 
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   static FirebaseAuthService instance = FirebaseAuthService();
   User get user => _firebaseAuth.currentUser;
+  static FirebaseAuthService getInstance() {
+    return instance;
+  }
 
   @override
   Future<User> createUserWithEmailAndPassword(String email, String password,
       {String name, String photoUrl}) async {
+    UserCredential result;
     try {
-      UserCredential result = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .catchError((e) => print(e));
+      result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "weak-password":
-          throw AuthExeption("the password is to weak");
+          throw AuthException(message: "the password is to weak");
           break;
         case "email-already-in-use":
-          throw AuthExeption("email already in use");
+          throw AuthException(message: "email already in use");
           break;
         case "invalid-email":
-          throw AuthExeption("email not valid");
+          throw AuthException(message: "email not valid");
           break;
         case "weak-password":
-          throw AuthExeption("password is too weak");
+          throw AuthException(message: "password is too weak");
           break;
       }
-    }
-
-    
+    } catch (e) {}
+    User u = result.user;
+    await u.updateProfile(displayName: name, photoURL: photoUrl);
+    return this.user;
   }
+
   @override
   Stream<User> authState() => _firebaseAuth.authStateChanges();
   @override
@@ -60,13 +66,12 @@ class FirebaseAuthService implements AuthService {
       String androidMinimumVersion}) {
     _firebaseAuth.sendSignInLinkToEmail(
       actionCodeSettings: ActionCodeSettings(
-        url: url,
-        iOSBundleId: iOSBundleID,
-        androidInstallApp: androidInstallApp,
-        androidPackageName: androidPackageName,
-        androidMinimumVersion: androidMinimumVersion,
-        handleCodeInApp: handleCodeInApp
-      ),
+          url: url,
+          iOSBundleId: iOSBundleID,
+          androidInstallApp: androidInstallApp,
+          androidPackageName: androidPackageName,
+          androidMinimumVersion: androidMinimumVersion,
+          handleCodeInApp: handleCodeInApp),
       email: email,
     );
   }
@@ -85,9 +90,10 @@ class FirebaseAuthService implements AuthService {
       print("signing in with mail");
       result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-    } catch (PlatformException) {
-      throw Exception("unable to login");
-    }
+    } on FirebaseAuthException catch (e) {
+      print("Failed to login with error code: ${e.code}");
+      throw AuthException(message: "wrong email or password!");
+    } catch (e) {}
     return result.user;
   }
 
@@ -95,8 +101,6 @@ class FirebaseAuthService implements AuthService {
   void signOut() {
     _firebaseAuth.signOut();
   }
-
-
 }
 
 final FirebaseAuthService firebaseAuthService = FirebaseAuthService();

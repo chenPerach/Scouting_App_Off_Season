@@ -1,4 +1,4 @@
-# scouting_app_off_season
+# scouting_app_2
 
 A new Flutter project.
 

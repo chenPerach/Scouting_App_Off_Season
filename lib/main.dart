@@ -1,8 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:scouting_app_off_season/Pages/Home/Home.dart';
-import 'package:scouting_app_off_season/Pages/Login/widgets/Login.dart';
-import 'package:scouting_app_off_season/services/firebase_auth_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:scouting_app_2/services/firebase_auth_service.dart';
+
+import 'Pages/Home/Home.dart';
+import 'Pages/Login/widgets/LoginScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       home: FutureBuilder(
         future: _isInitilazed,
         builder: (context, snapshot) {
@@ -38,7 +40,7 @@ class HandleAuth extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuthService.instance.authState(),
       builder: (context, snapshot) {
-        return snapshot.data == null ? Login() : Home();
+        return snapshot.data == null ? LoginScreen() : Home();
       },
     );
   }

@@ -1,83 +1,75 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
+import 'package:scouting_app_2/Pages/Login/widgets/login.dart';
+import 'package:scouting_app_2/Pages/Login/widgets/register.dart';
 
-class MyCustomForm extends StatefulWidget {
-  @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
-  }
-}
+class ChangePage extends StatelessWidget {
+  ChangePage({
+    Key key,
+    @required this.controller,
+  }) : super(key: key);
 
-// Define a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
+  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          // Add TextFormFields and ElevatedButton here.
-        ],
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      bloc: context.read<AuthenticationBloc>(),
+      listener: (context, state) {
+        if (state is Authenticated) {
+          print("User Succesfuly Authenticated");
+        }
+      },
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        bloc: context.read<AuthenticationBloc>(),
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          if (state is AuthError) {
+            var e = state.exception;
+            return PageView(
+              scrollDirection: Axis.horizontal,
+              controller: controller,
+              children: <Widget>[
+                Login(exception: e.happendOn == "LOGIN" ? e : null),
+                Register(exception: e.happendOn == "REGISTER" ? e : null),
+              ],
+            );
+          }
+          if (state is AuthenticationInitial) {
+            return PageView(
+              scrollDirection: Axis.horizontal,
+              controller: controller,
+              children: <Widget>[
+                Login(),
+                Register(),
+              ],
+            );
+          }
+          return null;
+        },
       ),
     );
   }
 }
 
-// ignore: camel_case_types
-class changePage extends StatelessWidget {
-  //const changePage({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  final PageController controller = PageController(initialPage: 0);
 
-  @override
-  Widget build(BuildContext context) {
-    final PageController controller = PageController(initialPage: 0);
-    return PageView(
-      /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-      /// Use [Axis.vertical] to scroll vertically.
-      scrollDirection: Axis.horizontal,
-      controller: controller,
-      children: <Widget>[
-        Center(
-          child:SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("Login"),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Email",
-                    hintText: "enter your email"
-                  ),
-                ),
-          ],
-          ),
-
-        ),
-        ),
-        Center(
-          child: Text('Second Page'),
-        ),
-      ],
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class Login extends StatelessWidget {
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: 
-        changePage(),
+      body: BlocProvider(
+        create: (_) => AuthenticationBloc(),
+        child: ChangePage(controller: controller),
+      ),
     );
   }
 }
