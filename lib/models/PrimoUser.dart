@@ -1,30 +1,45 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:scouting_app_2/models/Team.dart';
 
 class PrimoUser {
-  User _user;
-  VoidCallback _notifier;
-  DatabaseReference _userRef;
-  Map<int, bool> _favorites;
-  PrimoUser(this._user) {
-    this._favorites = Map<int, bool>();
-    _notifier = () {};
-    _userRef =
-        FirebaseDatabase.instance.reference().child("Users/${_user.uid}");
-    _userRef.onChildChanged.listen((event) {
-      if (event.snapshot.value == null) {
-        _userRef.child("name").set(_user.displayName);
-        _userRef.child("favorites").set(Map<Team, bool>.fromIterables( // these lines handle the favorite player's teams.
-            TeamsConsts.teams,
-            List.generate(TeamsConsts.teams.length, (index) => false)));
-        _notifier.call();
-      }else{
-        this._favorites = event.snapshot.value["favorites"];
-      }
+  User user;
+  Map<int, bool> favorites;
+  PrimoUser({this.favorites, this.user});
+}
+
+class PrimoUserService {
+  static DatabaseReference _usersRef =
+      FirebaseDatabase.instance.reference().child("users");
+  static Map<int, bool> initial_fav = Map.fromIterable(TeamsConsts.teams_json,
+      key: (e) => e["number"], value: (e) => false);
+
+  static Future<PrimoUser> getUser(User user) async {
+    var _userRef = _usersRef.child(user.uid);
+    var snapshot = await _userRef.once();
+    if (snapshot.value == null) return null;
+
+    return PrimoUser(
+        user: user,
+        favorites: Map<int,bool>.fromIterable(
+            Map<String, bool>.from(snapshot.value["favorites"]).entries,
+            key: (e) => int.parse(e.key),
+            value: (e) => e.value));
+  }
+
+  static Future<void> addUser(PrimoUser user) async {
+    var _userRef = _usersRef.child(user.user.uid);
+    if(user.user.displayName == null) return null;
+    await _userRef.update({
+      "name": user.user.displayName,
+      "favorites": Map<String, bool>.fromIterable(user.favorites.entries,
+          key: (item) => item.key.toString(), value: (e) => e.value)
     });
   }
-  User get firebaseUser => this._user;
-  set notifier(VoidCallback notifier) => this._notifier = notifier;
+
+  static addListener(PrimoUser user, void onData(Event e),
+      {void onError(), void onDone()}) {
+    var _userRef = _usersRef.child(user.user.uid);
+    _userRef.onChildChanged.listen(onData, onError: onError, onDone: onDone);
+  }
 }

@@ -8,7 +8,11 @@ class UserContainer extends ChangeNotifier {
 
   UserContainer() {
     FirebaseAuthService.instance.userChanges.listen((user) {
-      this.user = FirebaseAuthService.instance.toPrimoUser(user);
+      if(user == null) return;
+      syncWithDB(user).then((value) {
+        _user = value;
+        notifyListeners();
+      });
     });
   }
   set user(PrimoUser user) {
@@ -17,4 +21,13 @@ class UserContainer extends ChangeNotifier {
   }
 
   PrimoUser get user => this._user;
+
+  Future<PrimoUser> syncWithDB(User user) async {
+    var puser = await PrimoUserService.getUser(user);
+    if (puser == null) {
+      puser = FirebaseAuthService.instance.toPrimoUser(user);
+      await PrimoUserService.addUser(puser);
+    }
+    return puser;
+  }
 }

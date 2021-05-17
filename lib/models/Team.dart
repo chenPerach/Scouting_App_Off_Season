@@ -5,6 +5,12 @@ class Team {
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(number: json["number"], nickname: json["nickname"]);
   }
+  Map<String,dynamic> toJson(){
+    return {
+      "nickname":nickname,
+      "number":number
+    };
+  }
 }
 
 class TeamsConsts {
