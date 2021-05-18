@@ -24,7 +24,6 @@ class UserContainer extends ChangeNotifier {
 
   void setUpChangeListener() {
     PrimoUserService.addListener(_user,(e) {
-      print("USER CONTAINER: notifying user ${_user.user?.displayName ?? "loading..."}");
       PrimoUserService.handleSnapShot(_user, e.snapshot); 
       notifyListeners();
     });

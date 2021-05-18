@@ -30,6 +30,22 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script>
+    var firebaseConfig = {
+    apiKey: "AIzaSyA0a4ES5NxhSfd07OfW8ahT0FtGFTK3rDc",
+    authDomain: "scouting-off-season.firebaseapp.com",
+    databaseURL: "https://scouting-off-season-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "scouting-off-season",
+    storageBucket: "scouting-off-season.appspot.com",
+    messagingSenderId: "427388459859",
+    appId: "1:427388459859:web:ba51fda245ccd264261fa6",
+    measurementId: "G-L635PNW7LY"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
