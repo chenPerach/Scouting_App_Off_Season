@@ -13,7 +13,6 @@ class UserContainer extends ChangeNotifier {
       if (user == null) return;
       _syncWithDB(user).then((value) {
         _user = value;
-
         notifyListeners();
       });
     });

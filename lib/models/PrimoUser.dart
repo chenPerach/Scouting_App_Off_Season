@@ -20,9 +20,13 @@ class PrimoUserService {
       key: (e) => e["number"], value: (e) => false);
 
   static Future<PrimoUser> getUser(User user) async {
+    print("$_TAG: getting user from firebase");
     var _userRef = _usersRef.child(user.uid);
     var snapshot = await _userRef.once();
-    if (snapshot.value == null) return null;
+    if (snapshot.value == null) {
+      print("$_TAG: wasn't able to get firebase user.");
+      return null;
+    }
 
     return PrimoUser(
         user: user,
@@ -33,6 +37,7 @@ class PrimoUserService {
   }
 
   static Future<void> addUser(PrimoUser user) async {
+    print("$_TAG: adding user to data base");
     var _userRef = _usersRef.child(user.user.uid);
     if (user.user.displayName == null) return null;
     await _userRef.update({
@@ -56,6 +61,7 @@ class PrimoUserService {
   }
 
   static void handleSnapShot(PrimoUser user, DataSnapshot snapshot) {
+    print("$_TAG: handling database change on user ${user.user.displayName}");
     /**
      * the [snapshot] object returns a different key depending on what has been 
      * changed. [remember to handle that!!!]
