@@ -24,7 +24,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserContainer())
+        ChangeNotifierProvider(create: (_)=> UserContainer())
       ],
       child: MaterialApp(
         theme: ThemeData.dark(),
@@ -33,6 +33,11 @@ class _AppState extends State<App> {
       ),
     );
   }
+  @override
+    void dispose() {
+      UserContainer.subscription.cancel();
+      super.dispose();
+    }
 }
 
 class FirebaseInitilaize extends StatelessWidget {

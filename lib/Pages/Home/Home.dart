@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserContainer uc = Provider.of<UserContainer>(context);
-    if (uc.user != null) uc.setUpChangeListener(uc.user);
+    if (uc.user != null) uc.setUpChangeListener();
     return Scaffold(
       body: Center(
         child: Column(
@@ -19,8 +19,7 @@ class Home extends StatelessWidget {
             Text(uc.user?.user?.displayName ?? "Loading..."),
             TextButton(
                 onPressed: () {
-                  PrimoUserService.clearStreamSubs();
-                  FirebaseAuthService.instance.signOut();
+                  PrimoUserService.signOut();
                 },
                 child: Text("sign out")),
           ],
