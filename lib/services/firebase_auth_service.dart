@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 import 'auth_service.dart';
 

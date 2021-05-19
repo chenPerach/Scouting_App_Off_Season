@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 class Home extends StatelessWidget {
@@ -18,9 +19,7 @@ class Home extends StatelessWidget {
           children: [
             Text(uc.user?.user?.displayName ?? "Loading..."),
             TextButton(
-                onPressed: () {
-                  PrimoUserService.signOut();
-                },
+                onPressed: PrimoUserService.signOut,
                 child: Text("sign out")),
           ],
         ),
