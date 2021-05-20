@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>427388459859-l95k5lgduoiv40nf19aqi42ico699rvs.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.427388459859-l95k5lgduoiv40nf19aqi42ico699rvs</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>427388459859-2skpkpniq2obm31115cngik4qr0jgpj6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBe9zP8xx2OeNC0AREn3YE8JZt7QGDnLRY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>427388459859</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.scoutingApp2</string>
+	<key>PROJECT_ID</key>
+	<string>scouting-off-season</string>
+	<key>STORAGE_BUCKET</key>
+	<string>scouting-off-season.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:427388459859:ios:7a04489c5217aa92261fa6</string>
+	<key>DATABASE_URL</key>
+	<string>https://scouting-off-season-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
