@@ -1,3 +1,4 @@
+import 'package:ansicolor/ansicolor.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
 void main() {
+  ansiColorDisabled = false;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
 }
@@ -23,7 +25,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserContainer())
+        ChangeNotifierProvider(create: (_)=> UserContainer())
       ],
       child: MaterialApp(
         theme: ThemeData.dark(),
@@ -32,6 +34,11 @@ class _AppState extends State<App> {
       ),
     );
   }
+  @override
+    void dispose() {
+      UserContainer.subscription.cancel();
+      super.dispose();
+    }
 }
 
 class FirebaseInitilaize extends StatelessWidget {
@@ -47,7 +54,11 @@ class FirebaseInitilaize extends StatelessWidget {
           return StreamBuilder(
             stream: FirebaseAuthService.instance.authState(),
             builder: (context, snapshot) {
-              return snapshot.data == null ? LoginScreen() : Home();
+              if(snapshot.data == null){
+                return LoginScreen();
+              }else {
+                return Home();
+              }
             },
           );
         else
