@@ -30,13 +30,12 @@ class MatchTile extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   child: Text(
-                    match.compLevel.toUpperCase() +
-                        match.matchNumber.toString(),
+                    match.compLevel + match.matchNumber.toString(),
                     style: title,
                   ),
                   padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 ),
-                width: screenWidth * 0.36,
+                width: screenWidth * 0.4,
               ),
               SizedBox(
                 width: screenWidth * 0.05,
@@ -90,16 +89,20 @@ class _BlueRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(3, (i) {
         bool iffav =
-            uc.user.isFavorite(match.red_allience.teamNumbers[i]) ?? false;
+            uc.user.isFavorite(match.blue_allience.teamNumbers[i]) ?? false;
 
-        return Container(
-          color: iffav ? gold : Theme.of(context).cardColor,
-          child: Text(
-            match.red_allience.teamNumbers[i].toString(),
-            style: blueStyle,
-            textAlign: TextAlign.center,
+        Widget t = SingleChildScrollView(
+          child: Container(
+            color: iffav ? gold : Theme.of(context).cardColor,
+            child: Text(
+              match.blue_allience.teamNumbers[i].toString(),
+              style: blueStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         );
+
+        return t;
       }),
     );
   }
@@ -122,18 +125,22 @@ class _RedRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List<Widget>.generate(
-            3,
-            (i) => Container(
-                  color: uc.user.isFavorite(match.red_allience.teamNumbers[i])
-                      ? gold
-                      : Theme.of(context).cardColor,
-                  child: Text(
-                    match.red_allience.teamNumbers[i].toString(),
-                    style: redStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                )));
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List<Widget>.generate(
+        3,
+        (i) {
+          bool f =
+              uc.user.isFavorite(match.red_allience.teamNumbers[i]) ?? false;
+          return Container(
+            color: f ? gold : Theme.of(context).cardColor,
+            child: Text(
+              match.red_allience.teamNumbers[i].toString(),
+              style: redStyle,
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
+      ),
+    );
   }
 }

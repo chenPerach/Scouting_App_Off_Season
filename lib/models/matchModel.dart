@@ -24,4 +24,10 @@ class MatchModel {
       blue_allience: Allience.fromJson(List<String>.from(json["alliances"]["blue"]["team_keys"]), "blue"),
     );
   }
+  String toString(){
+    print("number: $matchNumber");
+    print("number: $compLevel");
+    print("blue ${blue_allience.teamNumbers}");
+    print("blue ${red_allience.teamNumbers}");
+  }
 }

@@ -21,8 +21,8 @@ class _HomePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         leading: IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: () =>
-                BlocProvider.of<HomeBloc>(context).add(HomeFetchGames())),
+            onPressed: () => BlocProvider.of<HomeBloc>(context)
+                .add(HomeFetchGames(Provider.of<UserContainer>(context)))),
         actions: [
           IconButton(icon: Icon(Icons.arrow_right), onPressed: () {}),
         ],
@@ -42,7 +42,7 @@ class _BlocHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(),
-      child: BlocListener<HomeBloc,HomeState>(
+      child: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {},
         child: _BlocBuilder(),
       ),
@@ -57,13 +57,14 @@ class _BlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc,HomeState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeLoading) {
           return Waiting();
         }
         if (state is HomeInitial) {
-          BlocProvider.of<HomeBloc>(context).add(HomeFetchGames());
+          BlocProvider.of<HomeBloc>(context)
+              .add(HomeFetchGames(Provider.of<UserContainer>(context)));
           return Waiting();
         }
         if (state is HomeWithData) {
