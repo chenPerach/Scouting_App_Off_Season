@@ -20,8 +20,8 @@ class MatchModel {
       compLevel: json["comp_level"],
       matchNumber: json["match_number"],
       time: DateTime.fromMillisecondsSinceEpoch(json["time"]),
-      red_allience: Allience.fromJson(json["alliences"]["red"], "red"),
-      blue_allience: Allience.fromJson(json["alliences"]["blue"], "blue"),
+      red_allience: Allience.fromJson(List<String>.from(json["alliances"]["red"]["team_keys"]), "red"),
+      blue_allience: Allience.fromJson(List<String>.from(json["alliances"]["blue"]["team_keys"]), "blue"),
     );
   }
 }

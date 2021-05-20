@@ -38,29 +38,39 @@ class Home extends StatelessWidget {
 }
 
 class _BlocHandler extends StatelessWidget {
-  final HomeBloc bloc = HomeBloc();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: bloc,
-      child: BlocListener(
+    return BlocProvider<HomeBloc>(
+      create: (_) => HomeBloc(),
+      child: BlocListener<HomeBloc,HomeState>(
         listener: (context, state) {},
-        child: BlocBuilder(
-          builder: (context, state) {
-            if (state is HomeLoading) {
-              return Waiting();
-            }
-            if (state is HomeInitial) {
-              bloc.add(HomeFetchGames());
-              return Waiting();
-            }
-            if (state is HomeWithData) {
-              return _HomePage(state.matches);
-            }
-            return null;
-          },
-        ),
+        child: _BlocBuilder(),
       ),
+    );
+  }
+}
+
+class _BlocBuilder extends StatelessWidget {
+  const _BlocBuilder({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<HomeBloc,HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return Waiting();
+        }
+        if (state is HomeInitial) {
+          BlocProvider.of<HomeBloc>(context).add(HomeFetchGames());
+          return Waiting();
+        }
+        if (state is HomeWithData) {
+          return _HomePage(state.matches);
+        }
+        return null;
+      },
     );
   }
 }

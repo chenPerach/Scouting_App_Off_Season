@@ -20,49 +20,53 @@ class MatchTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserContainer uc = Provider.of<UserContainer>(context);
     final double screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-        height: 90,
-        child: Row(
-          children: <Widget>[
-            Container(
-              color: Colors.black12,
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                child: Text(
-                  match.compLevel.toUpperCase() + match.matchNumber.toString(),
-                  style: title,
-                ),
-                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-              ),
-              width: screenWidth * 0.36,
-            ),
-            SizedBox(
-              width: screenWidth * 0.05,
-            ),
-            Container(
-              width: screenWidth * 0.5,
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _RedRow(uc: uc, match: match, gold: gold, redStyle: redStyle),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
-                    child: Container(
-                      color: Colors.grey,
-                      width: screenWidth * 0.4,
-                      height: 1,
-                    ),
+    return Card(
+      child: Container(
+          height: 90,
+          child: Row(
+            children: <Widget>[
+              Container(
+                color: Colors.black12,
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  child: Text(
+                    match.compLevel.toUpperCase() +
+                        match.matchNumber.toString(),
+                    style: title,
                   ),
-                  _BlueRow(
-                      uc: uc, match: match, gold: gold, blueStyle: blueStyle)
-                ],
+                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                ),
+                width: screenWidth * 0.36,
               ),
-            ),
-          ],
-        ));
+              SizedBox(
+                width: screenWidth * 0.05,
+              ),
+              Container(
+                width: screenWidth * 0.5,
+                alignment: Alignment.center,
+                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _RedRow(
+                        uc: uc, match: match, gold: gold, redStyle: redStyle),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
+                      child: Container(
+                        color: Colors.grey,
+                        width: screenWidth * 0.4,
+                        height: 1,
+                      ),
+                    ),
+                    _BlueRow(
+                        uc: uc, match: match, gold: gold, blueStyle: blueStyle)
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
   }
 }
 
@@ -84,19 +88,19 @@ class _BlueRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List<Widget>.generate(
-        3,
-        (i) => Container(
-          color: uc.user.isFavorite(match.red_allience.teamNumbers[i])
-              ? gold
-              : Theme.of(context).cardColor,
+      children: List<Widget>.generate(3, (i) {
+        bool iffav =
+            uc.user.isFavorite(match.red_allience.teamNumbers[i]) ?? false;
+
+        return Container(
+          color: iffav ? gold : Theme.of(context).cardColor,
           child: Text(
             match.red_allience.teamNumbers[i].toString(),
             style: blueStyle,
             textAlign: TextAlign.center,
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
