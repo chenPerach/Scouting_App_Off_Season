@@ -12,10 +12,6 @@ class RouteGenerator {
     {
       case FirebaseInitilaize.route:
         return MaterialPageRoute(builder: (_) => FirebaseInitilaize());
-      case LoginScreen.route:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
-      case Home.route:
-        return MaterialPageRoute(builder: (_) => Home());
       default:
     }
   }

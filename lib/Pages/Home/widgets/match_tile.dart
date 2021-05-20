@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
-import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 
 class MatchTile extends StatelessWidget {
@@ -13,7 +12,7 @@ class MatchTile extends StatelessWidget {
       title = TextStyle(
           fontSize: 50, fontWeight: FontWeight.w800, fontFamily: "OpenSans");
 
-  Color gold = Color(0xFFf5d905).withOpacity(0.25);
+  final Color gold = Color(0xFFf5d905).withOpacity(0.25);
   final MatchModel match;
   MatchTile(this.match);
 
