@@ -22,7 +22,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event.uc.user != null) event.uc.setUpChangeListener();
       List matches = await HomeService.getMatches();
       await Future.doWhile(() => event.uc?.user?.user?.displayName == null);
-      matches.forEach((element) { element.toString();});
       yield HomeWithData(matches: matches);
     }
   }

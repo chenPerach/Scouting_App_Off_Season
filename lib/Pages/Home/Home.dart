@@ -20,11 +20,11 @@ class _HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(Icons.refresh_rounded),
             onPressed: () => BlocProvider.of<HomeBloc>(context)
-                .add(HomeFetchGames(Provider.of<UserContainer>(context)))),
+                .add(HomeFetchGames(uc))),
         actions: [
-          IconButton(icon: Icon(Icons.arrow_right), onPressed: () {}),
+          IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: () {}),
         ],
       ),
       body: MatchList(matches: matches),
