@@ -12,8 +12,8 @@ class PrimoUserService {
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
       FirebaseDatabase.instance.reference().child("users");
-  static List<StreamSubscription> streamSubs = [];
-  static Map<int, bool> initial_fav = Map.fromIterable(TeamsConsts.teams_json,
+  static List<StreamSubscription> _streamSubs = [];
+  static Map<int, bool> _initial_fav = Map.fromIterable(TeamsConsts.teams_json,
       key: (e) => e["number"], value: (e) => false);
 
   static Future<PrimoUser> getUser(User user) async {
@@ -33,7 +33,7 @@ class PrimoUserService {
             value: (e) => e.value));
   }
 
-  static Future<void> addUser(PrimoUser user) async {
+  static Future<void> updateUser(PrimoUser user) async {
     _log("$_TAG: adding user to data base");
     var _userRef = _usersRef.child(user.user.uid);
     if (user.user.displayName == null) return null;
@@ -47,14 +47,14 @@ class PrimoUserService {
   static addListener(PrimoUser user, void onData(Event e),
       {void onError(), void onDone()}) {
     var _userRef = _usersRef.child(user.user.uid);
-    streamSubs.add(_userRef.onChildChanged
+    _streamSubs.add(_userRef.onChildChanged
         .listen(onData, onError: onError, onDone: onDone));
   }
 
   static void clearStreamSubscriptions() {
     _log("$_TAG: clearing stream subscriptions");
-    streamSubs.forEach((e) => e.cancel());
-    streamSubs = [];
+    _streamSubs.forEach((e) => e.cancel());
+    _streamSubs = [];
   }
 
   static void handleSnapShot(PrimoUser user, DataSnapshot snapshot) {
