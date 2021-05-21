@@ -8,12 +8,12 @@ import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 class PrimoUserService {
-  static AnsiPen pen = AnsiPen()..yellow(bold: true,bg: false);
+  static AnsiPen _pen = AnsiPen()..yellow(bold: true,bg: false);
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
       FirebaseDatabase.instance.reference().child("users");
   static List<StreamSubscription> _streamSubs = [];
-  static Map<int, bool> _initial_fav = Map.fromIterable(TeamsConsts.teams_json,
+  static final Map<int, bool> initialFav = Map.fromIterable(TeamsConsts.teams_json,
       key: (e) => e["number"], value: (e) => false);
 
   static Future<PrimoUser> getUser(User user) async {
@@ -75,6 +75,6 @@ class PrimoUserService {
     FirebaseAuthService.instance.signOut();
   }
   static void _log(String msg){
-    print(pen(msg));
+    print(_pen(msg));
   }
 }

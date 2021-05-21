@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
-import 'package:scouting_app_2/Pages/Home/Home.dart';
-import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -32,7 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var n = event.favoite;
       user.favorites[n] = !user.favorites[n];
       event.uc.user = user;
-      await PrimoUserService.addUser(user);
+      await PrimoUserService.updateUser(user);
     }
   }
 }

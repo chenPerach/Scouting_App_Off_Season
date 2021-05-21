@@ -6,7 +6,9 @@ import 'package:scouting_app_2/Pages/Home/bloc/home_bloc.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 class _HomePage extends StatelessWidget {
   final List<MatchModel> matches;
@@ -28,14 +30,9 @@ class _HomePage extends StatelessWidget {
         actions: [
           IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                var bloc = BlocProvider.of<HomeBloc>(context);
-                
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => MultiProvider(child: Favorites(context),providers: [
-                      ListenableProvider.value(value: uc),
-                      Provider.value(value: bloc)
-                    ],)));
+              onPressed: () async {                
+                PrimoUser user = await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Favorites(uc)));
+                PrimoUserService.updateUser(user);
               }),
         ],
       ),

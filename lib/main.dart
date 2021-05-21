@@ -36,7 +36,7 @@ class _AppState extends State<App> {
   }
   @override
     void dispose() {
-      UserContainer.subscription.cancel();
+      UserContainer.cancelSubscription();
       super.dispose();
     }
 }

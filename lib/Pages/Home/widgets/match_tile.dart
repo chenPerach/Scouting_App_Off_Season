@@ -89,13 +89,13 @@ class _BlueRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(3, (i) {
         bool iffav =
-            uc.user.isFavorite(match.blue_allience.teamNumbers[i]) ?? false;
+            uc.user.isFavorite(match.blueAllience.teamNumbers[i]) ?? false;
 
         Widget t = SingleChildScrollView(
           child: Container(
             color: iffav ? gold : Theme.of(context).cardColor,
             child: Text(
-              match.blue_allience.teamNumbers[i].toString(),
+              match.blueAllience.teamNumbers[i].toString(),
               style: blueStyle,
               textAlign: TextAlign.center,
             ),
@@ -130,11 +130,11 @@ class _RedRow extends StatelessWidget {
         3,
         (i) {
           bool f =
-              uc.user.isFavorite(match.red_allience.teamNumbers[i]) ?? false;
+              uc.user.isFavorite(match.redAllience.teamNumbers[i]) ?? false;
           return Container(
             color: f ? gold : Theme.of(context).cardColor,
             child: Text(
-              match.red_allience.teamNumbers[i].toString(),
+              match.redAllience.teamNumbers[i].toString(),
               style: redStyle,
               textAlign: TextAlign.center,
             ),
