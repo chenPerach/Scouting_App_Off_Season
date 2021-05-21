@@ -31,8 +31,7 @@ class _HomePage extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () async {                
-                PrimoUser user = await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Favorites(uc)));
-                PrimoUserService.updateUser(user);
+                await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Favorites(uc)));
               }),
         ],
       ),

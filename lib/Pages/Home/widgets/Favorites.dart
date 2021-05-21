@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/models/Team.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 class Favorites extends StatefulWidget {
   final UserContainer _user;
@@ -16,10 +17,14 @@ class _FavoritesState extends State<Favorites> {
     var favorites = widget._user.user.favorites;
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
           leading: IconButton(
-        icon: Icon(Icons.arrow_left),
+        icon: Icon(Icons.arrow_back),
         onPressed: () {
-          Navigator.of(context).pop(this.widget._user.user);
+          PrimoUserService.updateUser(widget._user.user);
+          Navigator.of(context).pop();
         },
       )),
       body: Center(
