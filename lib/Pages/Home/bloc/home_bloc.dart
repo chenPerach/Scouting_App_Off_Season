@@ -21,9 +21,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoading();
 
       if (event.uc.user != null) event.uc.setUpChangeListener();
-      List matches = await HomeService.getMatches();
+      List<MatchModel> matches = await HomeService.getMatches();
       await Future.doWhile(() => event.uc?.user?.user?.displayName == null);
-      yield HomeWithData(matches: matches);
+      var comp = CompotitionModel(
+        finals: _getList("f", matches),
+        semi:  _getList("sf", matches),
+        quarter:_getList("qf", matches),
+        quals:  _getList("qm", matches),
+      );
+      yield HomeWithData(comp);
     }
 
     if (event is HomeAddFavorite) {
@@ -33,6 +39,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       event.uc.user = user;
       await PrimoUserService.updateUser(user);
     }
+  }
+  List<MatchModel> _getList(String matchType,List<MatchModel> matches){
+    List<MatchModel> l = List<MatchModel>.from(matches.where((e) => e.compLevel.toLowerCase() == matchType));
+    l.sort((m1,m2) => m1.matchNumber - m2.matchNumber);
+    return l;
   }
 }
 

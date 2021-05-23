@@ -6,6 +6,17 @@ abstract class HomeState {}
 class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 class HomeWithData extends HomeState {
-  final List<MatchModel> matches;
-  HomeWithData({this.matches});
+  final CompotitionModel matches;
+  HomeWithData(this.matches);
+}
+
+class CompotitionModel{
+
+  final List<MatchModel> quals,quarter,semi,finals;
+  CompotitionModel({
+    this.finals,
+    this.quals,
+    this.quarter,
+    this.semi
+  });
 }

@@ -1,17 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/Pages/Home/bloc/home_bloc.dart';
+import 'package:scouting_app_2/Pages/Home/widgets/ExpantionTile.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
-import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
-import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 class _HomePage extends StatelessWidget {
-  final List<MatchModel> matches;
+  final CompotitionModel matches;
   _HomePage(this.matches);
 
   @override
@@ -30,12 +31,20 @@ class _HomePage extends StatelessWidget {
         actions: [
           IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () async {                
-                await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Favorites(uc)));
+              onPressed: () async {
+                await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => Favorites(uc)));
               }),
         ],
       ),
-      body: MatchList(matches: matches),
+      body: ListView(
+        children: [
+          MatchesExpansionTile(title: "Qualification Matches",matches: this.matches.quals,),
+          MatchesExpansionTile(title: "Quarter Finals",matches: this.matches.quarter,),
+          MatchesExpansionTile(title: "Semi Finals",matches: this.matches.semi,),
+          MatchesExpansionTile(title: "Finals",matches: this.matches.finals,),
+        ],
+      ),
     );
   }
 }

@@ -4,6 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 
+final Color gold = Color.fromARGB(255, 255, 215, 0);
+final TextStyle goldStyle =
+    TextStyle(color: gold, fontSize: 18, fontWeight: FontWeight.w700);
+
 class MatchTile extends StatelessWidget {
   final TextStyle redStyle = TextStyle(
           color: Colors.red, fontSize: 18, fontWeight: FontWeight.w700),
@@ -12,7 +16,6 @@ class MatchTile extends StatelessWidget {
       title = TextStyle(
           fontSize: 50, fontWeight: FontWeight.w800, fontFamily: "OpenSans");
 
-  final Color gold = Color(0xFFf5d905).withOpacity(0.25);
   final MatchModel match;
   MatchTile(this.match);
 
@@ -30,12 +33,12 @@ class MatchTile extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   child: Text(
-                    match.compLevel + match.matchNumber.toString(),
+                    match.matchNumber.toString(),
                     style: title,
                   ),
                   padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 ),
-                width: screenWidth * 0.4,
+                width: screenWidth * 0.3,
               ),
               SizedBox(
                 width: screenWidth * 0.05,
@@ -47,8 +50,7 @@ class MatchTile extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _RedRow(
-                        uc: uc, match: match, gold: gold, redStyle: redStyle),
+                    _RedRow(uc: uc, match: match, redStyle: redStyle),
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
@@ -58,8 +60,7 @@ class MatchTile extends StatelessWidget {
                         height: 1,
                       ),
                     ),
-                    _BlueRow(
-                        uc: uc, match: match, gold: gold, blueStyle: blueStyle)
+                    _BlueRow(uc: uc, match: match, blueStyle: blueStyle)
                   ],
                 ),
               ),
@@ -74,13 +75,11 @@ class _BlueRow extends StatelessWidget {
     Key key,
     @required this.uc,
     @required this.match,
-    @required this.gold,
     @required this.blueStyle,
   }) : super(key: key);
 
   final UserContainer uc;
   final MatchModel match;
-  final Color gold;
   final TextStyle blueStyle;
 
   @override
@@ -88,15 +87,14 @@ class _BlueRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(3, (i) {
-        bool iffav =
+        bool isfav =
             uc.user.isFavorite(match.blueAllience.teamNumbers[i]) ?? false;
 
         Widget t = SingleChildScrollView(
           child: Container(
-            color: iffav ? gold : Theme.of(context).cardColor,
             child: Text(
               match.blueAllience.teamNumbers[i].toString(),
-              style: blueStyle,
+              style: isfav ? goldStyle : blueStyle,
               textAlign: TextAlign.center,
             ),
           ),
@@ -113,13 +111,11 @@ class _RedRow extends StatelessWidget {
     Key key,
     @required this.uc,
     @required this.match,
-    @required this.gold,
     @required this.redStyle,
   }) : super(key: key);
 
   final UserContainer uc;
   final MatchModel match;
-  final Color gold;
   final TextStyle redStyle;
 
   @override
@@ -132,10 +128,9 @@ class _RedRow extends StatelessWidget {
           bool f =
               uc.user.isFavorite(match.redAllience.teamNumbers[i]) ?? false;
           return Container(
-            color: f ? gold : Theme.of(context).cardColor,
             child: Text(
               match.redAllience.teamNumbers[i].toString(),
-              style: redStyle,
+              style: f ? goldStyle : redStyle,
               textAlign: TextAlign.center,
             ),
           );
