@@ -13,9 +13,11 @@ class MatchesExpansionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       initiallyExpanded: true,
+      expandedAlignment: Alignment.centerLeft,
       title: Text(title),
       children: [
         Container(
+          width: MediaQuery.of(context).size.width*0.9,
             height: min(98.0 * this.matches.length,
                 MediaQuery.of(context).size.height - 150),
             child: MatchList(matches: this.matches)),

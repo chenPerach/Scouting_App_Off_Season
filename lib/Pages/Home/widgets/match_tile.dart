@@ -27,7 +27,7 @@ class MatchTile extends StatelessWidget {
       child: Container(
           height: 90,
           child: Row(
-            children: <Widget>[
+            children: [
               Container(
                 color: Colors.black12,
                 alignment: Alignment.centerLeft,
@@ -36,9 +36,8 @@ class MatchTile extends StatelessWidget {
                     match.matchNumber.toString(),
                     style: title,
                   ),
-                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(20, 0, 25, 0),
                 ),
-                width: screenWidth * 0.3,
               ),
               SizedBox(
                 width: screenWidth * 0.05,
@@ -60,10 +59,18 @@ class MatchTile extends StatelessWidget {
                         height: 1,
                       ),
                     ),
-                    _BlueRow(uc: uc, match: match, blueStyle: blueStyle)
+                    _BlueRow(uc: uc, match: match, blueStyle: blueStyle),
                   ],
                 ),
               ),
+              Expanded(child: Container()),
+              IconButton(
+                icon: Icon(Icons.favorite_border),
+                onPressed: (){},
+              ),
+              SizedBox(
+                width: 12,
+              )
             ],
           )),
     );
