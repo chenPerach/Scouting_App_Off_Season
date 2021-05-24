@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/auth_service.dart';
@@ -44,7 +43,6 @@ class AuthenticationBloc
     }
     if(event is AuthForgotPassword){
       FirebaseAuthService.instance.sendPasswordResetEmail(event.email);
-
     }
   }
 }

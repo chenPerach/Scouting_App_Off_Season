@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
+import 'package:scouting_app_2/services/PrimoUserService.dart';
 
 import 'auth_service.dart';
 
@@ -58,7 +59,7 @@ class FirebaseAuthService implements AuthService {
     _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  PrimoUser toPrimoUser(User u) => PrimoUser(user: u,favorites: PrimoUserService.initial_fav);
+  PrimoUser toPrimoUser(User u) => PrimoUser(user: u,favoriteTeams: PrimoUserService.initialFav);
   @override
   void sendSignInWithEmailLink(
       {String email,
