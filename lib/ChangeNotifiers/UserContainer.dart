@@ -10,12 +10,10 @@ class UserContainer extends ChangeNotifier {
   PrimoUser _user;
   static StreamSubscription<User> _subscription;
   UserContainer() {
-    _subscription = FirebaseAuthService.instance.userChanges.listen((user) {
+    _subscription = FirebaseAuthService.instance.userChanges.listen((user) async {
       if (user == null) return;
-      _syncWithDB(user).then((value) {
-        _user = value;
-        notifyListeners();
-      });
+      _user  = await _syncWithDB(user);
+      notifyListeners();
     });
   }
   set user(PrimoUser user) {
@@ -39,7 +37,7 @@ class UserContainer extends ChangeNotifier {
     var puser = await PrimoUserService.getUser(user);
     if (puser == null) {
       puser = FirebaseAuthService.instance.toPrimoUser(user);
-      await PrimoUserService.updateUser(puser);
+      PrimoUserService.updateUser(puser).then((value) => print("finished updating!"));
     }
     return puser;
   }

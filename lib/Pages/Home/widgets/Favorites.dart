@@ -14,7 +14,7 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
-    var favorites = widget._user.user.favorites;
+    var favorites = widget._user.user.favoriteTeams;
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -23,8 +23,7 @@ class _FavoritesState extends State<Favorites> {
           leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          PrimoUserService.updateUser(widget._user.user);
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(widget._user.user);
         },
       )),
       body: Center(
@@ -47,7 +46,7 @@ class _FavoritesState extends State<Favorites> {
                   onPressed: () {
                     setState(() {
                       var user = widget._user.user;
-                      user.favorites[teamNumber] = !user.favorites[teamNumber];
+                      user.favoriteTeams[teamNumber] = !user.favoriteTeams[teamNumber];
                       widget._user.user = user;
                     });
                   },

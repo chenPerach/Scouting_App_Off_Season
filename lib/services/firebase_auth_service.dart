@@ -59,7 +59,7 @@ class FirebaseAuthService implements AuthService {
     _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  PrimoUser toPrimoUser(User u) => PrimoUser(user: u,favorites: PrimoUserService.initialFav);
+  PrimoUser toPrimoUser(User u) => PrimoUser(user: u,favoriteTeams: PrimoUserService.initialFav);
   @override
   void sendSignInWithEmailLink(
       {String email,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
@@ -32,13 +33,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeWithData(comp);
     }
 
-    if (event is HomeAddFavorite) {
-      var user = event.uc.user;
-      var n = event.favoite;
-      user.favorites[n] = !user.favorites[n];
-      event.uc.user = user;
-      await PrimoUserService.updateUser(user);
+    if (event is HomeUpdateUser) {
+      await PrimoUserService.updateUser(event.user);
     }
+
   }
   List<MatchModel> _getList(String matchType,List<MatchModel> matches){
     List<MatchModel> l = List<MatchModel>.from(matches.where((e) => e.compLevel.toLowerCase() == matchType));

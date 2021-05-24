@@ -8,6 +8,7 @@ import 'package:scouting_app_2/Pages/Home/widgets/ExpantionTile.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 
 class _HomePage extends StatelessWidget {
@@ -36,23 +37,15 @@ class _HomePage extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () async {
-                await Navigator.of(context)
+                PrimoUser user = await Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => Favorites(uc)));
+                BlocProvider.of<HomeBloc>(context).add(HomeUpdateUser(user));
+                uc.user = user; 
               }),
         ],
       ),
       body: 
       MatchList(matches: matches.quals),
-      // ListView(
-      //   children: [
-
-      //     this.matches.quals.length != 0 ? MatchesExpansionTile(title: "Qualification Matches",matches: this.matches.quals,) : Container(),
-      //     this.matches.quarter.length != 0 ? MatchesExpansionTile(title: "Quarter Finals",matches: this.matches.quarter,) : Container(),
-      //     this.matches.semi.length != 0 ? MatchesExpansionTile(title: "Semi Finals",matches: this.matches.semi,) : Container(),
-      //     this.matches.finals.length != 0 ? MatchesExpansionTile(title: "Finals",matches: this.matches.finals,) : Container(),
-      //     matches.quals.length == 0 && matches.quarter.length == 0 &&matches.semi.length == 0 &&matches.finals.length == 0 ? Text("Games haven't been uploaded yet....") : Container()
-      //   ],
-      // ),
     );
   }
 }

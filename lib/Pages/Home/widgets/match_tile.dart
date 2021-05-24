@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
+import 'package:scouting_app_2/Pages/Home/bloc/home_bloc.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 
 final Color gold = Color.fromARGB(255, 255, 215, 0);
@@ -43,21 +45,16 @@ class MatchTile extends StatelessWidget {
                 width: screenWidth * 0.05,
               ),
               Container(
-                width: screenWidth * 0.5,
+                width: 160,
                 alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _RedRow(uc: uc, match: match, redStyle: redStyle),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
-                      child: Container(
-                        color: Colors.grey,
-                        width: screenWidth * 0.4,
-                        height: 1,
-                      ),
+                    Container(
+                      color: Colors.grey,
+                      width: screenWidth * 0.4,
+                      height: 1,
                     ),
                     _BlueRow(uc: uc, match: match, blueStyle: blueStyle),
                   ],
@@ -65,12 +62,21 @@ class MatchTile extends StatelessWidget {
               ),
               Expanded(child: Container()),
               IconButton(
-                icon: Icon(Icons.favorite_border),
-                onPressed: (){},
-              ),
-              SizedBox(
-                width: 12,
-              )
+                  icon: uc.user.favoriteMatches.indexOf(match.matchNumber) == -1
+                      ? Icon(Icons.favorite_border)
+                      : Icon(Icons.favorite, color: Colors.red),
+                  onPressed: () {
+                    var user = uc.user;
+                    var i = user.favoriteMatches.indexOf(match.matchNumber);
+                    if (i == -1)
+                      user.favoriteMatches.add(match.matchNumber);
+                    else
+                      user.favoriteMatches.removeAt(i);
+                    BlocProvider.of<HomeBloc>(context)
+                        .add(HomeUpdateUser(user));
+                    uc.user = user;
+                  },
+                  padding: EdgeInsets.fromLTRB(5, 0, 15, 0)),
             ],
           )),
     );
@@ -97,13 +103,11 @@ class _BlueRow extends StatelessWidget {
         bool isfav =
             uc.user.isFavorite(match.blueAllience.teamNumbers[i]) ?? false;
 
-        Widget t = SingleChildScrollView(
-          child: Container(
-            child: Text(
-              match.blueAllience.teamNumbers[i].toString(),
-              style: isfav ? goldStyle : blueStyle,
-              textAlign: TextAlign.center,
-            ),
+        Widget t = Container(
+          child: Text(
+            match.blueAllience.teamNumbers[i].toString(),
+            style: isfav ? goldStyle : blueStyle,
+            textAlign: TextAlign.center,
           ),
         );
 

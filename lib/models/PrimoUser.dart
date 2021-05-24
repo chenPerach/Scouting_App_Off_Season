@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class PrimoUser {
   User user;
-  Map<int, bool> favorites;
-  PrimoUser({this.favorites, this.user});
-
+  bool isAdmin;
+  Map<int, bool> favoriteTeams;
+  List<int> favoriteMatches;
+  PrimoUser({this.favoriteTeams,@required this.user,this.isAdmin = false,this.favoriteMatches}){
+    this.favoriteMatches = this.favoriteMatches ?? [-1];
+  }
   bool isFavorite(int team){
-    return this.favorites[team];
+    return this.favoriteTeams[team];
   }
 }
