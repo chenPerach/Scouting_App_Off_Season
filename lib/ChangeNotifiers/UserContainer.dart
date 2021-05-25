@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
-
+//this is a test
 class UserContainer extends ChangeNotifier {
   PrimoUser _user;
   static StreamSubscription<User> _subscription;
