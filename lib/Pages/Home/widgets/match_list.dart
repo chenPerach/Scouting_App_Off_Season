@@ -8,9 +8,9 @@ class MatchList extends StatelessWidget {
   MatchList({this.matches});
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
-        itemCount: this.matches.length,
-        itemBuilder: (context, index) => MatchTile(this.matches[index]),
+    return ListView.builder(
+      itemCount: this.matches.length,
+      itemBuilder: (context, index) => MatchTile(this.matches[index]),
     );
   }
 }

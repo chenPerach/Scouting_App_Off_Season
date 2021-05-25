@@ -8,7 +8,6 @@ import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 class PrimoUserService {
-
   static AnsiPen _pen = AnsiPen()..yellow(bold: true, bg: false);
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
@@ -27,7 +26,6 @@ class PrimoUserService {
       _log("$_TAG: wasn't able to get firebase user.");
       return null;
     }
-
 
     var puser = PrimoUser(
         user: user,
@@ -78,7 +76,6 @@ class PrimoUserService {
      * changed. [remember to handle that!!!]
      */
     if (snapshot.key == "favorites") {
-
       user.favoriteTeams = Map<int, bool>.fromIterable(snapshot.value.entries,
           key: (e) => int.parse(e.key), value: (e) => e.value);
     }
@@ -89,7 +86,6 @@ class PrimoUserService {
     clearStreamSubscriptions();
     FirebaseAuthService.instance.signOut();
   }
-
 
   static void _log(String msg) {
     print(_pen(msg));

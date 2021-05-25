@@ -26,9 +26,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await Future.doWhile(() => event.uc?.user?.user?.displayName == null);
       var comp = CompotitionModel(
         finals: _getList("f", matches),
-        semi:  _getList("sf", matches),
-        quarter:_getList("qf", matches),
-        quals:  _getList("qm", matches),
+        semi: _getList("sf", matches),
+        quarter: _getList("qf", matches),
+        quals: _getList("qm", matches),
       );
       yield HomeWithData(comp);
     }
@@ -36,12 +36,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is HomeUpdateUser) {
       await PrimoUserService.updateUser(event.user);
     }
-
   }
-  List<MatchModel> _getList(String matchType,List<MatchModel> matches){
-    List<MatchModel> l = List<MatchModel>.from(matches.where((e) => e.compLevel.toLowerCase() == matchType));
-    l.sort((m1,m2) => m1.matchNumber - m2.matchNumber);
+
+  List<MatchModel> _getList(String matchType, List<MatchModel> matches) {
+    List<MatchModel> l = List<MatchModel>.from(
+        matches.where((e) => e.compLevel.toLowerCase() == matchType));
+    l.sort((m1, m2) => m1.matchNumber - m2.matchNumber);
     return l;
   }
 }
-

@@ -8,7 +8,7 @@ class HomeService {
     List matches = rawData.value;
     List<MatchModel> list = [];
     matches.forEach((element) =>
-        list.add(MatchModel.fromJson(Map<String,dynamic>.from(element))));
+        list.add(MatchModel.fromJson(Map<String, dynamic>.from(element))));
     return list;
   }
 }

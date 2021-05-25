@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/Pages/Home/bloc/home_bloc.dart';
-import 'package:scouting_app_2/Pages/Home/widgets/ExpantionTile.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
@@ -18,7 +16,7 @@ class _HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<MatchModel> lst = List.from( this.matches.quals);
+    List<MatchModel> lst = List.from(this.matches.quals);
     lst.addAll(matches.quarter);
     lst.addAll(matches.semi);
     lst.addAll(matches.finals);
@@ -26,7 +24,6 @@ class _HomePage extends StatelessWidget {
     UserContainer uc = Provider.of<UserContainer>(context);
     if (uc.user != null) uc.setUpChangeListener();
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -42,12 +39,11 @@ class _HomePage extends StatelessWidget {
                 PrimoUser user = await Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => Favorites(uc)));
                 BlocProvider.of<HomeBloc>(context).add(HomeUpdateUser(user));
-                uc.user = user; 
+                uc.user = user;
               }),
         ],
       ),
-      body: 
-      MatchList(matches: matches.quals),
+      body: MatchList(matches: matches.quals),
     );
   }
 }

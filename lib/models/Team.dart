@@ -5,11 +5,8 @@ class Team {
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(number: json["number"], nickname: json["nickname"]);
   }
-  Map<String,dynamic> toJson(){
-    return {
-      "nickname":nickname,
-      "number":number
-    };
+  Map<String, dynamic> toJson() {
+    return {"nickname": nickname, "number": number};
   }
 }
 
@@ -68,5 +65,6 @@ class TeamsConsts {
     {"nickname": "8BIT", "number": 7845},
     {"nickname": "Mariners", "number": 8223}
   ];
-  static List<Team> teams = List.generate(teams_json.length, (i) => Team.fromJson(teams_json[i]));
+  static List<Team> teams =
+      List.generate(teams_json.length, (i) => Team.fromJson(teams_json[i]));
 }

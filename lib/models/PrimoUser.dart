@@ -6,10 +6,14 @@ class PrimoUser {
   bool isAdmin;
   Map<int, bool> favoriteTeams;
   List<int> favoriteMatches;
-  PrimoUser({this.favoriteTeams,@required this.user,this.isAdmin = false,this.favoriteMatches}){
+  PrimoUser(
+      {this.favoriteTeams,
+      @required this.user,
+      this.isAdmin = false,
+      this.favoriteMatches}) {
     this.favoriteMatches = this.favoriteMatches ?? [-1];
   }
-  bool isFavorite(int team){
+  bool isFavorite(int team) {
     return this.favoriteTeams[team];
   }
 }

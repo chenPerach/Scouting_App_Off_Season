@@ -17,40 +17,39 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       appBar: AppBar(
         title: Text("forgot password"),
       ),
-      body:  Form(
-          key: key,
-          child: Center(
-            child: Container(
-              width: 350,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "password reset",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  SizedBox(height: 8),
-                  FormEmailField(
-                    controller: email,
-                  ),
-                  SizedBox(height: 4),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (key.currentState.validate()) {
-                        var bloc = BlocProvider.of<AuthenticationBloc>(context);
-                        bloc.add(AuthForgotPassword(email: email.text));
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text('reset'),
-                  ),
-
-                ],
-              ),
+      body: Form(
+        key: key,
+        child: Center(
+          child: Container(
+            width: 350,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "password reset",
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                SizedBox(height: 8),
+                FormEmailField(
+                  controller: email,
+                ),
+                SizedBox(height: 4),
+                ElevatedButton(
+                  onPressed: () {
+                    if (key.currentState.validate()) {
+                      var bloc = BlocProvider.of<AuthenticationBloc>(context);
+                      bloc.add(AuthForgotPassword(email: email.text));
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text('reset'),
+                ),
+              ],
             ),
           ),
         ),
+      ),
     );
   }
 

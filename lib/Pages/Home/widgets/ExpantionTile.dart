@@ -8,7 +8,7 @@ import 'package:scouting_app_2/models/matchModel.dart';
 class MatchesExpansionTile extends StatelessWidget {
   final String title;
   final List<MatchModel> matches;
-  MatchesExpansionTile({this.matches,this.title});
+  MatchesExpansionTile({this.matches, this.title});
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -17,7 +17,7 @@ class MatchesExpansionTile extends StatelessWidget {
       title: Text(title),
       children: [
         Container(
-          width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             height: min(98.0 * this.matches.length,
                 MediaQuery.of(context).size.height - 150),
             child: MatchList(matches: this.matches)),

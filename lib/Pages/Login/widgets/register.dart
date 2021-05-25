@@ -5,7 +5,6 @@ import 'package:scouting_app_2/Pages/Login/widgets/CustomTextFormFields.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/ExceptionWiget.dart';
 import 'package:scouting_app_2/services/auth_service.dart';
 
-
 class Register extends StatefulWidget {
   final AuthException exception;
   Register({this.exception});
@@ -48,9 +47,9 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 8),
                 FormNameField(controller: name),
                 exception == null ? Container() : SizedBox(height: 8),
-                  exception == null
-                      ? Container()
-                      : AuthErrorWidget(width: width, message: exception.message),
+                exception == null
+                    ? Container()
+                    : AuthErrorWidget(width: width, message: exception.message),
                 ElevatedButton(
                   child: Text("Register"),
                   onPressed: () {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
@@ -55,7 +54,8 @@ class _LoginState extends State<Login> {
                   exception == null ? Container() : SizedBox(height: 8),
                   exception == null
                       ? Container()
-                      : AuthErrorWidget(width: width, message: exception.message),
+                      : AuthErrorWidget(
+                          width: width, message: exception.message),
                   SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +78,8 @@ class _LoginState extends State<Login> {
                           // Validate returns true if the form is valid, or false otherwise.
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ForgotPassword()),
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPassword()),
                           );
                         },
                       )

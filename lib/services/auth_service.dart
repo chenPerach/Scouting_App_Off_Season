@@ -4,7 +4,8 @@ import 'package:scouting_app_2/models/PrimoUser.dart';
 
 abstract class AuthService {
   Future<PrimoUser> signInWithEmailAndPassword(String email, String password);
-  Future<PrimoUser> createUserWithEmailAndPassword(String email, String password);
+  Future<PrimoUser> createUserWithEmailAndPassword(
+      String email, String password);
   void sendPasswordResetEmail(String email);
   Future<PrimoUser> signInWithEmailAndLink({String email, String link});
   Future<bool> isSignInWithEmailLink(String link);
@@ -26,5 +27,5 @@ abstract class AuthService {
 
 class AuthException implements Exception {
   String message, happendOn, description;
-  AuthException({this.message,this.happendOn,this.description});
+  AuthException({this.message, this.happendOn, this.description});
 }

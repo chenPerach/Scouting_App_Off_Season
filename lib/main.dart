@@ -24,9 +24,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_)=> UserContainer())
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => UserContainer())],
       child: MaterialApp(
         theme: ThemeData.dark(),
         initialRoute: FirebaseInitilaize.route,
@@ -34,11 +32,12 @@ class _AppState extends State<App> {
       ),
     );
   }
+
   @override
-    void dispose() {
-      UserContainer.cancelSubscription();
-      super.dispose();
-    }
+  void dispose() {
+    UserContainer.cancelSubscription();
+    super.dispose();
+  }
 }
 
 class FirebaseInitilaize extends StatelessWidget {
@@ -54,9 +53,9 @@ class FirebaseInitilaize extends StatelessWidget {
           return StreamBuilder(
             stream: FirebaseAuthService.instance.authState(),
             builder: (context, snapshot) {
-              if(snapshot.data == null){
+              if (snapshot.data == null) {
                 return LoginScreen();
-              }else {
+              } else {
                 return Home();
               }
             },
@@ -67,8 +66,6 @@ class FirebaseInitilaize extends StatelessWidget {
     );
   }
 }
-
-
 
 class _WaitingApp extends StatelessWidget {
   @override

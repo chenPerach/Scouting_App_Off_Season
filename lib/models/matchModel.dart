@@ -19,14 +19,16 @@ class MatchModel {
       compLevel: json["comp_level"],
       matchNumber: json["match_number"],
       time: DateTime.fromMillisecondsSinceEpoch(json["time"]),
-      redAllience: Allience.fromJson(List<String>.from(json["alliances"]["red"]["team_keys"]), "red"),
-      blueAllience: Allience.fromJson(List<String>.from(json["alliances"]["blue"]["team_keys"]), "blue"),
+      redAllience: Allience.fromJson(
+          List<String>.from(json["alliances"]["red"]["team_keys"]), "red"),
+      blueAllience: Allience.fromJson(
+          List<String>.from(json["alliances"]["blue"]["team_keys"]), "blue"),
     );
   }
-  String toString(){
-    return "match: $matchNumber \n" + 
-            "number: $compLevel \n" +
-            "blue ${blueAllience.teamNumbers} \n" +
-            "red ${redAllience.teamNumbers}";
+  String toString() {
+    return "match: $matchNumber \n" +
+        "number: $compLevel \n" +
+        "blue ${blueAllience.teamNumbers} \n" +
+        "red ${redAllience.teamNumbers}";
   }
 }

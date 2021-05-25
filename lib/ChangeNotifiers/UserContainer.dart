@@ -5,14 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
+
 //this is a test
 class UserContainer extends ChangeNotifier {
   PrimoUser _user;
   static StreamSubscription<User> _subscription;
   UserContainer() {
-    _subscription = FirebaseAuthService.instance.userChanges.listen((user) async {
+    _subscription =
+        FirebaseAuthService.instance.userChanges.listen((user) async {
       if (user == null) return;
-      _user  = await _syncWithDB(user);
+      _user = await _syncWithDB(user);
       notifyListeners();
     });
   }
@@ -22,21 +24,23 @@ class UserContainer extends ChangeNotifier {
   }
 
   void setUpChangeListener() {
-    PrimoUserService.addListener(_user,(e) {
-      PrimoUserService.handleSnapShot(_user, e.snapshot); 
+    PrimoUserService.addListener(_user, (e) {
+      PrimoUserService.handleSnapShot(_user, e.snapshot);
       notifyListeners();
     });
   }
 
   PrimoUser get user => this._user;
-  static void cancelSubscription(){
+  static void cancelSubscription() {
     _subscription.cancel();
   }
+
   Future<PrimoUser> _syncWithDB(User user) async {
     var puser = await PrimoUserService.getUser(user);
     if (puser == null) {
       puser = FirebaseAuthService.instance.toPrimoUser(user);
-      PrimoUserService.updateUser(puser).then((value) => print("finished updating!"));
+      PrimoUserService.updateUser(puser)
+          .then((value) => print("finished updating!"));
     }
     return puser;
   }
