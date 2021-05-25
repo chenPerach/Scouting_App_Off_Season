@@ -1,15 +1,15 @@
-import 'dart:async';
-
-import 'package:ansicolor/ansicolor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:scouting_app_2/models/Team.dart';
-import 'package:scouting_app_2/services/firebase_auth_service.dart';
+import 'package:flutter/cupertino.dart';
 
 class PrimoUser {
   User user;
-  Map<int, bool> favorites;
-  PrimoUser({this.favorites, this.user});
+  bool isAdmin;
+  Map<int, bool> favoriteTeams;
+  List<int> favoriteMatches;
+  PrimoUser({this.favoriteTeams,@required this.user,this.isAdmin = false,this.favoriteMatches}){
+    this.favoriteMatches = this.favoriteMatches ?? [-1];
+  }
+  bool isFavorite(int team){
+    return this.favoriteTeams[team];
+  }
 }
-
-

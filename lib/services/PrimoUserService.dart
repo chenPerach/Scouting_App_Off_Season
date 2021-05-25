@@ -8,13 +8,16 @@ import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 
 class PrimoUserService {
-  static AnsiPen pen = AnsiPen()..yellow(bold: true,bg: false);
+
+  static AnsiPen _pen = AnsiPen()..yellow(bold: true, bg: false);
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
       FirebaseDatabase.instance.reference().child("users");
-  static List<StreamSubscription> streamSubs = [];
-  static Map<int, bool> initial_fav = Map.fromIterable(TeamsConsts.teams_json,
-      key: (e) => e["number"], value: (e) => false);
+  static List<StreamSubscription> _streamSubs = [];
+  static final Map<int, bool> initialFav = Map.fromIterable(
+      TeamsConsts.teams_json,
+      key: (e) => e["number"],
+      value: (e) => false);
 
   static Future<PrimoUser> getUser(User user) async {
     _log("$_TAG: getting user from firebase");
@@ -25,36 +28,47 @@ class PrimoUserService {
       return null;
     }
 
-    return PrimoUser(
+
+    var puser = PrimoUser(
         user: user,
-        favorites: Map<int, bool>.fromIterable(
-            Map<String, bool>.from(snapshot.value["favorites"]).entries,
+        favoriteTeams: Map<int, bool>.fromIterable(
+            Map<String, bool>.from(snapshot.value["favorite_teams"]).entries,
             key: (e) => int.parse(e.key),
-            value: (e) => e.value));
+            value: (e) => e.value),
+        isAdmin: snapshot.value["admin"]);
+    puser.favoriteMatches =
+        List<int>.from(snapshot.value["favorite_matches"] ?? [-1]);
+    return puser;
   }
 
-  static Future<void> addUser(PrimoUser user) async {
+  static Future<void> updateUser(PrimoUser user) async {
     _log("$_TAG: adding user to data base");
     var _userRef = _usersRef.child(user.user.uid);
-    if (user.user.displayName == null) return null;
-    await _userRef.update({
+    if (user.user.displayName == null) return;
+    _userRef.update({
       "name": user.user.displayName,
-      "favorites": Map<String, bool>.fromIterable(user.favorites.entries,
-          key: (item) => item.key.toString(), value: (e) => e.value)
+      "favorite_teams": Map<String, bool>.fromIterable(
+          user.favoriteTeams.entries,
+          key: (item) => item.key.toString(),
+          value: (e) => e.value),
+      "admin": user.isAdmin,
     });
+    if (user.favoriteMatches.isNotEmpty)
+      _userRef.child("favorite_matches").set(user.favoriteMatches);
   }
 
   static addListener(PrimoUser user, void onData(Event e),
       {void onError(), void onDone()}) {
     var _userRef = _usersRef.child(user.user.uid);
-    streamSubs.add(_userRef.onChildChanged
+
+    _streamSubs.add(_userRef.onChildChanged
         .listen(onData, onError: onError, onDone: onDone));
   }
 
   static void clearStreamSubscriptions() {
     _log("$_TAG: clearing stream subscriptions");
-    streamSubs.forEach((e) => e.cancel());
-    streamSubs = [];
+    _streamSubs.forEach((e) => e.cancel());
+    _streamSubs = [];
   }
 
   static void handleSnapShot(PrimoUser user, DataSnapshot snapshot) {
@@ -64,7 +78,8 @@ class PrimoUserService {
      * changed. [remember to handle that!!!]
      */
     if (snapshot.key == "favorites") {
-      user.favorites = Map<int, bool>.fromIterable(snapshot.value.entries,
+
+      user.favoriteTeams = Map<int, bool>.fromIterable(snapshot.value.entries,
           key: (e) => int.parse(e.key), value: (e) => e.value);
     }
   }
@@ -74,7 +89,9 @@ class PrimoUserService {
     clearStreamSubscriptions();
     FirebaseAuthService.instance.signOut();
   }
-  static void _log(String msg){
-    print(pen(msg));
+
+
+  static void _log(String msg) {
+    print(_pen(msg));
   }
 }
