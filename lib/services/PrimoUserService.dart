@@ -56,7 +56,7 @@ class PrimoUserService {
   }
 
   static addListener(PrimoUser user, void onData(Event e),
-      {void onError(), void onDone()}) {
+      {void onError(msg), void onDone()}) {
     var _userRef = _usersRef.child(user.user.uid);
 
     _streamSubs.add(_userRef.onChildChanged

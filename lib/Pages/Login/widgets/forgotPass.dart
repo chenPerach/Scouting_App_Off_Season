@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/CustomTextFormFields.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -38,7 +36,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ElevatedButton(
                   onPressed: () {
                     if (key.currentState.validate()) {
-                      Navigator.pop(context,email.text);
+                      Navigator.pop(context, email.text);
                     }
                   },
                   child: Text('reset'),

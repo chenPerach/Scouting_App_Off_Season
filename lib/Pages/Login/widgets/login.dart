@@ -81,7 +81,9 @@ class _LoginState extends State<Login> {
                             MaterialPageRoute(
                                 builder: (context) => ForgotPassword()),
                           );
-                          var bloc = BlocProvider.of<AuthenticationBloc>(context).add(AuthForgotPassword(email: email));
+
+                          BlocProvider.of<AuthenticationBloc>(context)
+                              .add(AuthForgotPassword(email: email));
                         },
                       )
                     ],
