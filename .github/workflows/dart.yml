@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: dart pub get
         
-      - uses: jeanluc243/Flutter-Deployment@0.1  
-      
-      - name: Flutter Deployment
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
       #   run: dart format --output=none --set-exit-if-changed .
