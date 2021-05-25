@@ -4,7 +4,7 @@ import 'package:scouting_app_2/Pages/nav_drawer.dart';
 
 class GameForm extends StatelessWidget {
   static const String route = "/game_form";
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
