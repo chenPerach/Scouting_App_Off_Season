@@ -74,13 +74,14 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         child: Text("Forgot password"),
-                        onPressed: () {
+                        onPressed: () async {
                           // Validate returns true if the form is valid, or false otherwise.
-                          Navigator.push(
+                          String email = await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ForgotPassword()),
                           );
+                          var bloc = BlocProvider.of<AuthenticationBloc>(context).add(AuthForgotPassword(email: email));
                         },
                       )
                     ],

@@ -38,9 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ElevatedButton(
                   onPressed: () {
                     if (key.currentState.validate()) {
-                      var bloc = BlocProvider.of<AuthenticationBloc>(context);
-                      bloc.add(AuthForgotPassword(email: email.text));
-                      Navigator.pop(context);
+                      Navigator.pop(context,email.text);
                     }
                   },
                   child: Text('reset'),
