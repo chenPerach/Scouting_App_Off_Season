@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2/Pages/GameForm/game_form.dart';
 import 'package:scouting_app_2/main.dart';
 
 class RouteGenerator {
@@ -8,6 +9,8 @@ class RouteGenerator {
     switch (settings.name) {
       case FirebaseInitilaize.route:
         return MaterialPageRoute(builder: (_) => FirebaseInitilaize());
+      case GameForm.route:
+        return MaterialPageRoute(builder: (_) => GameForm());
       default:
     }
     return null;

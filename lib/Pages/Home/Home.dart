@@ -6,6 +6,7 @@ import 'package:scouting_app_2/Pages/Home/bloc/home_bloc.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
+import 'package:scouting_app_2/Pages/nav_drawer.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 
 import 'package:scouting_app_2/models/matchModel.dart';
@@ -24,6 +25,7 @@ class _HomePage extends StatelessWidget {
     UserContainer uc = Provider.of<UserContainer>(context);
     if (uc.user != null) uc.setUpChangeListener();
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
