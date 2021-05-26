@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/bloc/authentication_bloc.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/login.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/register.dart';
+import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 
 class ChangePage extends StatelessWidget {
   ChangePage({
@@ -26,11 +27,7 @@ class ChangePage extends StatelessWidget {
         bloc: context.read<AuthenticationBloc>(),
         builder: (context, state) {
           if (state is AuthLoading) {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return Waiting();
           }
           if (state is AuthError) {
             var e = state.exception;
@@ -43,7 +40,7 @@ class ChangePage extends StatelessWidget {
               ],
             );
           }
-          if (state is AuthenticationInitial) {
+          if (state is AuthenticationInitial || state is Authenticated) {
             return PageView(
               scrollDirection: Axis.horizontal,
               controller: controller,
@@ -53,7 +50,8 @@ class ChangePage extends StatelessWidget {
               ],
             );
           }
-          return null;
+          
+          return Waiting();
         },
       ),
     );

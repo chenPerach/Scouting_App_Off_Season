@@ -13,7 +13,7 @@ class UserContainer extends ChangeNotifier {
   UserContainer() {
     _subscription =
         FirebaseAuthService.instance.userChanges.listen((user) async {
-      if (user == null) return;
+      if (user == null || user.displayName == null) return;
       _user = await _syncWithDB(user);
       notifyListeners();
     });

@@ -21,7 +21,13 @@ class PrimoUserService {
   static Future<PrimoUser> getUser(User user) async {
     _log("$_TAG: getting user from firebase");
     var _userRef = _usersRef.child(user.uid);
-    var snapshot = await _userRef.once();
+    var snapshot = await _userRef.once()
+    .catchError((error, stackTrace) {
+      print(error);
+      print(stackTrace.toString());
+      return null;
+    });
+    _log("$_TAG: aquired snapshot from data base");
     if (snapshot.value == null) {
       _log("$_TAG: wasn't able to get firebase user.");
       return null;
@@ -43,16 +49,19 @@ class PrimoUserService {
     _log("$_TAG: adding user to data base");
     var _userRef = _usersRef.child(user.user.uid);
     if (user.user.displayName == null) return;
-    _userRef.update({
+    await _userRef.update({
       "name": user.user.displayName,
       "favorite_teams": Map<String, bool>.fromIterable(
           user.favoriteTeams.entries,
           key: (item) => item.key.toString(),
           value: (e) => e.value),
       "admin": user.isAdmin,
+    }).catchError((error, stackTrace) {
+      _log("$_TAG: wasn't able to get user");
+      _log(stackTrace.toString());
     });
     if (user.favoriteMatches.isNotEmpty)
-      _userRef.child("favorite_matches").set(user.favoriteMatches);
+      await _userRef.child("favorite_matches").set(user.favoriteMatches);
   }
 
   static addListener(PrimoUser user, void onData(Event e),
@@ -86,7 +95,9 @@ class PrimoUserService {
     clearStreamSubscriptions();
     FirebaseAuthService.instance.signOut();
   }
-
+  static void add_subscription(StreamSubscription sub){
+    _streamSubs.add(sub);
+  }
   static void _log(String msg) {
     print(_pen(msg));
   }
