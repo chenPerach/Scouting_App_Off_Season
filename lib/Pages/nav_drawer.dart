@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
-import 'package:scouting_app_2/Pages/GameForm/game_form.dart';
+import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
 import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 

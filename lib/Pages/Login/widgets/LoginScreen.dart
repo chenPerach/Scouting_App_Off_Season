@@ -50,7 +50,7 @@ class ChangePage extends StatelessWidget {
               ],
             );
           }
-          
+
           return Waiting();
         },
       ),

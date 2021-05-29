@@ -21,8 +21,7 @@ class PrimoUserService {
   static Future<PrimoUser> getUser(User user) async {
     _log("$_TAG: getting user from firebase");
     var _userRef = _usersRef.child(user.uid);
-    var snapshot = await _userRef.once()
-    .catchError((error, stackTrace) {
+    var snapshot = await _userRef.once().catchError((error, stackTrace) {
       print(error);
       print(stackTrace.toString());
       return null;
@@ -95,9 +94,11 @@ class PrimoUserService {
     clearStreamSubscriptions();
     FirebaseAuthService.instance.signOut();
   }
-  static void add_subscription(StreamSubscription sub){
+
+  static void addSubscription(StreamSubscription sub) {
     _streamSubs.add(sub);
   }
+
   static void _log(String msg) {
     print(_pen(msg));
   }

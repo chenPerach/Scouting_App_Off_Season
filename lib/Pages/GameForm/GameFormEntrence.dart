@@ -6,10 +6,16 @@ class GameForm extends StatelessWidget {
   static const String route = "/game_form";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext c) {
     return Scaffold(
       drawer: NavDrawer(),
-      body: Center(child: Text("Welcome to the Game Form Page")),
+      body: Center(
+          child: Container(
+        child: ElevatedButton(
+            onPressed: () =>
+                Navigator.of(c).push(MaterialPageRoute(builder: (_) => null)),
+            child: Text("Start Scouting")),
+      )),
     );
   }
 }
