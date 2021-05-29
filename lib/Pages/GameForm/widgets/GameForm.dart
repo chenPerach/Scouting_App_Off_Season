@@ -1,32 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
-import 'package:scouting_app_2/Pages/GameForm/widgets/GameFormWrapper.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
+import 'package:scouting_app_2/Utils/BlocCreator.dart';
 
 class GameFormBlocCreator extends StatelessWidget {
   @override
   Widget build(BuildContext c) {
     return WillPopScope(
       onWillPop: () => _onWillPop(c),
-      child: BlocProvider(
+      child: PageBlocCreator<GameformEvent,GameformState,GameformBloc>(
         create: (_) => GameformBloc(),
-        child: Builder(
-          builder: (context) {
-            return BlocListener(
-              listener: (context, state) {},
-              bloc: BlocProvider.of<GameformBloc>(context),
-              child: BlocBuilder(
-                bloc: BlocProvider.of<GameformBloc>(context),
-                builder: (context, state) {
-                  return GameFormMenu(index: 1);
-                },
-              ),
-            );
-          },
-        ),
+        builder: _builder,
+        listener: (context, state) {},
       ),
     );
+  }
+
+  Widget _builder(BuildContext context, GameformState state) {
+    if (state is GameformPage) return GameFormBottomNavPage(index: state.index);
+    if (state is GameformInitial) return GameFormBottomNavPage(index: 0);
+    return null;
   }
 
   Future<bool> _onWillPop(BuildContext c) async {

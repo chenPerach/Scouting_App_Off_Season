@@ -13,6 +13,7 @@ class GameformBloc extends Bloc<GameformEvent, GameformState> {
   Stream<GameformState> mapEventToState(
     GameformEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if(event is GameFormMoveTo)
+      yield GameformPage(event.index);
   }
 }

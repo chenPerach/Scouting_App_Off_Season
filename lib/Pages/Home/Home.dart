@@ -7,6 +7,7 @@ import 'package:scouting_app_2/Pages/Home/widgets/Favorites.dart';
 import 'package:scouting_app_2/Pages/Home/widgets/match_list.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 import 'package:scouting_app_2/Pages/nav_drawer.dart';
+import 'package:scouting_app_2/Utils/BlocCreator.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 
 import 'package:scouting_app_2/models/matchModel.dart';
@@ -58,38 +59,25 @@ class Home extends StatelessWidget {
 class _BlocHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
+    return PageBlocCreator<HomeEvent, HomeState, HomeBloc>(
       create: (_) => HomeBloc(),
-      child: BlocListener<HomeBloc, HomeState>(
-        listener: (context, state) {},
-        child: _BlocBuilder(),
-      ),
+      builder: _build,
+      listener: (context, state) {},
     );
   }
-}
 
-class _BlocBuilder extends StatelessWidget {
-  const _BlocBuilder({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoading) {
-          return Waiting();
-        }
-        if (state is HomeInitial) {
-          BlocProvider.of<HomeBloc>(context)
-              .add(HomeFetchGames(Provider.of<UserContainer>(context)));
-          return Waiting();
-        }
-        if (state is HomeWithData) {
-          return _HomePage(state.matches);
-        }
-        return null;
-      },
-    );
+  Widget _build(BuildContext context, HomeState state) {
+    if (state is HomeLoading) {
+      return Waiting();
+    }
+    if (state is HomeInitial) {
+      BlocProvider.of<HomeBloc>(context)
+          .add(HomeFetchGames(Provider.of<UserContainer>(context)));
+      return Waiting();
+    }
+    if (state is HomeWithData) {
+      return _HomePage(state.matches);
+    }
+    return null;
   }
 }
