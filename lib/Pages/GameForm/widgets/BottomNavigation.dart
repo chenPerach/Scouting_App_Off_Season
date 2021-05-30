@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 
 /// this class handles the bottom [navigation menu] view
 
@@ -11,7 +12,7 @@ class GameFormBottomNavPage extends StatelessWidget {
 
   GameFormBottomNavPage({@required this.index});
   final pages = [
-    GameFormExamplePage(),
+    MatchData(),
     GameFormExamplePage(),
     GameFormExamplePage(),
   ];
