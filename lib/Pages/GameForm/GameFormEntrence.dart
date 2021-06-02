@@ -13,8 +13,8 @@ class GameForm extends StatelessWidget {
       body: Center(
           child: Container(
         child: ElevatedButton(
-            onPressed: () =>
-                Navigator.of(c).push(MaterialPageRoute(builder: (_) => GameFormBlocCreator())),
+            onPressed: () => Navigator.of(c)
+                .push(MaterialPageRoute(builder: (_) => GameFormBlocCreator())),
             child: Text("Start Scouting")),
       )),
     );

@@ -1,29 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:scouting_app_2/models/AllianceModel.dart';
 
-class Match {
+class ScoutingMatch {
   CompLevel compLevel;
   int matchNumber;
   int teamNumber;
   String alliance;
-  Match({
+  ScoutingMatch({
     @required this.compLevel,
     @required this.matchNumber,
     @required this.teamNumber,
     @required this.alliance,
   });
 
-  factory Match.formJson(Map<String, dynamic> json) {
-    return Match(
-      compLevel: CompLevel.simple(json["comp_level"]),
-      matchNumber: json["match_number"],
-      teamNumber: json["team_number"],
-      alliance: json["alliance"]
-    );
+  factory ScoutingMatch.formJson(Map<String, dynamic> json) {
+    return ScoutingMatch(
+        compLevel: CompLevel.simple(json["comp_level"]),
+        matchNumber: json["match_number"],
+        teamNumber: json["team_number"],
+        alliance: json["alliance"]);
   }
-  factory Match.empty() {
-    return Match(
+  factory ScoutingMatch.empty() {
+    return ScoutingMatch(
       compLevel: CompLevel.simple("qm"),
       matchNumber: 0,
       teamNumber: 4586,
@@ -34,10 +32,13 @@ class Match {
   /// creates a copy of this object
   /// the [=] parameter only passes a [reference] around
   /// and does not create a new member in memory
-  Match clone() {
-    return Match(
-        compLevel: CompLevel.simple(this.compLevel.compLevel),
-        matchNumber: this.matchNumber);
+  ScoutingMatch clone() {
+    return ScoutingMatch(
+      compLevel: CompLevel.simple(this.compLevel.compLevel),
+      matchNumber: this.matchNumber,
+      teamNumber: this.teamNumber,
+      alliance: this.alliance,
+    );
   }
 }
 
@@ -68,9 +69,9 @@ class CompLevel {
   }
   @override
   bool operator ==(Object other) {
-    // ignore: test_types_in_equals
-    return (other as CompLevel).compLevel == this.compLevel &&
-        (other as CompLevel).compLevelDetailed == this.compLevelDetailed;
+    if(identical(this,other)) return true;
+    return other is CompLevel && other.compLevel == this.compLevel &&
+        other.compLevelDetailed == this.compLevelDetailed;
   }
 
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:scouting_app_2/models/Match/Match.dart';
+import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 
 part 'gameform_event.dart';
 part 'gameform_state.dart';

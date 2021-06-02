@@ -5,6 +5,7 @@ import 'package:scouting_app_2/Pages/Login/widgets/login.dart';
 import 'package:scouting_app_2/Pages/Login/widgets/register.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
+
 class LoginScreen extends StatelessWidget {
   static const String route = '/login';
   final PageController controller = PageController(initialPage: 0);
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
     }
     if (state is AuthError) {
       var e = state.exception;
-      
+
       return PageView(
         scrollDirection: Axis.horizontal,
         controller: controller,
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
           Login(exception: e.happendOn == "LOGIN" ? e : null),
           Register(exception: e.happendOn == "REGISTER" ? e : null),
         ],
-      ) ;
+      );
     }
     if (state is AuthenticationInitial || state is Authenticated) {
       return PageView(
