@@ -5,23 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
+import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 
-class MatchData extends StatelessWidget {
-  final int pageNumber = 0;
+class MatchData extends StatefulWidget {
   ScoutingMatch match;
-  final Key _key = GlobalKey<FormState>();
-  final List<CompLevel> _matchTypes = [
-    CompLevel.simple("qm"),
-    CompLevel.simple("qf"),
-    CompLevel.simple("sf"),
-    CompLevel.simple("f"),
-  ];
-  final List<String> _allianceTypes = ["red", "blue"];
+
   MatchData(ScoutingMatch match) {
-    this.match = match;
-    if (this.match == null) {
+    if (match == null) {
       var closestMatch = getMatchByTime(DateTime.now());
       this.match = ScoutingMatch(
           compLevel: CompLevel.simple(closestMatch.compLevel),
@@ -30,11 +22,43 @@ class MatchData extends StatelessWidget {
           alliance: "blue");
     }
   }
+  MatchModel getMatchByTime(DateTime time) {
+    MatchModel closestGame = HomeService.matchList.first;
+    Duration dT = time.difference(HomeService.matchList.first.time).abs();
+    for (var game in HomeService.matchList) {
+      var difference = time.difference(game.time).abs();
+      if (difference.compareTo(dT) <= 0) {
+        closestGame = game;
+        dT = difference;
+      }
+    }
+    return closestGame;
+  }
+
+  @override
+  _MatchDataState createState() => _MatchDataState();
+}
+
+class _MatchDataState extends State<MatchData> {
+  final int pageNumber = 0;
+
+  final Key _key = GlobalKey<FormState>();
+
+  final List<CompLevel> _matchTypes = [
+    CompLevel.simple("qm"),
+    CompLevel.simple("qf"),
+    CompLevel.simple("sf"),
+    CompLevel.simple("f"),
+  ];
+
+  final List<String> _allianceTypes = ["red", "blue"];
 
   @override
   Widget build(BuildContext context) {
     var model = HomeService.matchList
-        .where((e) => e.matchNumber == match.matchNumber && e.compLevel == match.compLevel.compLevel)
+        .where((e) =>
+            e.matchNumber == widget.match.matchNumber &&
+            e.compLevel == widget.match.compLevel.compLevel)
         .first;
     return Form(
       key: _key,
@@ -63,7 +87,7 @@ class MatchData extends StatelessWidget {
               child: Text("Match Type"),
               dropDown: DropdownButtonFormField<CompLevel>(
                 hint: Text("select game type"),
-                value: match.compLevel,
+                value: widget.match.compLevel,
                 items: List<DropdownMenuItem<CompLevel>>.generate(
                   _matchTypes.length,
                   (i) => DropdownMenuItem(
@@ -72,8 +96,30 @@ class MatchData extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) {
-                  var m = match.clone();
+                  var m = widget.match.clone();
                   m.compLevel = value;
+                  BlocProvider.of<GameformBloc>(context)
+                      .add(GameFormUpdate(pageNumber, m));
+                },
+              ),
+            ),
+            _DropDownRow(
+              child: Text("Match Number"),
+              dropDown: DropdownButtonFormField<int>(
+                hint: Text("select game type"),
+                value: widget.match.matchNumber,
+                items: List<DropdownMenuItem<int>>.generate(
+                  HomeService.matchList
+                      .where((e) => e.compLevel == "qm")
+                      .length,
+                  (i) => DropdownMenuItem(
+                    child: Text((i + 1).toString()),
+                    value: i + 1,
+                  ),
+                ),
+                onChanged: (value) {
+                  var m = widget.match.clone();
+                  m.matchNumber = value;
                   BlocProvider.of<GameformBloc>(context)
                       .add(GameFormUpdate(pageNumber, m));
                 },
@@ -83,7 +129,7 @@ class MatchData extends StatelessWidget {
               child: Text("Allience"),
               dropDown: DropdownButtonFormField<String>(
                 hint: Text("select Alliance"),
-                value: match.alliance,
+                value: widget.match.alliance,
                 items: List<DropdownMenuItem<String>>.generate(
                   _allianceTypes.length,
                   (i) => DropdownMenuItem(
@@ -97,9 +143,8 @@ class MatchData extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) {
-                  var m = match.clone();
+                  var m = widget.match.clone();
                   m.alliance = value;
-
                   BlocProvider.of<GameformBloc>(context)
                       .add(GameFormUpdate(pageNumber, m));
                 },
@@ -109,26 +154,24 @@ class MatchData extends StatelessWidget {
               child: Text("Team"),
               dropDown: DropdownButtonFormField<int>(
                 hint: Text("select Team"),
-                value: match.teamNumber,
+                value: widget.match.teamNumber,
                 items: List<DropdownMenuItem<int>>.generate(
-                  3,
+                  TeamsConsts.teams.length,
                   (i) => DropdownMenuItem(
                     child: Container(
-                      child: Text(
-                        (match.alliance == "red"
-                                ? model.redAllience.teamNumbers[i]
-                                : model.blueAllience.teamNumbers[i])
-                            .toString(),
-                      style: TextStyle(color: match.alliance == "red" ? Colors.red : Colors.blue),
+                      child: Row(
+                        children: [
+                          Text(TeamsConsts.teams[i].number.toString()),
+                          SizedBox(width: 5),
+                          Text(TeamsConsts.teams[i].nickname)
+                        ],
                       ),
                     ),
-                    value: match.alliance == "red"
-                        ? model.redAllience.teamNumbers[i]
-                        : model.blueAllience.teamNumbers[i],
+                    value: TeamsConsts.teams[i].number,
                   ),
                 ),
                 onChanged: (value) {
-                  var m = match.clone();
+                  var m = widget.match.clone();
                   m.teamNumber = value;
                   BlocProvider.of<GameformBloc>(context)
                       .add(GameFormUpdate(pageNumber, m));
@@ -140,31 +183,8 @@ class MatchData extends StatelessWidget {
       ),
     );
   }
+  
 
-  MatchModel getMatchByTime(DateTime time) {
-    MatchModel closestGame = HomeService.matchList.first;
-    Duration dT = time.difference(HomeService.matchList.first.time).abs();
-    for (var game in HomeService.matchList) {
-      var difference = time.difference(game.time).abs();
-      if (difference.compareTo(dT) <= 0) {
-        closestGame = game;
-        dT = difference;
-      }
-    }
-    return closestGame;
-  }
-  ScoutingMatch _changeMatchNumber(ScoutingMatch match,int number){
-    var m = match.clone();
-    var model = HomeService.matchList
-        .where((e) => e.matchNumber == match.matchNumber && e.compLevel == match.compLevel.compLevel)
-        .first;
-    return ScoutingMatch(
-      matchNumber: number,
-      alliance: match.alliance,
-      teamNumber: match.alliance == "red" ? model.redAllience.teamNumbers[0] : model.blueAllience.teamNumbers[0], 
-      compLevel: CompLevel.simple(model.compLevel),
-    );
-  }
 }
 
 class _DropDownRow extends StatelessWidget {
