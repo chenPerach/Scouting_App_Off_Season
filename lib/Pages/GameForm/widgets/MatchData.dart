@@ -20,6 +20,8 @@ class MatchData extends StatefulWidget {
           matchNumber: closestMatch.matchNumber,
           teamNumber: closestMatch.blueAllience.teamNumbers[0],
           alliance: "blue");
+    } else {
+      this.match = match;
     }
   }
   MatchModel getMatchByTime(DateTime time) {
@@ -55,11 +57,11 @@ class _MatchDataState extends State<MatchData> {
 
   @override
   Widget build(BuildContext context) {
-    var model = HomeService.matchList
-        .where((e) =>
-            e.matchNumber == widget.match.matchNumber &&
-            e.compLevel == widget.match.compLevel.compLevel)
-        .first;
+    // var model = HomeService.matchList
+    //     .where((e) =>
+    //         e.matchNumber == widget.match.matchNumber &&
+    //         e.compLevel == widget.match.compLevel.compLevel)
+    //     .first;
     return Form(
       key: _key,
       child: Center(
@@ -183,8 +185,6 @@ class _MatchDataState extends State<MatchData> {
       ),
     );
   }
-  
-
 }
 
 class _DropDownRow extends StatelessWidget {
@@ -193,11 +193,13 @@ class _DropDownRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(width: 10),
         child,
+        SizedBox(width: 15),
         Container(
-            width: MediaQuery.of(context).size.width * 0.65, child: dropDown),
+            width: MediaQuery.of(context).size.width * 0.6, child: dropDown),
       ],
     );
   }
