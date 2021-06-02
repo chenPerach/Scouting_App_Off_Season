@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:scouting_app_2/models/Match/Match.dart';
 
 part 'gameform_event.dart';
 part 'gameform_state.dart';
@@ -13,7 +14,7 @@ class GameformBloc extends Bloc<GameformEvent, GameformState> {
   Stream<GameformState> mapEventToState(
     GameformEvent event,
   ) async* {
-    if(event is GameFormMoveTo)
-      yield GameformPage(event.index);
+    if (event is GameFormUpdate)
+      yield GameformPage(index: event.index, match: event.match);
   }
 }

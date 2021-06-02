@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
+import 'package:scouting_app_2/models/Match/Match.dart';
 
 class GameFormBlocCreator extends StatelessWidget {
   @override
@@ -18,8 +19,8 @@ class GameFormBlocCreator extends StatelessWidget {
   }
 
   Widget _builder(BuildContext context, GameformState state) {
-    if (state is GameformPage) return GameFormBottomNavPage(index: state.index);
-    if (state is GameformInitial) return GameFormBottomNavPage(index: 0);
+    if (state is GameformPage) return GameFormBottomNavPage(index: state.index,match: state.match,);
+    if (state is GameformInitial) return GameFormBottomNavPage(index: 0,match: Match.empty(),);
     return null;
   }
 

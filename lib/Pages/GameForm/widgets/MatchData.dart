@@ -2,9 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
+import 'package:scouting_app_2/models/Match/Match.dart';
 
 class MatchData extends StatelessWidget {
+  final int pageNumber = 0;
+  final Match match;
+  MatchData(this.match);
   final Key _key = GlobalKey<FormState>();
+  final List<CompLevel> _matchTypes = [
+    CompLevel.simple("qm"),
+    CompLevel.simple("qf"),
+    CompLevel.simple("sf"),
+    CompLevel.simple("f"),
+  ];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -12,6 +24,7 @@ class MatchData extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "Match Data",
@@ -27,21 +40,34 @@ class MatchData extends StatelessWidget {
             SizedBox(
               height: 3,
             ),
-            DropdownButtonFormField(items: [
-              DropdownMenuItem(
-                child: Text("Qualification Matches"),
-                value: "qm",
-              ),
-              DropdownMenuItem(
-                child: Text("Quarter finals"),
-                value: "qf",
-              ),
-              DropdownMenuItem(
-                child: Text("Semi finals"),
-                value: "sf",
-              ),
-              DropdownMenuItem(child: Text("Finals"), value: "f"),
-            ], key: _key)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Match Type"),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.65,
+                  child: DropdownButtonFormField<CompLevel>(
+                    hint: Text("select game type"),
+                    value: match.compLevel,
+                    items: List<DropdownMenuItem<CompLevel>>.generate(
+                      _matchTypes.length,
+                      (i) => DropdownMenuItem(
+                        child: Text(_matchTypes[i].compLevelDetailed),
+                        value: _matchTypes[i],
+                      ),
+                    ),
+                    onChanged: (value) {
+                      var m = match.clone();
+                      m.compLevel = value;
+                      BlocProvider.of<GameformBloc>(context).add(GameFormUpdate(pageNumber,m));
+                    },
+                    key: _key,
+                  ),
+                ),
+              ],
+            ),
+
+            
           ],
         ),
       ),

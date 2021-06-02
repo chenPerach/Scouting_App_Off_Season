@@ -4,22 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
+import 'package:scouting_app_2/models/Match/Match.dart';
 
 /// this class handles the bottom [navigation menu] view
 
 class GameFormBottomNavPage extends StatelessWidget {
   final int index;
-
-  GameFormBottomNavPage({@required this.index});
-  final pages = [
-    MatchData(),
-    GameFormExamplePage(),
-    GameFormExamplePage(),
-  ];
+  final Match match;
+  GameFormBottomNavPage({@required this.index,@required this.match});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[index],
+      body: _getBody(index),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -35,9 +32,19 @@ class GameFormBottomNavPage extends StatelessWidget {
             label: "general"
           ),
         ],
-        onTap: (i) => BlocProvider.of<GameformBloc>(context).add(GameFormMoveTo(i)),
+        onTap: (i) => BlocProvider.of<GameformBloc>(context).add(GameFormUpdate(i,this.match)),
         currentIndex: index,
       ),
     );
+  }
+
+  Widget _getBody(int i){
+    switch (i) {
+      case 0:
+        return MatchData(this.match);
+        break;
+      default:
+        return GameFormExamplePage();
+    }
   }
 }
