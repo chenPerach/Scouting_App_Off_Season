@@ -9,6 +9,7 @@ import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 
+// ignore: must_be_immutable
 class MatchData extends StatefulWidget {
   ScoutingMatch match;
 
@@ -56,134 +57,186 @@ class _MatchDataState extends State<MatchData> {
   final List<String> _allianceTypes = ["red", "blue"];
 
   @override
-  Widget build(BuildContext context) {
-    // var model = HomeService.matchList
-    //     .where((e) =>
-    //         e.matchNumber == widget.match.matchNumber &&
-    //         e.compLevel == widget.match.compLevel.compLevel)
-    //     .first;
+  Widget build(BuildContext ctx) {
     return Form(
       key: _key,
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Match Data",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Container(
-                width: min(400, MediaQuery.of(context).size.width * 0.8),
-                height: 2,
-                color: Theme.of(context).hintColor),
-            SizedBox(
-              height: 3,
-            ),
-            _DropDownRow(
-              child: Text("Match Type"),
-              dropDown: DropdownButtonFormField<CompLevel>(
-                hint: Text("select game type"),
-                value: widget.match.compLevel,
-                items: List<DropdownMenuItem<CompLevel>>.generate(
-                  _matchTypes.length,
-                  (i) => DropdownMenuItem(
-                    child: Text(_matchTypes[i].compLevelDetailed),
-                    value: _matchTypes[i],
-                  ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            "Match Data",
+            style: Theme.of(ctx).textTheme.headline3,
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Container(
+              width: min(400, MediaQuery.of(ctx).size.width * 0.8),
+              height: 2,
+              color: Theme.of(ctx).hintColor),
+          SizedBox(
+            height: 3,
+          ),
+          _DropDownRow(
+            child: Text("Match Type"),
+            dropDown: DropdownButtonFormField<CompLevel>(
+              hint: Text("select game type"),
+              value: widget.match.compLevel,
+              items: List<DropdownMenuItem<CompLevel>>.generate(
+                _matchTypes.length,
+                (i) => DropdownMenuItem(
+                  child: Text(_matchTypes[i].compLevelDetailed),
+                  value: _matchTypes[i],
                 ),
-                onChanged: (value) {
-                  var m = widget.match.clone();
-                  m.compLevel = value;
-                  BlocProvider.of<GameformBloc>(context)
-                      .add(GameFormUpdate(pageNumber, m));
-                },
               ),
+              onChanged: (value) {
+                var m = widget.match.clone();
+                m.compLevel = value;
+                BlocProvider.of<GameformBloc>(ctx)
+                    .add(GameFormUpdate(pageNumber, m));
+              },
             ),
-            _DropDownRow(
-              child: Text("Match Number"),
-              dropDown: DropdownButtonFormField<int>(
-                hint: Text("select game type"),
-                value: widget.match.matchNumber,
-                items: List<DropdownMenuItem<int>>.generate(
-                  HomeService.matchList
-                      .where((e) => e.compLevel == "qm")
-                      .length,
-                  (i) => DropdownMenuItem(
-                    child: Text((i + 1).toString()),
-                    value: i + 1,
-                  ),
+          ),
+          _DropDownRow(
+            child: Text("Match Number"),
+            dropDown: DropdownButtonFormField<int>(
+              hint: Text("select game type"),
+              value: widget.match.matchNumber,
+              items: List<DropdownMenuItem<int>>.generate(
+                HomeService.matchList.where((e) => e.compLevel == "qm").length,
+                (i) => DropdownMenuItem(
+                  child: Text((i + 1).toString()),
+                  value: i + 1,
                 ),
-                onChanged: (value) {
-                  var m = widget.match.clone();
-                  m.matchNumber = value;
-                  BlocProvider.of<GameformBloc>(context)
-                      .add(GameFormUpdate(pageNumber, m));
-                },
               ),
+              onChanged: (value) {
+                var m = widget.match.clone();
+                m.matchNumber = value;
+                BlocProvider.of<GameformBloc>(ctx)
+                    .add(GameFormUpdate(pageNumber, m));
+              },
             ),
-            _DropDownRow(
-              child: Text("Allience"),
-              dropDown: DropdownButtonFormField<String>(
-                hint: Text("select Alliance"),
-                value: widget.match.alliance,
-                items: List<DropdownMenuItem<String>>.generate(
-                  _allianceTypes.length,
-                  (i) => DropdownMenuItem(
-                    child: Container(
-                      width: 100,
-                      height: 15,
-                      color:
-                          _allianceTypes[i] == "red" ? Colors.red : Colors.blue,
+          ),
+          _DropDownRow(
+            child: Text("Allience"),
+            dropDown: DropdownButtonFormField<String>(
+              hint: Text("select Alliance"),
+              value: widget.match.alliance,
+              items: List<DropdownMenuItem<String>>.generate(
+                _allianceTypes.length,
+                (i) => DropdownMenuItem(
+                  child: Container(
+                    width: 100,
+                    height: 15,
+                    color:
+                        _allianceTypes[i] == "red" ? Colors.red : Colors.blue,
+                  ),
+                  value: _allianceTypes[i],
+                ),
+              ),
+              onChanged: (value) {
+                var m = widget.match.clone();
+                m.alliance = value;
+                BlocProvider.of<GameformBloc>(ctx)
+                    .add(GameFormUpdate(pageNumber, m));
+              },
+            ),
+          ),
+          _DropDownRow(
+            child: Text("Team"),
+            dropDown: DropdownButtonFormField<int>(
+              hint: Text("select Team"),
+              value: widget.match.teamNumber,
+              items: List<DropdownMenuItem<int>>.generate(
+                TeamsConsts.teams.length,
+                (i) => DropdownMenuItem(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Text(TeamsConsts.teams[i].number.toString()),
+                        SizedBox(width: 5),
+                        Text(TeamsConsts.teams[i].nickname)
+                      ],
                     ),
-                    value: _allianceTypes[i],
                   ),
+                  value: TeamsConsts.teams[i].number,
                 ),
-                onChanged: (value) {
-                  var m = widget.match.clone();
-                  m.alliance = value;
-                  BlocProvider.of<GameformBloc>(context)
-                      .add(GameFormUpdate(pageNumber, m));
-                },
               ),
+              onChanged: (value) {
+                var m = widget.match.clone();
+                m.teamNumber = value;
+                BlocProvider.of<GameformBloc>(ctx)
+                    .add(GameFormUpdate(pageNumber, m));
+              },
             ),
-            _DropDownRow(
-              child: Text("Team"),
-              dropDown: DropdownButtonFormField<int>(
-                hint: Text("select Team"),
-                value: widget.match.teamNumber,
-                items: List<DropdownMenuItem<int>>.generate(
-                  TeamsConsts.teams.length,
-                  (i) => DropdownMenuItem(
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Text(TeamsConsts.teams[i].number.toString()),
-                          SizedBox(width: 5),
-                          Text(TeamsConsts.teams[i].nickname)
-                        ],
-                      ),
+          ),
+          SizedBox(height: 50),
+          Expanded(
+            child: Builder(
+              builder: (context) => Stack(
+                children: [
+                  Image.asset(
+                    "assets/images/PlayingField/playing_field_starting_line.jpg",
+                    fit: BoxFit.contain,
+                  ),
+                  Positioned(
+                    width: MediaQuery.of(context).size.width,
+                    top: 29,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            _updateStartingLinePosition(context, "Left");
+                          },
+                          child: Text("Left"),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  widget.match.startingPosition == "Left"
+                                      ? Colors.orange
+                                      : Colors.blue)),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _updateStartingLinePosition(context, "Middle");
+                          },
+                          child: Text("Middle"),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  widget.match.startingPosition == "Middle"
+                                      ? Colors.orange
+                                      : Colors.blue)),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _updateStartingLinePosition(context, "Right");
+                          },
+                          child: Text("Right"),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  widget.match.startingPosition == "Right"
+                                      ? Colors.orange
+                                      : Colors.blue)),
+                        ),
+                      ],
                     ),
-                    value: TeamsConsts.teams[i].number,
-                  ),
-                ),
-                onChanged: (value) {
-                  var m = widget.match.clone();
-                  m.teamNumber = value;
-                  BlocProvider.of<GameformBloc>(context)
-                      .add(GameFormUpdate(pageNumber, m));
-                },
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  void _updateStartingLinePosition(BuildContext context, String pos) {
+    var prov = BlocProvider.of<GameformBloc>(context);
+    widget.match.startingPosition = pos;
+    prov.add(GameFormUpdate(this.pageNumber, widget.match));
   }
 }
 

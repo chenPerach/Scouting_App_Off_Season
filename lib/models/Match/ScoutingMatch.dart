@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -6,11 +7,13 @@ class ScoutingMatch {
   int matchNumber;
   int teamNumber;
   String alliance;
+  String startingPosition;
   ScoutingMatch({
     @required this.compLevel,
     @required this.matchNumber,
     @required this.teamNumber,
     @required this.alliance,
+    this.startingPosition
   });
 
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
@@ -18,7 +21,7 @@ class ScoutingMatch {
         compLevel: CompLevel.simple(json["comp_level"]),
         matchNumber: json["match_number"],
         teamNumber: json["team_number"],
-        alliance: json["alliance"]);
+        alliance: json["alliance"],);
   }
   factory ScoutingMatch.empty() {
     return ScoutingMatch(
@@ -38,12 +41,13 @@ class ScoutingMatch {
       matchNumber: this.matchNumber,
       teamNumber: this.teamNumber,
       alliance: this.alliance,
+      startingPosition: this.startingPosition
     );
   }
 }
 
 @immutable
-class CompLevel {
+class CompLevel extends Equatable{
   final String compLevel;
   final String compLevelDetailed;
   CompLevel({this.compLevel, this.compLevelDetailed});
@@ -68,12 +72,6 @@ class CompLevel {
     return CompLevel(compLevel: compLevel, compLevelDetailed: detailed);
   }
   @override
-  bool operator ==(Object other) {
-    if(identical(this,other)) return true;
-    return other is CompLevel && other.compLevel == this.compLevel &&
-        other.compLevelDetailed == this.compLevelDetailed;
-  }
+  List<Object> get props => [this.compLevel,this.compLevelDetailed];
 
-  @override
-  int get hashCode => super.hashCode;
 }

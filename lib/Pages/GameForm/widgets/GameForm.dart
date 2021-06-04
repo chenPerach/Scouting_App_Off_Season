@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
-import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 
 class GameFormBlocCreator extends StatelessWidget {
   @override
