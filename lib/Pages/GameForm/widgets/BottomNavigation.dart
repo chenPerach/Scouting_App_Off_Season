@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/Cycles.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
@@ -35,6 +36,9 @@ class GameFormBottomNavPage extends StatelessWidget {
     switch (i) {
       case 0:
         return MatchData(this.match);
+        break;
+      case 1:
+        return Cycles(match: this.match,type: "Auto");
         break;
       default:
         return GameFormExamplePage();
