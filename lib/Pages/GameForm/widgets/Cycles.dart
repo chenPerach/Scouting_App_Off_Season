@@ -31,10 +31,10 @@ class Cycles extends StatelessWidget {
           height: 3,
         ),
         ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (_)=>ShotBalls())
-            );
+          onPressed: () async{
+            var c = await Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => ShotBalls()));
+            //TODO: implement the gotten Cycle
           },
           child: Text("shot balls"),
         ),

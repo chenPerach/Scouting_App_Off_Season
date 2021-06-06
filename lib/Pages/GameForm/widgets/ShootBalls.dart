@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/PositionPage.dart';
+import 'package:scouting_app_2/Utils/Vector.dart';
+import 'package:scouting_app_2/models/Match/Cycle.dart';
 
 class ShotBalls extends StatefulWidget {
   @override
@@ -8,7 +11,7 @@ class ShotBalls extends StatefulWidget {
 }
 
 class _ShotBallsState extends State<ShotBalls> {
-  double ballsShot = 0, inner = 0, outer = 0, lower = 0;
+  Cycle c = Cycle();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,36 +22,47 @@ class _ShotBallsState extends State<ShotBalls> {
           children: [
             _MySlider(
               title: "Balls Shot",
-              getValue: () => ballsShot,
+              getValue: () => c.ballsShot.toDouble(),
               onChange: (value) {
-                if (value >= inner + lower + outer)
-                  setState(() => ballsShot = value);
+                if (value >= c.ballsInner + c.ballsLower + c.ballsLower)
+                  setState(() => c.ballsShot = value);
               },
             ),
             _MySlider(
               title: "Inner",
-              getValue: () => inner,
+              getValue: () => c.ballsInner.toDouble(),
               onChange: (value) {
-                if (ballsShot >= value + lower + outer)
-                  setState(() => inner = value);
+                if (c.ballsShot >= value + c.ballsLower + c.ballsOuter)
+                  setState(() => c.ballsInner = value);
               },
             ),
             _MySlider(
               title: "Outer",
-              getValue: () => outer,
+              getValue: () => c.ballsOuter.toDouble(),
               onChange: (value) {
-                if (ballsShot >= inner + lower + value)
-                  setState(() => outer = value);
+                if (c.ballsShot >= c.ballsInner + c.ballsLower + value)
+                  setState(() => c.ballsOuter = value);
               },
             ),
             _MySlider(
               title: "Lower",
-              getValue: () => lower,
+              getValue: () => c.ballsLower.toDouble(),
               onChange: (value) {
-                if (ballsShot >= inner + value + outer)
-                  setState(() => lower = value);
+                if (c.ballsShot >= c.ballsInner + value + c.ballsOuter)
+                  setState(() => c.ballsLower = value);
               },
             ),
+            ElevatedButton(onPressed: () async {
+              var pos = await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>PositionPage()));
+              setState(() {
+                this.c.shootingPosition = pos;
+              });
+            }, child: Text("Shot Position"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>( c.shootingPosition == Vector2d.zero ? Colors.orange : Colors.blue)),),
+            ElevatedButton(onPressed: () async {
+              if(c.ballsShot == 0 || c.shootingPosition == Vector2d.zero)
+              return;
+              Navigator.of(context).pop(c);              
+            }, child: Text("Submit")),
           ],
         ),
       ),
@@ -66,7 +80,10 @@ class _MySlider extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("$title:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+        Text(
+          "$title:",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+        ),
         SizedBox(
           width: 5,
         ),

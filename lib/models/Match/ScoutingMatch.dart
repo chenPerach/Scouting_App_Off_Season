@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+///TODO: add Cycles to this model
+///TODO: add toJson method
 class ScoutingMatch {
   CompLevel compLevel;
   int matchNumber;
