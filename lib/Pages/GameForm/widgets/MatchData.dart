@@ -196,7 +196,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Left"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.startingPosition == "Left"
+                                  widget.match.data.startingPosition == "Left"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -207,7 +207,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Middle"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.startingPosition == "Middle"
+                                  widget.match.data.startingPosition == "Middle"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -218,7 +218,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Right"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.startingPosition == "Right"
+                                  widget.match.data.startingPosition == "Right"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -236,7 +236,7 @@ class _MatchDataState extends State<MatchData> {
 
   void _updateStartingLinePosition(BuildContext context, String pos) {
     var prov = BlocProvider.of<GameformBloc>(context);
-    widget.match.startingPosition = pos;
+    widget.match.data.startingPosition = pos;
     prov.add(GameFormUpdate(this.pageNumber, widget.match));
   }
 }

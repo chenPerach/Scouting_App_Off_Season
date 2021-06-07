@@ -13,33 +13,37 @@ class Cycles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "$type Stage",
-          style: Theme.of(context).textTheme.headline3,
-        ),
-        SizedBox(
-          height: 3,
-        ),
-        Container(
-            width: min(400, MediaQuery.of(context).size.width * 0.8),
-            height: 2,
-            color: Theme.of(context).hintColor),
-        SizedBox(
-          height: 3,
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            //TODO: implement [c] the gotten Cycle
-            // ignore: unused_local_variable
-            var c = await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => ShotBalls()));
-          },
-          child: Text("shot balls"),
-        ),
-      ],
-    ));
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "$type Stage",
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Container(
+              width: min(400, MediaQuery.of(context).size.width * 0.8),
+              height: 2,
+              color: Theme.of(context).hintColor),
+          SizedBox(
+            height: 3,
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              var c = await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => ShotBalls()));
+              if (type == "AUTO")
+                match.data.autonomus.shooting.add(c);
+              else if (type == "TELEOP") {
+                match.data.teleop.shooting.add(c);
+              }
+            },
+            child: Text("shot balls"),
+          ),
+        ],
+      ),
+    );
   }
 }

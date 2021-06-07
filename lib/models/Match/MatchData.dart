@@ -44,7 +44,7 @@ class MidGameStage extends GenericScoutingStageData {
   MidGameStage(
       {this.balls = const [],
       this.rollet = const [],
-      this.shooting = const []});
+      this.shooting = const [],});
   @override
   Map<String, dynamic> toJson() {
     return {
