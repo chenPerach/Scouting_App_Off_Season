@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
+import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
@@ -88,7 +89,7 @@ class _MatchDataState extends State<MatchData> {
               items: List<DropdownMenuItem<CompLevel>>.generate(
                 _matchTypes.length,
                 (i) => DropdownMenuItem(
-                  child: Text(_matchTypes[i].compLevelDetailed),
+                  child: Text(_matchTypes[i].detailed),
                   value: _matchTypes[i],
                 ),
               ),

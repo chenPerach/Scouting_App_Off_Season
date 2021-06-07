@@ -1,9 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Utils/Vector.dart';
-
-
 
 class PositionPage extends StatelessWidget {
   final _key = GlobalKey();
@@ -19,13 +16,12 @@ class PositionPage extends StatelessWidget {
             key: _key,
           ),
           onLongPressStart: (details) {
-            
             var normalizedPoint =
                 Vector2d(details.localPosition.dx, details.localPosition.dy) /
                     Vector2d(_key.currentContext.size.width,
                         _key.currentContext.size.height);
-            var position = Vector2d(normalizedPoint.x,
-                normalizedPoint.y)*Vector2d(fieldWidth,fieldHeight);
+            var position = Vector2d(normalizedPoint.x, normalizedPoint.y) *
+                Vector2d(fieldWidth, fieldHeight);
             print(position);
             Navigator.of(context).pop(position);
           },

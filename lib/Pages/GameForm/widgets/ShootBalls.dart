@@ -11,7 +11,7 @@ class ShotBalls extends StatefulWidget {
 }
 
 class _ShotBallsState extends State<ShotBalls> {
-  Cycle c = Cycle();
+  ShootingCycle c = ShootingCycle();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,17 +52,28 @@ class _ShotBallsState extends State<ShotBalls> {
                   setState(() => c.ballsLower = value);
               },
             ),
-            ElevatedButton(onPressed: () async {
-              var pos = await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>PositionPage()));
-              setState(() {
-                this.c.shootingPosition = pos;
-              });
-            }, child: Text("Shot Position"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>( c.shootingPosition == Vector2d.zero ? Colors.orange : Colors.blue)),),
-            ElevatedButton(onPressed: () async {
-              if(c.ballsShot == 0 || c.shootingPosition == Vector2d.zero)
-              return;
-              Navigator.of(context).pop(c);              
-            }, child: Text("Submit")),
+            ElevatedButton(
+              onPressed: () async {
+                var pos = await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => PositionPage()));
+                setState(() {
+                  this.c.shootingPosition = pos;
+                });
+              },
+              child: Text("Shot Position"),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      c.shootingPosition == Vector2d.zero
+                          ? Colors.orange
+                          : Colors.blue)),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  if (c.ballsShot == 0 || c.shootingPosition == Vector2d.zero)
+                    return;
+                  Navigator.of(context).pop(c);
+                },
+                child: Text("Submit")),
           ],
         ),
       ),

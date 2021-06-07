@@ -1,36 +1,36 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:scouting_app_2/models/Match/CompLevel.dart';
+import 'package:scouting_app_2/models/Match/MatchData.dart';
+import 'package:scouting_app_2/models/model.dart';
 
-///TODO: add Cycles to this model
 ///TODO: add toJson method
-class ScoutingMatch {
+///this class holds all the data a match could have
+///it exists to hold all the data, the data is seperated to different classes to
+/// improve readability and code managment
+class ScoutingMatch extends Model {
   CompLevel compLevel;
   int matchNumber;
   int teamNumber;
   String alliance;
   String startingPosition;
+  ScoutingMatchData data;
   ScoutingMatch({
     @required this.compLevel,
     @required this.matchNumber,
     @required this.teamNumber,
     @required this.alliance,
-    this.startingPosition
-  });
+    this.startingPosition,
+  }) {
+    this.data = ScoutingMatchData();
+  }
 
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
     return ScoutingMatch(
-        compLevel: CompLevel.simple(json["comp_level"]),
-        matchNumber: json["match_number"],
-        teamNumber: json["team_number"],
-        alliance: json["alliance"],);
-  }
-  factory ScoutingMatch.empty() {
-    return ScoutingMatch(
-      compLevel: CompLevel.simple("qm"),
-      matchNumber: 0,
-      teamNumber: 4586,
-      alliance: "red",
+      compLevel: CompLevel.simple(json["comp_level"]),
+      matchNumber: json["match_number"],
+      teamNumber: json["team_number"],
+      alliance: json["alliance"],
     );
   }
 
@@ -39,41 +39,21 @@ class ScoutingMatch {
   /// and does not create a new member in memory
   ScoutingMatch clone() {
     return ScoutingMatch(
-      compLevel: CompLevel.simple(this.compLevel.compLevel),
+      compLevel: CompLevel.simple(this.compLevel.simple),
       matchNumber: this.matchNumber,
       teamNumber: this.teamNumber,
       alliance: this.alliance,
-      startingPosition: this.startingPosition
+      startingPosition: this.startingPosition,
     );
   }
-}
 
-@immutable
-class CompLevel extends Equatable{
-  final String compLevel;
-  final String compLevelDetailed;
-  CompLevel({this.compLevel, this.compLevelDetailed});
-
-  factory CompLevel.simple(String compLevel) {
-    String detailed;
-    switch (compLevel) {
-      case "qm":
-        detailed = "Qualification Match";
-        break;
-      case "qf":
-        detailed = "Quarter Finals";
-        break;
-      case "sf":
-        detailed = "Semi Finals";
-        break;
-      case "f":
-        detailed = "Finals";
-        break;
-      default:
-    }
-    return CompLevel(compLevel: compLevel, compLevelDetailed: detailed);
+  Map<String, dynamic> toJson() {
+    return {
+      "alliance": alliance,
+      "team_number": this.teamNumber,
+      "comp_level": this.compLevel.simple,
+      "starting_position": this.startingPosition,
+      "data": this.data.toJson(),
+    };
   }
-  @override
-  List<Object> get props => [this.compLevel,this.compLevelDetailed];
-
 }
