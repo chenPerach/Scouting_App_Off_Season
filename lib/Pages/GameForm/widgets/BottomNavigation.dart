@@ -40,6 +40,9 @@ class GameFormBottomNavPage extends StatelessWidget {
       case 1:
         return Cycles(match: this.match, type: "Auto");
         break;
+      case 2: 
+        return Cycles(match: this.match, type: "Teleop");
+        break;
       default:
         return GameFormExamplePage();
     }

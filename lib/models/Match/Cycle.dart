@@ -38,7 +38,7 @@ class BallsCycle implements Model {
   Vector2d position;
   num numPicked;
   bool tranch;
-  BallsCycle({this.position, this.numPicked, this.tranch});
+  BallsCycle({this.position = Vector2d.zero, this.numPicked = 0, this.tranch = false});
 
   factory BallsCycle.fromJson(Map<String, dynamic> json) {
     return BallsCycle(
@@ -56,12 +56,13 @@ class BallsCycle implements Model {
 }
 
 class RolletCycle implements Model {
+  
   String type;
   static const String position = "POSITION", rotation = "ROTATION";
-  RolletCycle(this.type);
+  RolletCycle({this.type = position});
 
   factory RolletCycle.fromJson(Map<String, dynamic> json) {
-    return RolletCycle(json["type"]);
+    return RolletCycle(type: json["type"]);
   }
 
   Map<String, dynamic> toJson() {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/PositionPage.dart';
 import 'package:scouting_app_2/Utils/Vector.dart';
+import 'package:scouting_app_2/Utils/widgets/Buttons.dart';
+import 'package:scouting_app_2/Utils/widgets/PrimoSlider.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 
 class ShotBalls extends StatefulWidget {
@@ -20,7 +22,7 @@ class _ShotBallsState extends State<ShotBalls> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _MySlider(
+            PrimoSlider(
               title: "Balls Shot",
               getValue: () => c.ballsShot.toDouble(),
               onChange: (value) {
@@ -28,7 +30,7 @@ class _ShotBallsState extends State<ShotBalls> {
                   setState(() => c.ballsShot = value);
               },
             ),
-            _MySlider(
+            PrimoSlider(
               title: "Inner",
               getValue: () => c.ballsInner.toDouble(),
               onChange: (value) {
@@ -36,7 +38,7 @@ class _ShotBallsState extends State<ShotBalls> {
                   setState(() => c.ballsInner = value);
               },
             ),
-            _MySlider(
+            PrimoSlider(
               title: "Outer",
               getValue: () => c.ballsOuter.toDouble(),
               onChange: (value) {
@@ -44,7 +46,7 @@ class _ShotBallsState extends State<ShotBalls> {
                   setState(() => c.ballsOuter = value);
               },
             ),
-            _MySlider(
+            PrimoSlider(
               title: "Lower",
               getValue: () => c.ballsLower.toDouble(),
               onChange: (value) {
@@ -52,20 +54,16 @@ class _ShotBallsState extends State<ShotBalls> {
                   setState(() => c.ballsLower = value);
               },
             ),
-            ElevatedButton(
-              onPressed: () async {
+            PrimoSwitchButton(
+              onPressed:() async {
                 var pos = await Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => PositionPage()));
                 setState(() {
                   this.c.shootingPosition = pos;
                 });
-              },
+              } ,
               child: Text("Shot Position"),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      c.shootingPosition == Vector2d.zero
-                          ? Colors.orange
-                          : Colors.blue)),
+              isActive: c.shootingPosition == Vector2d.zero,
             ),
             ElevatedButton(
                 onPressed: () async {
@@ -77,36 +75,6 @@ class _ShotBallsState extends State<ShotBalls> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _MySlider extends StatelessWidget {
-  final String title;
-  final void Function(double value) onChange;
-  const _MySlider({this.onChange, this.title, this.getValue});
-  final double Function() getValue;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "$title:",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Slider(
-          label: title,
-          min: 0,
-          max: 5,
-          divisions: 5,
-          value: getValue(),
-          onChanged: onChange,
-        ),
-      ],
     );
   }
 }
