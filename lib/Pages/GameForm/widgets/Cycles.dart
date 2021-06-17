@@ -39,9 +39,9 @@ class Cycles extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (_) => ShotBalls()));
               if (type.toUpperCase() == "AUTO")
                 match.data.autonomus.shooting.add(c);
-              else if (type.toUpperCase() == "TELEOP") {
+              else if (type.toUpperCase() == "TELEOP") 
                 match.data.teleop.shooting.add(c);
-              }
+              
             },
             child: Text("shot balls"),
           ),

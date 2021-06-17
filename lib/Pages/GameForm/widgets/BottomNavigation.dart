@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Cycles.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/EndGame.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
@@ -24,6 +25,7 @@ class GameFormBottomNavPage extends StatelessWidget {
               icon: Icon(Icons.list), label: "pre Match Data"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "Auto"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "general"),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "general"),
         ],
         onTap: (i) => BlocProvider.of<GameformBloc>(context)
             .add(GameFormUpdate(i, this.match)),
@@ -40,8 +42,11 @@ class GameFormBottomNavPage extends StatelessWidget {
       case 1:
         return Cycles(match: this.match, type: "Auto");
         break;
-      case 2: 
+      case 2:
         return Cycles(match: this.match, type: "Teleop");
+        break;
+      case 3:
+        return EndGamePage();
         break;
       default:
         return GameFormExamplePage();

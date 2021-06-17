@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class PrimoSlider extends StatelessWidget {
   final String title;
   final void Function(double value) onChange;
-  const PrimoSlider({this.onChange, this.title, this.getValue});
+  final String img;
+  const PrimoSlider({this.onChange, this.title, this.getValue,this.img});
   final double Function() getValue;
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Image.asset(img,width: 20,height: 20,),
         Text(
           "$title:",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
