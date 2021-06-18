@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
+import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
 
 class GameFormBlocCreator extends StatelessWidget {
@@ -23,12 +25,10 @@ class GameFormBlocCreator extends StatelessWidget {
         index: state.index,
         match: state.match,
       );
-    if (state is GameformInitial)
-      return GameFormBottomNavPage(
-        index: 0,
-        match: null,
-      );
-    return null;
+    if (state is GameformInitial){
+      BlocProvider.of<GameformBloc>(context).add(GameFromInitialEvent());
+      return Waiting();
+    }
   }
 
   Future<bool> _onWillPop(BuildContext c) async {

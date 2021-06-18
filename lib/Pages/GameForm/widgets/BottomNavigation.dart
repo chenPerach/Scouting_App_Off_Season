@@ -28,7 +28,7 @@ class GameFormBottomNavPage extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "general"),
         ],
         onTap: (i) => BlocProvider.of<GameformBloc>(context)
-            .add(GameFormUpdate(i, this.match)),
+            .add(GameFromChangePage(i)),
         currentIndex: index,
       ),
     );
@@ -37,7 +37,7 @@ class GameFormBottomNavPage extends StatelessWidget {
   Widget _getBody(int i) {
     switch (i) {
       case 0:
-        return MatchData(this.match);
+        return MatchData(info: this.match?.info ?? null,pos: this.match?.data?.startingPosition,);
         break;
       case 1:
         return Cycles(match: this.match, type: "Auto");

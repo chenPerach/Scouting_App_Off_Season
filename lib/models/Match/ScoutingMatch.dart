@@ -11,24 +11,20 @@ class ScoutingMatch extends Model {
   DateTime time;
   GameInfo info;
   ScoutingMatchData data;
-  ScoutingMatch({
-    this.data,
-    this.info,
-    this.time
-  });
+  ScoutingMatch({this.data, this.info, this.time}) {
+    if (this.time == null) this.time = DateTime.now();
+  }
 
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
     return ScoutingMatch(
-      time: DateTime.parse(json["time"]),
-      data: ScoutingMatchData.fromJson(json["data"]),
-      info: GameInfo.fromJson(json["general_info"])
-    );
+        time: DateTime.parse(json["time"]),
+        data: ScoutingMatchData.fromJson(json["data"]),
+        info: GameInfo.fromJson(json["general_info"]));
   }
 
   /// creates a copy of this object
   /// the [=] parameter only passes a [reference] around
   /// and does not create a new member in memory
-  
 
   Map<String, dynamic> toJson() {
     return {
@@ -40,10 +36,10 @@ class ScoutingMatch extends Model {
 }
 
 class GameInfo extends Model {
-  final CompLevel compLevel;
-  final int matchNumber;
-  final int teamNumber;
-  final String alliance;
+  CompLevel compLevel;
+  int matchNumber;
+  int teamNumber;
+  String alliance;
   GameInfo({this.alliance, this.compLevel, this.matchNumber, this.teamNumber});
   factory GameInfo.fromJson(Map<String, dynamic> json) => GameInfo(
       alliance: json["alliance"],

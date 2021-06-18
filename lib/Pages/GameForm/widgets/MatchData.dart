@@ -12,25 +12,8 @@ import 'package:scouting_app_2/services/HomeService.dart';
 
 class MatchData extends StatefulWidget {
   GameInfo info;
-  MatchData() {
-    if (info == null) {
-      var closestMatch = getInfoByTime(DateTime.now());
-      info = GameInfo(
-        alliance: "blue",
-        teamNumber: closestMatch.blueAllience.teamNumbers[0],
-        compLevel: CompLevel.simple(closestMatch.compLevel),
-        matchNumber: closestMatch.matchNumber,
-      );
-
-    } else {
-      info = GameInfo(
-        alliance: "blue",
-        teamNumber: 4586,
-        compLevel: CompLevel.simple("qm"),
-        matchNumber: 1
-      );
-    }
-  }
+  String pos;
+  MatchData({this.info,this.pos});
   MatchModel getInfoByTime(DateTime time) {
     MatchModel closestGame = HomeService.matchList.first;
     Duration dT = time.difference(HomeService.matchList.first.time).abs();
@@ -90,7 +73,7 @@ class _MatchDataState extends State<MatchData> {
             child: Text("Match Type"),
             dropDown: DropdownButtonFormField<CompLevel>(
               hint: Text("select game type"),
-              value: widget.match.compLevel,
+              value: widget.info.compLevel,
               items: List<DropdownMenuItem<CompLevel>>.generate(
                 _matchTypes.length,
                 (i) => DropdownMenuItem(
@@ -99,10 +82,9 @@ class _MatchDataState extends State<MatchData> {
                 ),
               ),
               onChanged: (value) {
-                var m = widget.match.clone();
-                m.compLevel = value;
+                widget.info.compLevel = value;
                 BlocProvider.of<GameformBloc>(ctx)
-                    .add(GameFormUpdate(pageNumber, m));
+                    .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
           ),
@@ -110,7 +92,7 @@ class _MatchDataState extends State<MatchData> {
             child: Text("Match Number"),
             dropDown: DropdownButtonFormField<int>(
               hint: Text("select game type"),
-              value: widget.match.matchNumber,
+              value: widget.info.matchNumber,
               items: List<DropdownMenuItem<int>>.generate(
                 HomeService.matchList.where((e) => e.compLevel == "qm").length,
                 (i) => DropdownMenuItem(
@@ -119,10 +101,9 @@ class _MatchDataState extends State<MatchData> {
                 ),
               ),
               onChanged: (value) {
-                var m = widget.match.clone();
-                m.matchNumber = value;
+                widget.info.matchNumber = value;
                 BlocProvider.of<GameformBloc>(ctx)
-                    .add(GameFormUpdate(pageNumber, m));
+                    .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
           ),
@@ -130,7 +111,7 @@ class _MatchDataState extends State<MatchData> {
             child: Text("Allience"),
             dropDown: DropdownButtonFormField<String>(
               hint: Text("select Alliance"),
-              value: widget.match.alliance,
+              value: widget.info.alliance,
               items: List<DropdownMenuItem<String>>.generate(
                 _allianceTypes.length,
                 (i) => DropdownMenuItem(
@@ -144,10 +125,9 @@ class _MatchDataState extends State<MatchData> {
                 ),
               ),
               onChanged: (value) {
-                var m = widget.match.clone();
-                m.alliance = value;
+                widget.info.alliance = value;
                 BlocProvider.of<GameformBloc>(ctx)
-                    .add(GameFormUpdate(pageNumber, m));
+                    .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
           ),
@@ -155,7 +135,7 @@ class _MatchDataState extends State<MatchData> {
             child: Text("Team"),
             dropDown: DropdownButtonFormField<int>(
               hint: Text("select Team"),
-              value: widget.match.teamNumber,
+              value: widget.info.teamNumber,
               items: List<DropdownMenuItem<int>>.generate(
                 TeamsConsts.teams.length,
                 (i) => DropdownMenuItem(
@@ -172,10 +152,9 @@ class _MatchDataState extends State<MatchData> {
                 ),
               ),
               onChanged: (value) {
-                var m = widget.match.clone();
-                m.teamNumber = value;
+                widget.info.teamNumber = value;
                 BlocProvider.of<GameformBloc>(ctx)
-                    .add(GameFormUpdate(pageNumber, m));
+                    .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
           ),
@@ -201,7 +180,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Left"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.data.startingPosition == "Left"
+                                  widget.pos == "Left"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -212,7 +191,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Middle"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.data.startingPosition == "Middle"
+                                  widget.pos == "Middle"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -223,7 +202,7 @@ class _MatchDataState extends State<MatchData> {
                           child: Text("Right"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.match.data.startingPosition == "Right"
+                                  widget.pos == "Right"
                                       ? Colors.orange
                                       : Colors.blue)),
                         ),
@@ -241,8 +220,8 @@ class _MatchDataState extends State<MatchData> {
 
   void _updateStartingLinePosition(BuildContext context, String pos) {
     var prov = BlocProvider.of<GameformBloc>(context);
-    widget.match.data.startingPosition = pos;
-    prov.add(GameFormUpdate(this.pageNumber, widget.match));
+    widget.pos = pos;
+    prov.add(GameFormUpdateStartingPosition(widget.pos));
   }
 }
 
