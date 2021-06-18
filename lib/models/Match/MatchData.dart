@@ -9,11 +9,8 @@ class ScoutingMatchData extends Model {
   String startingPosition;
   EndGameStage endGame;
   MidGameStage autonomus, teleop;
-  ScoutingMatchData({this.startingPosition}) {
-    this.endGame = EndGameStage();
-    this.autonomus = MidGameStage();
-    this.teleop = MidGameStage();
-  }
+  ScoutingMatchData(
+      {this.startingPosition, this.autonomus, this.endGame, this.teleop});
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -23,6 +20,14 @@ class ScoutingMatchData extends Model {
       "end_game": endGame.toJson(),
     };
   }
+
+  factory ScoutingMatchData.fromJson(Map<String, dynamic> json) =>
+      ScoutingMatchData(
+        startingPosition: json["start_position"],
+        autonomus: MidGameStage.fromJson(json["auto"]),
+        teleop: MidGameStage.fromJson(json["teleop"]),
+        endGame: EndGameStage.fromJson(json["end_game"]),
+      );
 }
 
 /// this class represents data for a single
@@ -31,55 +36,59 @@ abstract class GenericScoutingStageData implements Model {}
 
 class EndGameStage extends GenericScoutingStageData {
   EndGameClimbType type;
-  EndGameStage({type}){
+  EndGameStage({type}) {
     this.type = type ?? EndGameClimbType.generate(EndGameClimbType.empty);
   }
-  EndGameStage fromJson(Map<String,dynamic> json){
+  factory EndGameStage.fromJson(Map<String, dynamic> json) {
     return EndGameStage(type: json["type"]);
   }
+
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "type":type.value
-    };
+    return {"type": type.value};
   }
 }
 
 class EndGameClimbType {
-  static const String even = "EVEN",uneven = "UNEVEN",platform = "PLATFORM",empty = "NULL";
+  static const String even = "EVEN",
+      uneven = "UNEVEN",
+      platform = "PLATFORM",
+      empty = "NULL";
   String value;
   Image image;
-  EndGameClimbType({this.image,this.value});
-  factory EndGameClimbType.generate(String value){
+  EndGameClimbType({this.image, this.value});
+  factory EndGameClimbType.generate(String value) {
     Image img;
     switch (value) {
       //TODO: add currect assests
       case even:
         img = Image.asset("");
         break;
-        case uneven:
+      case uneven:
         img = Image.asset("");
         break;
-        case platform:
+      case platform:
         img = Image.asset("");
         break;
-        case empty:
+      case empty:
         img = Image.asset("");
         break;
       default:
     }
-    return EndGameClimbType(value: value,image: img);
+    return EndGameClimbType(value: value, image: img);
   }
 }
+
 class MidGameStage extends GenericScoutingStageData {
   List<ShootingCycle> shooting;
   List<BallsCycle> balls;
   List<RolletCycle> rollet;
 
-  MidGameStage(
-      {this.balls = const [],
-      this.rollet = const [],
-      this.shooting = const [],});
+  MidGameStage({
+    this.balls,
+    this.rollet,
+    this.shooting,
+  });
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -93,4 +102,14 @@ class MidGameStage extends GenericScoutingStageData {
               this.rollet, (e) => e.toJson()),
     };
   }
+
+  factory MidGameStage.fromJson(Map<String, dynamic> json) => MidGameStage(
+        balls: SmartList.fromIterable<BallsCycle, Map<String, dynamic>>(
+            List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(e)),
+        shooting: SmartList.fromIterable<ShootingCycle, Map<String, dynamic>>(
+            List.from(json["shooring_cycles"]),
+            (e) => ShootingCycle.fromJson(e)),
+        rollet: SmartList.fromIterable<RolletCycle, Map<String, dynamic>>(
+            List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(e)),
+      );
 }

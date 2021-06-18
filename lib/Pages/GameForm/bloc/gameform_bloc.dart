@@ -9,7 +9,8 @@ part 'gameform_state.dart';
 
 class GameformBloc extends Bloc<GameformEvent, GameformState> {
   GameformBloc() : super(GameformInitial());
-
+  int index;
+  ScoutingMatch match;
   @override
   Stream<GameformState> mapEventToState(
     GameformEvent event,

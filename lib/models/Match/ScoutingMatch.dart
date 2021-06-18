@@ -8,48 +8,56 @@ import 'package:scouting_app_2/models/model.dart';
 ///it exists to hold all the data, the data is seperated to different classes to
 /// improve readability and code managment
 class ScoutingMatch extends Model {
-  CompLevel compLevel;
-  int matchNumber;
-  int teamNumber;
-  String alliance;
-  // String startingPosition;
+  DateTime time;
+  GameInfo info;
   ScoutingMatchData data;
   ScoutingMatch({
-    @required this.compLevel,
-    @required this.matchNumber,
-    @required this.teamNumber,
-    @required this.alliance,
-  }) {
-    this.data = ScoutingMatchData();
-  }
+    this.data,
+    this.info,
+    this.time
+  });
 
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
     return ScoutingMatch(
-      compLevel: CompLevel.simple(json["comp_level"]),
-      matchNumber: json["match_number"],
-      teamNumber: json["team_number"],
-      alliance: json["alliance"],
+      time: DateTime.parse(json["time"]),
+      data: ScoutingMatchData.fromJson(json["data"]),
+      info: GameInfo.fromJson(json["general_info"])
     );
   }
 
   /// creates a copy of this object
   /// the [=] parameter only passes a [reference] around
   /// and does not create a new member in memory
-  ScoutingMatch clone() {
-    return ScoutingMatch(
-      compLevel: CompLevel.simple(this.compLevel.simple),
-      matchNumber: this.matchNumber,
-      teamNumber: this.teamNumber,
-      alliance: this.alliance,
-    );
-  }
+  
 
   Map<String, dynamic> toJson() {
     return {
+      "general_info": info.toJson(),
+      "data": data.toJson(),
+      "time": time.toUtc().toString()
+    };
+  }
+}
+
+class GameInfo extends Model {
+  final CompLevel compLevel;
+  final int matchNumber;
+  final int teamNumber;
+  final String alliance;
+  GameInfo({this.alliance, this.compLevel, this.matchNumber, this.teamNumber});
+  factory GameInfo.fromJson(Map<String, dynamic> json) => GameInfo(
+      alliance: json["alliance"],
+      teamNumber: json["team_number"],
+      matchNumber: json["match_number"],
+      compLevel: json["comp_level"]);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "comp_level": compLevel,
+      "match_number": matchNumber,
       "alliance": alliance,
-      "team_number": this.teamNumber,
-      "comp_level": this.compLevel.simple,
-      "data": this.data.toJson(),
+      "team_number": teamNumber
     };
   }
 }

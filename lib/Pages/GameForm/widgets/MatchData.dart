@@ -10,23 +10,28 @@ import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 
-// ignore: must_be_immutable
 class MatchData extends StatefulWidget {
-  ScoutingMatch match;
+  GameInfo info;
+  MatchData() {
+    if (info == null) {
+      var closestMatch = getInfoByTime(DateTime.now());
+      info = GameInfo(
+        alliance: "blue",
+        teamNumber: closestMatch.blueAllience.teamNumbers[0],
+        compLevel: CompLevel.simple(closestMatch.compLevel),
+        matchNumber: closestMatch.matchNumber,
+      );
 
-  MatchData(ScoutingMatch match) {
-    if (match == null) {
-      var closestMatch = getMatchByTime(DateTime.now());
-      this.match = ScoutingMatch(
-          compLevel: CompLevel.simple(closestMatch.compLevel),
-          matchNumber: closestMatch.matchNumber,
-          teamNumber: closestMatch.blueAllience.teamNumbers[0],
-          alliance: "blue");
     } else {
-      this.match = match;
+      info = GameInfo(
+        alliance: "blue",
+        teamNumber: 4586,
+        compLevel: CompLevel.simple("qm"),
+        matchNumber: 1
+      );
     }
   }
-  MatchModel getMatchByTime(DateTime time) {
+  MatchModel getInfoByTime(DateTime time) {
     MatchModel closestGame = HomeService.matchList.first;
     Duration dT = time.difference(HomeService.matchList.first.time).abs();
     for (var game in HomeService.matchList) {
