@@ -12,7 +12,7 @@ class PrimoSlider extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(img,width: 20,height: 20,),
+        // Image.asset(img,width: 20,height: 20,),
         Text(
           "$title:",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
