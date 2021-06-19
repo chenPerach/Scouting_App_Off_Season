@@ -84,7 +84,7 @@ class _MatchDataState extends State<MatchData> {
               ),
               onChanged: (value) {
                 widget.info.compLevel = value;
-                BlocProvider.of<GameformBloc>(ctx)
+                BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
@@ -103,7 +103,7 @@ class _MatchDataState extends State<MatchData> {
               ),
               onChanged: (value) {
                 widget.info.matchNumber = value;
-                BlocProvider.of<GameformBloc>(ctx)
+                BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
@@ -127,7 +127,7 @@ class _MatchDataState extends State<MatchData> {
               ),
               onChanged: (value) {
                 widget.info.alliance = value;
-                BlocProvider.of<GameformBloc>(ctx)
+                BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
@@ -154,7 +154,7 @@ class _MatchDataState extends State<MatchData> {
               ),
               onChanged: (value) {
                 widget.info.teamNumber = value;
-                BlocProvider.of<GameformBloc>(ctx)
+                BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
@@ -220,7 +220,7 @@ class _MatchDataState extends State<MatchData> {
   }
 
   void _updateStartingLinePosition(BuildContext context, String pos) {
-    var prov = BlocProvider.of<GameformBloc>(context);
+    var prov = BlocProvider.of<GameFormBloc>(context);
     widget.pos = pos;
     prov.add(GameFormUpdateStartingPosition(widget.pos));
   }

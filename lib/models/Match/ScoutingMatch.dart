@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
+import 'package:scouting_app_2/models/Match/PostGameData.dart';
 import 'package:scouting_app_2/models/model.dart';
 
 ///this class holds all the data a match could have
@@ -12,6 +10,7 @@ class ScoutingMatch extends Model {
   DateTime time;
   GameInfo info;
   ScoutingMatchData data;
+  PostGameData postGameData;
   ScoutingMatch({this.data, this.info, this.time}) {
     if (this.time == null) this.time = DateTime.now();
   }

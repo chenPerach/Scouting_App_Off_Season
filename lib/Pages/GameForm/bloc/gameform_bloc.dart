@@ -6,6 +6,7 @@ import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
+import 'package:scouting_app_2/models/Match/PostGameData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
@@ -13,13 +14,13 @@ import 'package:scouting_app_2/services/HomeService.dart';
 part 'gameform_event.dart';
 part 'gameform_state.dart';
 
-class GameformBloc extends Bloc<GameformEvent, GameformState> {
-  GameformBloc() : super(GameformInitial());
+class GameFormBloc extends Bloc<GameFormEvent, GameformState> {
+  GameFormBloc() : super(GameformInitial());
   int index;
   ScoutingMatch match;
   @override
   Stream<GameformState> mapEventToState(
-    GameformEvent event,
+    GameFormEvent event,
   ) async* {
     if (event is GameFormUpdate)
       yield GameformPage(index: event.index, match: event.match);
@@ -38,6 +39,7 @@ class GameformBloc extends Bloc<GameformEvent, GameformState> {
               matchNumber: 1);
       this.match.data = ScoutingMatchData();
       this.match.data.endGame = EndGameStage(type: EndGameClimbTypeGenerator.next());
+      this.match.postGameData = PostGameData(winningState: WinningStateGenerator.next());
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUpdateStartingPosition) {
@@ -88,6 +90,11 @@ class GameformBloc extends Bloc<GameformEvent, GameformState> {
     }
     if(event is GameFormUpdateEndGame){
       match.data.endGame = EndGameStage(type: EndGameClimbTypeGenerator.next());
+      yield GameformPage(index: index, match: this.match);
+    }
+    if(event is GameFormUpdatePostGameData){
+      this.match.postGameData = event.data;
+      
       yield GameformPage(index: index, match: this.match);
     }
   }

@@ -5,7 +5,6 @@ import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
 
 class EndGamePage extends StatelessWidget {
-  
   final EndGameStage data;
   EndGamePage(this.data);
   @override
@@ -36,7 +35,7 @@ class EndGamePage extends StatelessWidget {
                 child: ElevatedButton(
               onPressed: () {
                   
-                  BlocProvider.of<GameformBloc>(context).add(GameFormUpdateEndGame(data));
+                  BlocProvider.of<GameFormBloc>(context).add(GameFormUpdateEndGame(data));
               },
               child: data.type.image,
             )),
@@ -44,19 +43,5 @@ class EndGamePage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String getValue(int index) {
-    switch (index) {
-      case 0:
-        return EndGameClimbType.empty;
-      case 1:
-        return EndGameClimbType.even;
-      case 2:
-        return EndGameClimbType.uneven;
-      case 3:
-        return EndGameClimbType.platform;
-      default:
-    }
   }
 }

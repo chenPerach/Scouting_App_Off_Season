@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:scouting_app_2/models/model.dart';
 
 class PostGameData extends Model {
@@ -40,6 +39,27 @@ class WinningState {
         break;
       default:
     }
+    return obj;
+  }
+}
+
+class WinningStateGenerator {
+  static int _i =0;
+  static WinningState next(){
+    var obj;
+    switch (_i) {
+      case 0:
+        obj = WinningState.generate(WinningState.win);
+        break;
+        case 1:
+        obj = WinningState.generate(WinningState.draw);
+        break;
+        case 2:
+        obj = WinningState.generate(WinningState.loss);
+        break;
+      default:
+    }
+    _i = (_i+1)%3;
     return obj;
   }
 }

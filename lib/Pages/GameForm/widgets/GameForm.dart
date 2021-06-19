@@ -11,8 +11,8 @@ class GameFormBlocCreator extends StatelessWidget {
   Widget build(BuildContext c) {
     return WillPopScope(
       onWillPop: () => _onWillPop(c),
-      child: PageBlocCreator<GameformEvent, GameformState, GameformBloc>(
-        create: (_) => GameformBloc(),
+      child: PageBlocCreator<GameFormEvent, GameformState, GameFormBloc>(
+        create: (_) => GameFormBloc(),
         builder: _builder,
         listener: (context, state) {},
       ),
@@ -26,7 +26,7 @@ class GameFormBlocCreator extends StatelessWidget {
         match: state.match,
       );
     if (state is GameformInitial){
-      BlocProvider.of<GameformBloc>(context).add(GameFromInitialEvent());
+      BlocProvider.of<GameFormBloc>(context).add(GameFromInitialEvent());
       return Waiting();
     }
   }
