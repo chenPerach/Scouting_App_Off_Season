@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
 
 class EndGamePage extends StatelessWidget {
   
-  EndGameStage cycle = EndGameStage();
-  int index = 0;
+  final EndGameStage data;
+  EndGamePage(this.data);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,7 +23,7 @@ class EndGamePage extends StatelessWidget {
           ),
           Container(
             width: 300,
-            height: 5,
+            height: 3,
             color: Colors.grey,
           ),
           SizedBox(
@@ -33,12 +35,10 @@ class EndGamePage extends StatelessWidget {
             child: Expanded(
                 child: ElevatedButton(
               onPressed: () {
-                  index = (index + 1) % 4;
-                  cycle = EndGameStage(
-                      type: EndGameClimbType.generate(getValue(index)));
-              
+                  
+                  BlocProvider.of<GameformBloc>(context).add(GameFormUpdateEndGame(data));
               },
-              child: Text(cycle.type.value),
+              child: data.type.image,
             )),
           )
         ],

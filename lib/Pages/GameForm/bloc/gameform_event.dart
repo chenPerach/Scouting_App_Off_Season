@@ -42,3 +42,7 @@ class GameFormAddRolletCycle extends GameformEvent{
   final RolletCycle cycle;
   GameFormAddRolletCycle({this.cycle,this.type});
 }
+class GameFormUpdateEndGame extends GameformEvent{
+  final EndGameStage data;
+  GameFormUpdateEndGame(this.data);
+}

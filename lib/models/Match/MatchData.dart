@@ -36,9 +36,7 @@ abstract class GenericScoutingStageData implements Model {}
 
 class EndGameStage extends GenericScoutingStageData {
   EndGameClimbType type;
-  EndGameStage({type}) {
-    this.type = type ?? EndGameClimbType.generate(EndGameClimbType.empty);
-  }
+  EndGameStage({this.type});
   factory EndGameStage.fromJson(Map<String, dynamic> json) {
     return EndGameStage(type: json["type"]);
   }
