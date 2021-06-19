@@ -62,16 +62,16 @@ class EndGameClimbType {
     switch (value) {
       //TODO: add currect assests
       case even:
-        img = Image.asset("");
+        img = Image.asset("assets/images/EndGame/Balanced.png");
         break;
       case uneven:
-        img = Image.asset("");
+        img = Image.asset("assets/images/EndGame/Climb.png");
         break;
       case platform:
-        img = Image.asset("");
+        img = Image.asset("assets/images/EndGame/Park.png");
         break;
       case empty:
-        img = Image.asset("");
+        img = Image.asset("assets/images/EndGame/Empty.png");
         break;
       default:
     }
