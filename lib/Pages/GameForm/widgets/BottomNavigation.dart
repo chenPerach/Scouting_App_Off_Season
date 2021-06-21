@@ -15,7 +15,8 @@ import 'package:scouting_app_2/presentation/primo_cons_icons.dart';
 class GameFormBottomNavPage extends StatelessWidget {
   final int index;
   final ScoutingMatch match;
-  GameFormBottomNavPage({@required this.index, @required this.match});
+  final String error;
+  GameFormBottomNavPage({@required this.index, @required this.match,this.error});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class GameFormBottomNavPage extends StatelessWidget {
         return MatchData(
           info: this.match?.info ?? null,
           pos: this.match?.data?.startingPosition,
+          error: this.error,
         );
         break;
       case 1:

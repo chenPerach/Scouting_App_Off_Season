@@ -24,6 +24,7 @@ class GameFormBlocCreator extends StatelessWidget {
       return GameFormBottomNavPage(
         index: state.index,
         match: state.match,
+        error: state.error,
       );
     if (state is GameformInitial){
       BlocProvider.of<GameFormBloc>(context).add(GameFromInitialEvent());

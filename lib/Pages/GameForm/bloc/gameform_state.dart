@@ -8,5 +8,6 @@ class GameformInitial extends GameformState {}
 class GameformPage extends GameformState {
   final int index;
   final ScoutingMatch match;
-  GameformPage({@required this.index, @required this.match});
+  final String error;
+  GameformPage({@required this.index, @required this.match,this.error});
 }

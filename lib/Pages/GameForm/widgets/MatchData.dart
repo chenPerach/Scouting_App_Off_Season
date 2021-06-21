@@ -14,7 +14,8 @@ import 'package:scouting_app_2/services/HomeService.dart';
 class MatchData extends StatefulWidget {
   GameInfo info;
   String pos;
-  MatchData({this.info,this.pos});
+  String error;
+  MatchData({this.info,this.pos,this.error});
   MatchModel getInfoByTime(DateTime time) {
     MatchModel closestGame = HomeService.matchList.first;
     Duration dT = time.difference(HomeService.matchList.first.time).abs();
@@ -214,6 +215,8 @@ class _MatchDataState extends State<MatchData> {
               ),
             ),
           ),
+          Container(child: Text(widget.error ?? "",style: TextStyle(color: Colors.red,),textAlign: TextAlign.center,),width: 250,),
+          SizedBox(height: 75,)
         ],
       ),
     );

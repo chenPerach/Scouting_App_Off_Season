@@ -37,7 +37,8 @@ class CommentAndSummary extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              BlocProvider.of<GameFormBloc>(context).add(GameFormCheckMatchData());
+              // Navigator.of(context).pop();
             },
             child: Text("Submit"),
           )
