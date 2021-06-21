@@ -31,14 +31,11 @@ class EndGamePage extends StatelessWidget {
           Container(
             width: 200,
             height: 200,
-            child: Expanded(
-                child: ElevatedButton(
-              onPressed: () {
-                  
-                  BlocProvider.of<GameFormBloc>(context).add(GameFormUpdateEndGame(data));
-              },
+            child: ElevatedButton(
+              onPressed: () => BlocProvider.of<GameFormBloc>(context)
+                  .add(GameFormUpdateEndGame(data)),
               child: data.type.image,
-            )),
+            ),
           )
         ],
       ),

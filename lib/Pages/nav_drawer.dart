@@ -12,7 +12,7 @@ class NavDrawer extends StatelessWidget {
     var uc = Provider.of<UserContainer>(context);
     return Drawer(
       child: Container(
-        child: ListView(
+        child: Column(
           children: [
             UserAccountsDrawerHeader(
               accountName: Text(uc.user.user.displayName ?? "Loading..."),
@@ -54,7 +54,7 @@ class NavDrawer extends StatelessWidget {
                 Navigator.of(context).pushNamed(FirebaseInitilaize.route);
               },
             ),
-            Expanded(),
+            Expanded(child: Container()),
             ListTile(
               trailing: Text(kVERSION),
             ),

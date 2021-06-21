@@ -8,6 +8,7 @@ import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/SummaryAndComment.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
+import 'package:scouting_app_2/presentation/primo_cons_icons.dart';
 
 /// this class handles the bottom [navigation menu] view
 
@@ -22,11 +23,11 @@ class GameFormBottomNavPage extends StatelessWidget {
       body: _getBody(index),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.list,color: Theme.of(context).accentColor,), label: "match data"),
-          BottomNavigationBarItem(icon: Icon(Icons.list,color: Theme.of(context).accentColor,), label: "Auto"),
-          BottomNavigationBarItem(icon: Icon(Icons.list,color: Theme.of(context).accentColor,), label: "teleop"),
-          BottomNavigationBarItem(icon: Icon(Icons.list,color: Theme.of(context).accentColor,), label: "end game"),
-          BottomNavigationBarItem(icon: Icon(Icons.list,color: Theme.of(context).accentColor,), label: "post game"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.iconsett,color: Theme.of(context).accentColor,), label: "match data"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.powercells,color: Theme.of(context).accentColor,), label: "Auto"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.powercells,color: Theme.of(context).accentColor,), label: "teleop"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.endgame,color: Theme.of(context).accentColor,), label: "end game"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.finish,color: Theme.of(context).accentColor,), label: "post game"),
         ],
         onTap: (i) =>
             BlocProvider.of<GameFormBloc>(context).add(GameFromChangePage(i)),

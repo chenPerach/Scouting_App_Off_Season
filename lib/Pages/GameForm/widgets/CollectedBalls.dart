@@ -50,7 +50,7 @@ class _CollectedBallsState extends State<CollectedBalls> {
                   cycle.position = pos;
                 });
               },
-              child: Text("Shot Position"),
+              child: Text("Collect Position"),
               isActive: cycle.position == Vector2d.zero,
             ),
             ElevatedButton(

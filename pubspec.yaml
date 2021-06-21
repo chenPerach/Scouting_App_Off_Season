@@ -56,6 +56,12 @@ flutter:
     - assets/images/PlayingField/
     - assets/images/EndGame/
     - assets/images/FinishScreen/
+
+  fonts:
+   - family:  PrimoCons
+     fonts:
+      - asset: assets/icons/PrimoCons.ttf
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
