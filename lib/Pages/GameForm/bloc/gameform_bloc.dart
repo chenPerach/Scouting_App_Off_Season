@@ -119,11 +119,11 @@ class GameFormBloc extends Bloc<GameFormEvent, GameformState> {
     for (var match in matches) {
       if (match.compLevel == data.compLevel.simple &&
           match.matchNumber == data.matchNumber) {
-        if (data.alliance == "BLUE")
+        if (data.alliance == "blue")
           for (var team in match.blueAllience.teamNumbers) {
             if (team == data.teamNumber) return true;
           }
-        else if (data.alliance == "RED")
+        else if (data.alliance == "red")
           for (var team in match.redAllience.teamNumbers)
             if (team == data.teamNumber) return true;
       }
