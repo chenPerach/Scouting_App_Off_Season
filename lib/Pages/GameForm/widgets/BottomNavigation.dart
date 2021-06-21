@@ -26,8 +26,8 @@ class GameFormBottomNavPage extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(PrimoCons.iconsett,color: Theme.of(context).accentColor,), label: "match data"),
           BottomNavigationBarItem(icon: Icon(PrimoCons.powercells,color: Theme.of(context).accentColor,), label: "Auto"),
           BottomNavigationBarItem(icon: Icon(PrimoCons.powercells,color: Theme.of(context).accentColor,), label: "teleop"),
-          BottomNavigationBarItem(icon: Icon(PrimoCons.endgame,color: Theme.of(context).accentColor,), label: "end game"),
-          BottomNavigationBarItem(icon: Icon(PrimoCons.finish,color: Theme.of(context).accentColor,), label: "post game"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.endgame,color: Theme.of(context).accentColor,), label:"end game"),
+          BottomNavigationBarItem(icon: Icon(PrimoCons.finish,color: Theme.of(context).accentColor,), label: "finish"),
         ],
         onTap: (i) =>
             BlocProvider.of<GameFormBloc>(context).add(GameFromChangePage(i)),

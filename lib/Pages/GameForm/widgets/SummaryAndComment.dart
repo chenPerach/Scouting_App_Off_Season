@@ -28,8 +28,9 @@ class CommentAndSummary extends StatelessWidget {
             ),
           ),
           Container(
-            width: 200,
+            width: 250,
             child: TextField(
+              decoration: InputDecoration(hintText: "comment"),
               keyboardType: TextInputType.multiline,
               maxLines: null,
             ),
