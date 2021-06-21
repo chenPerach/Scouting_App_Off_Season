@@ -9,6 +9,7 @@ import 'package:scouting_app_2/services/firebase_auth_service.dart';
 import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
+String kVERSION = "0.0.4";
 void main() {
   ansiColorDisabled = false;
   WidgetsFlutterBinding.ensureInitialized();

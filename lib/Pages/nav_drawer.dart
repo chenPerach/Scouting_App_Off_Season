@@ -54,6 +54,10 @@ class NavDrawer extends StatelessWidget {
                 Navigator.of(context).pushNamed(FirebaseInitilaize.route);
               },
             ),
+            Expanded(),
+            ListTile(
+              trailing: Text(kVERSION),
+            ),
           ],
         ),
       ),
