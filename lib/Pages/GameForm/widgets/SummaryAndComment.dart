@@ -12,19 +12,18 @@ class CommentAndSummary extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: 200,
             height: 200,
-            child: Expanded(
-              child: ElevatedButton(
-                child: data.winningState.image,
-                onPressed: () {
-                  this.data.winningState = WinningStateGenerator.next();
-                  BlocProvider.of<GameFormBloc>(context)
-                      .add(GameFormUpdatePostGameData(this.data));
-                },
-              ),
+            child: ElevatedButton(
+              child: data.winningState.image,
+              onPressed: () {
+                this.data.winningState = WinningStateGenerator.next();
+                BlocProvider.of<GameFormBloc>(context)
+                    .add(GameFormUpdatePostGameData(this.data));
+              },
             ),
           ),
           Container(
@@ -37,7 +36,8 @@ class CommentAndSummary extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              BlocProvider.of<GameFormBloc>(context).add(GameFormCheckMatchData());
+              BlocProvider.of<GameFormBloc>(context)
+                  .add(GameFormCheckMatchData());
               // Navigator.of(context).pop();
             },
             child: Text("Submit"),
