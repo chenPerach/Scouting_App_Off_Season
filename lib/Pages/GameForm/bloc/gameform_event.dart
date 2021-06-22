@@ -13,12 +13,6 @@ class GameFormUpdateGameInfo extends GameFormEvent {
   GameFormUpdateGameInfo(this.info);
 }
 
-class GameFormUpdate extends GameFormEvent {
-  final int index;
-  final ScoutingMatch match;
-  GameFormUpdate(this.index, this.match);
-}
-
 class GameFormUpdateStartingPosition extends GameFormEvent {
   final String pos;
   GameFormUpdateStartingPosition(this.pos);
@@ -55,3 +49,10 @@ class GameFormUpdatePostGameData extends GameFormEvent {
 }
 
 class GameFormCheckMatchData extends GameFormEvent {}
+
+class GameFormUploadMatch extends GameFormEvent {
+  final PrimoUser user;
+  GameFormUploadMatch({
+    @required this.user,
+  });
+}

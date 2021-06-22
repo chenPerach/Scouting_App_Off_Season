@@ -9,22 +9,22 @@ import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
 import 'package:scouting_app_2/models/Match/PostGameData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
+import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
+import 'package:scouting_app_2/services/gameForm.dart';
 
 part 'gameform_event.dart';
 part 'gameform_state.dart';
 
-class GameFormBloc extends Bloc<GameFormEvent, GameformState> {
+class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
   GameFormBloc() : super(GameformInitial());
   int index;
   ScoutingMatch match;
   @override
-  Stream<GameformState> mapEventToState(
+  Stream<GameFormState> mapEventToState(
     GameFormEvent event,
   ) async* {
-    if (event is GameFormUpdate)
-      yield GameformPage(index: event.index, match: event.match);
     if (event is GameFormUpdateGameInfo) {
       this.match.info = event.info;
       yield GameformPage(index: index, match: this.match);
@@ -97,7 +97,7 @@ class GameFormBloc extends Bloc<GameFormEvent, GameformState> {
       match.data.endGame = EndGameStage(type: EndGameClimbTypeGenerator.next());
       yield GameformPage(index: index, match: this.match);
     }
-    if (event is GameFormCheckMatchData) {
+    if (event is GameFormUploadMatch) {
       bool valid = isMatchData(this.match.info);
       if (!valid) {
         this.index = 0;
@@ -106,6 +106,9 @@ class GameFormBloc extends Bloc<GameFormEvent, GameformState> {
             match: this.match,
             error: "match data not valid, please provide correct match data.");
       }
+      yield GameFormLoading();
+      await GameFormService.uploadMatch(this.match, event.user);
+      yield GameFormExit();
     }
     if (event is GameFormUpdatePostGameData) {
       this.match.postGameData = event.data;

@@ -31,6 +31,7 @@ class _ShotBallsState extends State<ShotBalls> {
               },
             ),
             PrimoSlider(
+              // img: "assets/images/GamePieces/Inner.png",
               title: "Inner",
               getValue: () => c.ballsInner.toDouble(),
               onChange: (value) {
@@ -39,7 +40,8 @@ class _ShotBallsState extends State<ShotBalls> {
               },
             ),
             PrimoSlider(
-              title: "Outer",
+              img: "assets/images/GamePieces/Outer.png",
+              // title: "Outer",
               getValue: () => c.ballsOuter.toDouble(),
               onChange: (value) {
                 if (c.ballsShot >= c.ballsInner + c.ballsLower + value)
@@ -47,7 +49,8 @@ class _ShotBallsState extends State<ShotBalls> {
               },
             ),
             PrimoSlider(
-              title: "Lower",
+              img: "assets/images/GamePieces/Lower.png",
+              // title: "Lower",
               getValue: () => c.ballsLower.toDouble(),
               onChange: (value) {
                 if (c.ballsShot >= c.ballsInner + value + c.ballsOuter)
