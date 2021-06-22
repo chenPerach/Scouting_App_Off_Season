@@ -15,7 +15,7 @@ class MatchData extends StatefulWidget {
   GameInfo info;
   String pos;
   String error;
-  MatchData({this.info,this.pos,this.error});
+  MatchData({this.info, this.pos, this.error});
   MatchModel getInfoByTime(DateTime time) {
     MatchModel closestGame = HomeService.matchList.first;
     Duration dT = time.difference(HomeService.matchList.first.time).abs();
@@ -162,61 +162,90 @@ class _MatchDataState extends State<MatchData> {
           ),
           SizedBox(height: 50),
           Expanded(
-            child: Builder(
-              builder: (context) => Stack(
-                children: [
-                  Image.asset(
-                    "assets/images/PlayingField/playing_field_starting_line.jpg",
-                    fit: BoxFit.contain,
-                  ),
-                  Positioned(
-                    width: MediaQuery.of(context).size.width,
-                    top: 29,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: ListView(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Stack(
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            _updateStartingLinePosition(context, "Left");
-                          },
-                          child: Text("Left"),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.pos == "Left"
-                                      ? Colors.orange
-                                      : Colors.blue)),
+                        Image.asset(
+                          "assets/images/PlayingField/playing_field_starting_line.jpg",
+                          fit: BoxFit.contain,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            _updateStartingLinePosition(context, "Middle");
-                          },
-                          child: Text("Middle"),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.pos == "Middle"
-                                      ? Colors.orange
-                                      : Colors.blue)),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            _updateStartingLinePosition(context, "Right");
-                          },
-                          child: Text("Right"),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  widget.pos == "Right"
-                                      ? Colors.orange
-                                      : Colors.blue)),
-                        ),
+                        Positioned(
+                          width: MediaQuery.of(context).size.width,
+                          top: 29,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  _updateStartingLinePosition(context, "Left");
+                                },
+                                child: Text("Left"),
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            widget.pos == "Left"
+                                                ? Colors.orange
+                                                : Colors.blue)),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  _updateStartingLinePosition(
+                                      context, "Middle");
+                                },
+                                child: Text("Middle"),
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            widget.pos == "Middle"
+                                                ? Colors.orange
+                                                : Colors.blue)),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  _updateStartingLinePosition(context, "Right");
+                                },
+                                child: Text("Right"),
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            widget.pos == "Right"
+                                                ? Colors.orange
+                                                : Colors.blue)),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    widget.error ?? "",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  width: 250,
+                ),
+              ],
             ),
           ),
-          Container(child: Text(widget.error ?? "",style: TextStyle(color: Colors.red,),textAlign: TextAlign.center,),width: 250,),
-          SizedBox(height: 75,)
+          Container(
+            child: Text(
+              widget.error ?? "",
+              style: TextStyle(
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            width: 250,
+          ),
         ],
       ),
     );
