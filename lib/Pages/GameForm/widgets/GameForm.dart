@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/ExitPage.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
 
@@ -34,8 +36,7 @@ class GameFormBlocCreator extends StatelessWidget {
       return Waiting();
     }
     if(state is GameFormExit){
-      Navigator.of(context).pop();
-      return Waiting();
+      return Exit();
     }
   }
 

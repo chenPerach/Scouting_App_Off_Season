@@ -13,7 +13,6 @@ class GameFormService {
     var userRef = _ref.child("users/$userId/posts/$id");
     var teamRef = _ref.child("teams/${match.info.teamNumber}/posts/$id");
     var posts = _ref.child("posts/$id");
-    print(id);
     await userRef.set(submittionTime.millisecondsSinceEpoch);
     await teamRef.set(submittionTime.millisecondsSinceEpoch);
     await posts.set(match.toJson());
