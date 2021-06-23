@@ -15,11 +15,11 @@ class ShootingCycle implements Model {
       this.shootingPosition = const Vector2d(0, 0)});
   Map<String, dynamic> toJson() {
     return {
-      "outer": ballsOuter,
-      "inner": ballsInner,
-      "lower": ballsLower,
+      "outer": ballsOuter.toInt(),
+      "inner": ballsInner.toInt(),
+      "lower": ballsLower.toInt(),
       "balls_shot": ballsShot,
-      "position": {"x": shootingPosition.x, "y": shootingPosition.y}
+      "position": {"x": shootingPosition.x.toDouble(), "y": shootingPosition.y.toDouble()}
     };
   }
 
@@ -50,7 +50,7 @@ class BallsCycle implements Model {
     return {
       "tranch": tranch,
       "balls_picked": numPicked,
-      "position": {"x": position.x, "y": position.y}
+      "position": {"x": position.x.toDouble(), "y": position.y.toDouble()}
     };
   }
 }

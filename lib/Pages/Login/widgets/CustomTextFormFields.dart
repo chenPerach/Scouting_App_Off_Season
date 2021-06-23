@@ -10,10 +10,13 @@ class FormPasswordField extends TextFormField {
               if (pass == null || pass.isEmpty) {
                 return "empty";
               }
-              if (!RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")
-                  .hasMatch(pass)) {
-                return "not secure enough";
+              if(pass.length < 6){
+                return "not long enough";
               }
+              // if (!RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$")
+              //     .hasMatch(pass)) {
+              //   return "not secure enough";
+              // }
               return null;
             },
             controller: controller);

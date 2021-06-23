@@ -13,12 +13,6 @@ class GameFormUpdateGameInfo extends GameFormEvent {
   GameFormUpdateGameInfo(this.info);
 }
 
-class GameFormUpdate extends GameFormEvent {
-  final int index;
-  final ScoutingMatch match;
-  GameFormUpdate(this.index, this.match);
-}
-
 class GameFormUpdateStartingPosition extends GameFormEvent {
   final String pos;
   GameFormUpdateStartingPosition(this.pos);
@@ -26,28 +20,39 @@ class GameFormUpdateStartingPosition extends GameFormEvent {
 
 class GameFromInitialEvent extends GameFormEvent {}
 
-class GameFormAddShootingCycle extends GameFormEvent{
-  final String  type;
+class GameFormAddShootingCycle extends GameFormEvent {
+  final String type;
   final ShootingCycle cycle;
-  GameFormAddShootingCycle({this.cycle,this.type});
+  GameFormAddShootingCycle({this.cycle, this.type});
 }
 
-class GameFormAddBallsCycle extends GameFormEvent{
-  final String  type;
+class GameFormAddBallsCycle extends GameFormEvent {
+  final String type;
   final BallsCycle cycle;
-  GameFormAddBallsCycle({this.cycle,this.type});
+  GameFormAddBallsCycle({this.cycle, this.type});
 }
-class GameFormAddRolletCycle extends GameFormEvent{
-  final String  type;
+
+class GameFormAddRolletCycle extends GameFormEvent {
+  final String type;
   final RolletCycle cycle;
-  GameFormAddRolletCycle({this.cycle,this.type});
+  GameFormAddRolletCycle({this.cycle, this.type});
 }
-class GameFormUpdateEndGame extends GameFormEvent{
+
+class GameFormUpdateEndGame extends GameFormEvent {
   final EndGameStage data;
   GameFormUpdateEndGame(this.data);
 }
 
-class GameFormUpdatePostGameData extends GameFormEvent{
+class GameFormUpdatePostGameData extends GameFormEvent {
   final PostGameData data;
   GameFormUpdatePostGameData(this.data);
+}
+
+class GameFormCheckMatchData extends GameFormEvent {}
+
+class GameFormUploadMatch extends GameFormEvent {
+  final PrimoUser user;
+  GameFormUploadMatch({
+    @required this.user,
+  });
 }
