@@ -16,7 +16,7 @@ class GameInfo extends Model {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "comp_level": compLevel,
+      "comp_level": compLevel.simple,
       "match_number": matchNumber,
       "alliance": alliance,
       "team_number": teamNumber

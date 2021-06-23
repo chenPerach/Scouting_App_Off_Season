@@ -38,7 +38,7 @@ class CommentAndSummary extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              var user = Provider.of<UserContainer>(context).user;
+              var user = Provider.of<UserContainer>(context,listen: false).user;
               BlocProvider.of<GameFormBloc>(context)
                   .add(GameFormUploadMatch(user: user));
               },

@@ -13,9 +13,9 @@ class GameFormService {
     var userRef = _ref.child("users/$userId/posts/$id");
     var teamRef = _ref.child("teams/${match.info.teamNumber}/posts/$id");
     var posts = _ref.child("posts/$id");
-
-    // await userRef.set(submittionTime.toUtc().toString());
-    // await teamRef.set(submittionTime.toUtc().toString());
-    // await posts.set(match.toJson());
+    print(id);
+    await userRef.set(submittionTime.millisecondsSinceEpoch);
+    await teamRef.set(submittionTime.millisecondsSinceEpoch);
+    await posts.set(match.toJson());
   }
 }

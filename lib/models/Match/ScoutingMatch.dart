@@ -17,7 +17,7 @@ class ScoutingMatch extends Model {
 
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
     return ScoutingMatch(
-        time: DateTime.parse(json["time"]),
+        time: DateTime.fromMillisecondsSinceEpoch(json["time"]),
         data: ScoutingMatchData.fromJson(json["data"]),
         info: GameInfo.fromJson(json["general_info"]));
   }
@@ -30,7 +30,7 @@ class ScoutingMatch extends Model {
     return {
       "general_info": info.toJson(),
       "data": data.toJson(),
-      "time": time.toUtc().toString()
+      "time": time.millisecondsSinceEpoch
     };
   }
 }

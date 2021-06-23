@@ -35,6 +35,7 @@ class GameFormBlocCreator extends StatelessWidget {
     }
     if(state is GameFormExit){
       Navigator.of(context).pop();
+      return Waiting();
     }
   }
 

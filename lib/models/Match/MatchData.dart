@@ -58,7 +58,6 @@ class EndGameClimbType {
   factory EndGameClimbType.generate(String value) {
     Image img;
     switch (value) {
-      //TODO: add currect assests
       case even:
         img = Image.asset("assets/images/EndGame/Balanced.png");
         break;
