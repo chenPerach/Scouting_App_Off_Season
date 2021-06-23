@@ -43,6 +43,10 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
           EndGameStage(type: EndGameClimbTypeGenerator.next());
       this.match.postGameData =
           PostGameData(winningState: WinningStateGenerator.next());
+      this.match.data.autonomus =
+          MidGameStage(balls: [], rollet: [], shooting: []);
+      this.match.data.teleop =
+          MidGameStage(balls: [], rollet: [], shooting: []);
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUpdateStartingPosition) {
