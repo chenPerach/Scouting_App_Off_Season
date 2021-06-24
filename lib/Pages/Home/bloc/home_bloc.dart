@@ -48,6 +48,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           match2id(m), tz.TZDateTime.from(m.time, tz.local),
           title: "Scouting App", body: "your match is about to start");
     }
+    if(event is HomeRemoveScheduledNotification){
+      NotificationService.removeScheduledNotification(match2id(event.match));
+    }
   }
 
   List<MatchModel> _getList(String matchType, List<MatchModel> matches) {
