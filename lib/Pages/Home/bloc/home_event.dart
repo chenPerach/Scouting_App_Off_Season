@@ -12,3 +12,12 @@ class HomeUpdateUser extends HomeEvent {
   final PrimoUser user;
   HomeUpdateUser(this.user);
 }
+
+class HomeScheduleNotification extends HomeEvent { 
+  final MatchModel match;
+  HomeScheduleNotification(this.match);
+}
+class HomeRemoveScheduledNotification extends HomeEvent { 
+  final MatchModel match;
+  HomeRemoveScheduledNotification(this.match);
+}

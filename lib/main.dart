@@ -5,12 +5,19 @@ import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/route_manager.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
+import 'package:scouting_app_2/services/notification_service.dart';
 
 import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
-String kVERSION = "0.1.0";
+String kVERSION = "0.2.0";
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.initalize(
+    onSelectNotification: (payload) async {
+      //TODO: implement
+    },
+  );
   ansiColorDisabled = false;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
