@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -39,6 +40,8 @@ class NotificationService {
     _id++;
   }
 
+  /// this function scheduals notification in the future
+  /// [Note] this method only accepts [dates in the future]
   static Future<void> scheduleNotification(int id, DateTime date,
       {@required String title, @required String body}) async {
     await _flutterLocalNotificationPlugin.zonedSchedule(

@@ -5,6 +5,7 @@ import 'package:scouting_app_2/services/notification_service.dart';
 
 class MatchNotificationScheduler {
   static Future<void> scheduleMatch(MatchModel match) async {
+    if(match.time.compareTo(DateTime.now())>0)
     await NotificationService.scheduleNotification(_match2Id(match), match.time,
         title: "match ${match.compLevel}-${match.matchNumber}",
         body: "is starting now!!");
