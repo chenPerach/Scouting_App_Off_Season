@@ -4,14 +4,11 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
-import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
-import 'package:scouting_app_2/services/notification_service.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import 'package:scouting_app_2/services/notification_wrapper.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -35,6 +32,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         quarter: _getList("qf", matches),
         quals: _getList("qm", matches),
       );
+      matches.forEach((m) {
+        if(m.compLevel == "qm" && event.uc.user.favoriteMatches.indexOf(m.matchNumber) != -1) // does match exist in favorite matches
+          MatchNotificationScheduler.scheduleMatch(m);
+      });
       yield HomeWithData(comp);
     }
 
@@ -42,14 +43,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await PrimoUserService.updateUser(event.user);
     }
     if (event is HomeScheduleNotification) {
-      var m = event.match;
-
-      await NotificationService.scheduleNotification(
-          match2id(m), tz.TZDateTime.from(m.time, tz.local),
-          title: "Scouting App", body: "your match is about to start");
+      await MatchNotificationScheduler.scheduleMatch(event.match);
     }
-    if(event is HomeRemoveScheduledNotification){
-      NotificationService.removeScheduledNotification(match2id(event.match));
+    if (event is HomeRemoveScheduledNotification) {
+      MatchNotificationScheduler.removeSchedualMatch(event.match);
     }
   }
 
@@ -58,26 +55,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         matches.where((e) => e.compLevel.toLowerCase() == matchType));
     l.sort((m1, m2) => m1.matchNumber - m2.matchNumber);
     return l;
-  }
-
-  int match2id(MatchModel m) {
-    int id = 0;
-    switch (m.compLevel) {
-      case "qm":
-        id = 1;
-        break;
-      case "f":
-        id = 4;
-        break;
-      case "sf":
-        id = 3;
-        break;
-      case "qf":
-        id = 1;
-        break;
-      default:
-    }
-    id = id * pow(10, m.matchNumber.toString().length) + m.matchNumber;
-    return id;
   }
 }

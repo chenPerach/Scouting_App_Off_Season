@@ -39,10 +39,10 @@ class NotificationService {
     _id++;
   }
 
-  static Future<void> scheduleNotification(int id, tz.TZDateTime date,
+  static Future<void> scheduleNotification(int id, DateTime date,
       {@required String title, @required String body}) async {
     await _flutterLocalNotificationPlugin.zonedSchedule(
-        id, title, body, date, _platformChannelSpecifics,
+        id, title, body, tz.TZDateTime.from(date, tz.local), _platformChannelSpecifics,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true);

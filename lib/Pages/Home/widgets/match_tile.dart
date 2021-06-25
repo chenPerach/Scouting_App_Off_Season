@@ -68,10 +68,14 @@ class MatchTile extends StatelessWidget {
                   onPressed: () {
                     var user = uc.user;
                     var i = user.favoriteMatches.indexOf(match.matchNumber);
-                    if (i == -1)
+                    if (i == -1){
                       user.favoriteMatches.add(match.matchNumber);
-                    else
+                      BlocProvider.of<HomeBloc>(context).add(HomeScheduleNotification(match));
+                    }
+                    else{
                       user.favoriteMatches.removeAt(i);
+                      BlocProvider.of<HomeBloc>(context).add(HomeRemoveScheduledNotification(match));
+                    }
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeUpdateUser(user));
                     uc.user = user;
