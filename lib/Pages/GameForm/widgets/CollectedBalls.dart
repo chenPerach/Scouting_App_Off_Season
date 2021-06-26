@@ -19,6 +19,7 @@ class _CollectedBallsState extends State<CollectedBalls> {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "collected balls",
