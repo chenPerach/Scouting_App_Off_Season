@@ -18,7 +18,7 @@ class MatchModel {
     return MatchModel(
       compLevel: json["comp_level"],
       matchNumber: json["match_number"],
-      time: DateTime.fromMillisecondsSinceEpoch(json["time"]),
+      time: DateTime.fromMillisecondsSinceEpoch(json["time"]*1000),
       redAllience: Allience.fromJson(
           List<String>.from(json["alliances"]["red"]["team_keys"]), "red"),
       blueAllience: Allience.fromJson(

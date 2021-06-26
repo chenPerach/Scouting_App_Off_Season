@@ -49,6 +49,10 @@ class NotificationService {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true);
+    List<PendingNotificationRequest> n = await _flutterLocalNotificationPlugin.pendingNotificationRequests();
+    n.forEach((element) {
+      print(element.title);
+    });
   }
   static void removeScheduledNotification(int id){
     _flutterLocalNotificationPlugin.cancel(id);

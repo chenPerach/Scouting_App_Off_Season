@@ -14,9 +14,7 @@ String kVERSION = "0.2.0";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService.initalize(
-    onSelectNotification: (payload) async {
-      //TODO: implement
-    },
+    onSelectNotification: (payload) async {},
   );
   ansiColorDisabled = false;
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,21 +49,32 @@ class _AppState extends State<App> {
 class FirebaseInitilaize extends StatelessWidget {
   static const String route = "/";
   final Future<FirebaseApp> _isInitilazed = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _isInitilazed,
+      future: NotificationService.initalize(
+        onSelectNotification: (payload) async{
+          Navigator.of(context).pushNamed(FirebaseInitilaize.route);
+        },
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done)
-          return StreamBuilder(
-            stream: FirebaseAuthService.instance.authState(),
+          return FutureBuilder(
+            future: _isInitilazed,
             builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return LoginScreen();
-              } else {
-                return Home();
-              }
+              if (snapshot.connectionState == ConnectionState.done)
+                return StreamBuilder(
+                  stream: FirebaseAuthService.instance.authState(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return LoginScreen();
+                    } else {
+                      return Home();
+                    }
+                  },
+                );
+              else
+                return _WaitingApp();
             },
           );
         else
