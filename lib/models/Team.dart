@@ -56,7 +56,7 @@ class TeamsConsts {
     {"nickname": "alzahrawi", "number": 6168},
     {"nickname": "Team Koi", "number": 6230},
     {"nickname": "Excalibur", "number": 6738},
-    {"nickname": "G3", "number": 6740},
+    {"nickname": "G3 - Glue Gun & Glitter", "number": 6740},
     {"nickname": "Space monkeys", "number": 6741},
     {"nickname": "\u274c\u2b55", "number": 7039},
     {"nickname": "Team Streak", "number": 7067},

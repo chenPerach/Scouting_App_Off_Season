@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
-import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
@@ -27,6 +26,10 @@ class MatchData extends StatefulWidget {
         dT = difference;
       }
     }
+
+    List<int> l = List.generate(TeamsConsts.teams.length, (index) => TeamsConsts.teams[index].number);
+    
+
     return closestGame;
   }
 
