@@ -7,7 +7,6 @@ import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/CollectedBalls.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Rollet.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/ShootBalls.dart';
-import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 
 class Cycles extends StatelessWidget {

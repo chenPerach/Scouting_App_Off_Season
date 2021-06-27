@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
@@ -178,6 +177,7 @@ class EndGameClimbTypeGenerator {
       case 3:
         return EndGameClimbType.generate(EndGameClimbType.platform);
       default:
+        return EndGameClimbType.generate(EndGameClimbType.empty);
     }
   }
 }
