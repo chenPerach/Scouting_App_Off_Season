@@ -42,7 +42,7 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       this.match.data.endGame =
           EndGameStage(type: EndGameClimbTypeGenerator.next());
       this.match.postGameData =
-          PostGameData(winningState: WinningStateGenerator.next());
+          PostGameData(winningState: WinningStateGenerator.next(),playingType: PlayingTypeGenerator.next());
       this.match.data.autonomus =
           MidGameStage(balls: [], rollet: [], shooting: []);
       this.match.data.teleop =
@@ -111,7 +111,7 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
             error: "match data not valid, please provide correct match data.");
       }
       yield GameFormLoading();
-      await GameFormService.uploadMatch(this.match, event.user);
+      await ScoutingDataService.uploadMatch(this.match, event.user);
       yield GameFormExit();
     }
     if (event is GameFormUpdatePostGameData) {

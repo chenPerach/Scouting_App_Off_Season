@@ -3,7 +3,7 @@ import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:uuid/uuid.dart';
 
-class GameFormService {
+class ScoutingDataService {
   static var _ref = FirebaseDatabase.instance.reference();
   static var uuid = Uuid();
   static Future<void> uploadMatch(ScoutingMatch match,PrimoUser user) async {
@@ -17,4 +17,8 @@ class GameFormService {
     await teamRef.set(submittionTime.millisecondsSinceEpoch);
     await posts.set(match.toJson());
   }
+
+  static Future<List<ScoutingMatch>> fetchData(){
+    return null;
+  } 
 }
