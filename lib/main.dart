@@ -32,6 +32,7 @@ class _AppState extends State<App> {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => UserContainer())],
       child: MaterialApp(
+        builder: (context, child) => MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.15), child: child),
         theme: ThemeData.dark(),
         initialRoute: FirebaseInitilaize.route,
         onGenerateRoute: RouteGenerator.generateRoute,

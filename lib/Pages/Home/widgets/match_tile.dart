@@ -24,43 +24,48 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserContainer uc = Provider.of<UserContainer>(context);
-    final double screenWidth = MediaQuery.of(context).size.width;
+    // final double screenWidth = MediaQuery.of(context).size.width;
     return Card(
       child: Container(
           height: 90,
           child: Row(
             children: [
-              Container(
-                color: Colors.black12,
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  child: Text(
-                    match.matchNumber.toString(),
-                    style: title,
-                  ),
-                  padding: EdgeInsets.fromLTRB(20, 0, 25, 0),
-                ),
-              ),
-              SizedBox(
-                width: screenWidth * 0.05,
-              ),
-              Container(
-                width: 160,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _RedRow(uc: uc, match: match, redStyle: redStyle),
-                    Container(
-                      color: Colors.grey,
-                      width: screenWidth * 0.4,
-                      height: 1,
+              Flexible(
+                flex:6,
+                child: Container(
+                  color: Colors.black12,
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    child: Text(
+                      match.matchNumber.toString(),
+                      style: title,
                     ),
-                    _BlueRow(uc: uc, match: match, blueStyle: blueStyle),
-                  ],
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  ),
                 ),
               ),
-              Expanded(child: Container()),
+              // Flexible(child: Container(),flex: 1,),
+
+              Flexible(
+                fit: FlexFit.loose,
+                flex:12,
+                child: Container(
+                  // width: screenWidth*0.5,
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _RedRow(uc: uc, match: match, redStyle: redStyle),
+                      Container(height: 1,color: Colors.grey,width: 160,),
+                      _BlueRow(uc: uc, match: match, blueStyle: blueStyle),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(),
+                flex: 1,
+              ),
               IconButton(
                   icon: uc.user.favoriteMatches.indexOf(match.matchNumber) == -1
                       ? Icon(Icons.favorite_border)
@@ -68,13 +73,14 @@ class MatchTile extends StatelessWidget {
                   onPressed: () {
                     var user = uc.user;
                     var i = user.favoriteMatches.indexOf(match.matchNumber);
-                    if (i == -1){
+                    if (i == -1) {
                       user.favoriteMatches.add(match.matchNumber);
-                      BlocProvider.of<HomeBloc>(context).add(HomeScheduleNotification(match));
-                    }
-                    else{
+                      BlocProvider.of<HomeBloc>(context)
+                          .add(HomeScheduleNotification(match));
+                    } else {
                       user.favoriteMatches.removeAt(i);
-                      BlocProvider.of<HomeBloc>(context).add(HomeRemoveScheduledNotification(match));
+                      BlocProvider.of<HomeBloc>(context)
+                          .add(HomeRemoveScheduledNotification(match));
                     }
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeUpdateUser(user));
@@ -84,6 +90,10 @@ class MatchTile extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  num getColumnWidth(num screenWidth) {
+    if (screenWidth < 300) return 160;
   }
 }
 
