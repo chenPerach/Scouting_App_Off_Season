@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -135,29 +136,19 @@ class _MatchDataState extends State<MatchData> {
           ),
           _DropDownRow(
             child: Text("Team"),
-            dropDown: DropdownButtonFormField<int>(
-              hint: Text("select Team"),
-              value: widget.info.teamNumber,
-              items: List<DropdownMenuItem<int>>.generate(
-                TeamsConsts.teams.length,
-                (i) => DropdownMenuItem(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Text(TeamsConsts.teams[i].number.toString()),
-                        SizedBox(width: 5),
-                        Text(TeamsConsts.teams[i].nickname)
-                      ],
-                    ),
-                  ),
-                  value: TeamsConsts.teams[i].number,
-                ),
-              ),
+            dropDown: DropdownSearch<Team>(
+              items: TeamsConsts.teams,
+              mode:Mode.BOTTOM_SHEET,
+              searchBoxDecoration: InputDecoration(hintText: "search team"),
+              showSearchBox: true,
+              dropdownSearchDecoration: InputDecoration(border: InputBorder.none),
+              itemAsString: (item) => "${item.number} ${item.nickname}",
               onChanged: (value) {
-                widget.info.teamNumber = value;
+                widget.info.teamNumber = value.number;
                 BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
+              selectedItem: TeamsConsts.teams.where((element) => element.number == widget.info.teamNumber).first,
             ),
           ),
           SizedBox(height: 50),
