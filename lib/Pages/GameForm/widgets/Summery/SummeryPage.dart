@@ -10,8 +10,27 @@ class SummeryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MidGameStageWidget(summery.matchData.teleop),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                child: Text("Autonomus: "),
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              )
+            ],
+          ),
+          MidGameStageWidget(summery.matchData.auto),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                child: Text("Tele-Op: "),
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              )
+            ],
+          ),
           MidGameStageWidget(summery.matchData.teleop),
         ],
       ),

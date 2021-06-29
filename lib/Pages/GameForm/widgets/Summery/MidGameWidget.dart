@@ -9,7 +9,7 @@ class MidGameStageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
+        ShootingCycleWidget(data.shooting),
       ],
     ); 
   }
@@ -23,7 +23,7 @@ class ShootingCycleWidget extends StatelessWidget {
     return Column(
       children: [
         SummeryRow(
-          title: Text("accuracy:"),
+          title: Text("Accuracy:"),
           item: Text(cyclesSummery.accuracy.toStringAsFixed(2)),
         ),
         SummeryRow(

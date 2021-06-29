@@ -17,7 +17,10 @@ class GameFormBlocCreator extends StatelessWidget {
       child: PageBlocCreator<GameFormEvent, GameFormState, GameFormBloc>(
         create: (_) => GameFormBloc(),
         builder: _builder,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is GameFormExit)
+            Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -37,7 +40,7 @@ class GameFormBlocCreator extends StatelessWidget {
       return Waiting();
     }
     if(state is GameFormExit){
-      return Exit();
+      return Scaffold();
     }
     if(state is GameFormShowSummery){
       return SummeryPage(state.summery);

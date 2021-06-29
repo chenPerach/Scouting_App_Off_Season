@@ -158,7 +158,7 @@ class BallsCyclesSummery {
   double avgPicked;
   int tranchPasses;
   BallsCyclesSummery(this.balls) {
-    int ballsPicked = 0;
+    double ballsPicked = 0;
     this.tranchPasses = 0;
     balls.forEach((e) {
       ballsPicked += e.numPicked;
@@ -186,14 +186,15 @@ class ShootingCyclesSummery {
   List<ShootingCycle> shooting;
   double lowerAvg, outerAvg, innerAvg, accuracy;
   ShootingCyclesSummery(this.shooting) {
-    int ballsShot = 0;
-    int ballsLower = 0, ballsOuter = 0, ballsInner = 0;
+    
     if(this.shooting.isEmpty){
       this.innerAvg = 0;
       this.outerAvg = 0;
       this.lowerAvg = 0;
       return;
     }
+    double ballsShot = 0;
+    double ballsLower = 0, ballsOuter = 0, ballsInner = 0;
     this.shooting.forEach((e) {
       ballsShot += e.ballsShot;
       ballsInner += e.ballsInner;
