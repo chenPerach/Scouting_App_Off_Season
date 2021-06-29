@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ansicolor/ansicolor.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
@@ -118,7 +119,8 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
         var summery = ScoutingMatchSummery([this.match]);
         yield GameFormLoading();
         await ScoutingDataService.uploadMatch(this.match, event.user);
-        yield GameFormExit();
+        yield GameFormShowSummery(summery);
+        // yield GameFormExit();
       }
     }
     if (event is GameFormUpdatePostGameData) {
