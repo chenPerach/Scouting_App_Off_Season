@@ -24,7 +24,7 @@ class ShootingCycleWidget extends StatelessWidget {
       children: [
         SummeryRow(
           title: Text("Accuracy:"),
-          item: Text(cyclesSummery.accuracy.toStringAsFixed(2)),
+          item: Text("${cyclesSummery.accuracy.toStringAsFixed(2)}%"),
         ),
         SummeryRow(
           title: Text("Avg Inner:"),

@@ -207,6 +207,7 @@ class ShootingCyclesSummery {
     this.lowerAvg = ballsLower.toDouble() / shooting.length.toDouble();
     this.accuracy = (ballsInner + ballsOuter + ballsLower).toDouble() /
         ballsShot.toDouble();
+    this.accuracy *= 100;
   }
 }
 
