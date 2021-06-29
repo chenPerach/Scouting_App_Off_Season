@@ -20,7 +20,7 @@ class PostGameData extends Model {
 }
 
 class PlayingType {
-  static const String kOFFENSIVE = "OFFENSIVE", kDEFFENCIVE = "DEFFENSIVE";
+  static const String kOFFENSIVE = "OFFENSIVE", kDEFFENSIVE = "DEFFENSIVE";
   String type;
   PlayingType(this.type);
 }
@@ -31,7 +31,7 @@ class PlayingTypeGenerator {
     var type;
     switch (id) {
       case 0:
-        type = PlayingType(PlayingType.kDEFFENCIVE);
+        type = PlayingType(PlayingType.kDEFFENSIVE);
         break;
       case 1:
         type = PlayingType(PlayingType.kOFFENSIVE);

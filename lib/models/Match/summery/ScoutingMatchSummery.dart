@@ -1,18 +1,90 @@
+import 'dart:math';
+
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
+import 'package:scouting_app_2/models/Match/PostGameData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 
 /// this is a summery object for a few matches from the same team
 class ScoutingMatchSummery {
   GameInfoSummery info;
   MatchDataSummery matchData;
+  PostGameDataSummery postGame;
   ScoutingMatchSummery(List<ScoutingMatch> matches) {
     this.info =
         GameInfoSummery(List.generate(matches.length, (i) => matches[i].info));
     this.matchData =
         MatchDataSummery(List.generate(matches.length, (i) => matches[i].data));
+    this.postGame = PostGameDataSummery(
+        List.generate(matches.length, (i) => matches[i].postGameData),
+        List.generate(
+            matches.length,
+            (i) => Comment(
+                  comment: matches[i].postGameData.comment,
+                  match: _Match(
+                      compLevel: matches[i].info.compLevel.simple,
+                      number: matches[i].info.matchNumber),
+                )));
   }
+}
+
+class PostGameDataSummery {
+  List<Comment> comments;
+  WinningStateCounter winningStateCounter;
+  
+  PostGameDataSummery(List<PostGameData> postGameData, this.comments) {
+    this.winningStateCounter = WinningStateCounter(List.generate(
+        postGameData.length, (i) => postGameData[i].winningState));
+    
+  }
+}
+
+class PlayingTypeCounter{
+  int deffensive,offensive;
+  PlayingTypeCounter(List<PlayingType> l){
+    deffensive = 0;
+    offensive = 0;
+    l.forEach((e) {
+      switch (e.type) {
+        case PlayingType.kDEFFENSIVE:
+          deffensive++;
+          break;
+        case PlayingType.kOFFENSIVE:
+        offensive++;
+        break;
+        default:
+      }
+    });
+  }
+}
+class WinningStateCounter {
+  int win, draw, lose;
+  WinningStateCounter(List<WinningState> l) {
+    win = 0;
+    lose = 0;
+    draw = 0;
+    l.forEach((element) {
+      switch (element.type) {
+        case WinningState.draw:
+          draw++;
+          break;
+        case WinningState.loss:
+          lose++;
+          break;
+        case WinningState.win:
+          win++;
+          break;
+      }
+    });
+  }
+}
+
+class Comment {
+  String comment;
+  _Match match;
+
+  Comment({this.match, this.comment});
 }
 
 class MatchDataSummery {
@@ -20,12 +92,15 @@ class MatchDataSummery {
   EndGameSummery endGame;
   MatchDataSummery(List<ScoutingMatchData> data) {
     List<MidGameStage> teleList = [], autoList = [];
+    List<EndGameStage> endList = [];
     data.forEach((e) {
       teleList.add(e.teleop);
       autoList.add(e.autonomus);
+      endList.add(e.endGame);
     });
     this.auto = MidGameDataSummery(autoList);
     this.teleop = MidGameDataSummery(teleList);
+    this.endGame = EndGameSummery(endList);
   }
 }
 
@@ -113,6 +188,12 @@ class ShootingCyclesSummery {
   ShootingCyclesSummery(this.shooting) {
     int ballsShot = 0;
     int ballsLower = 0, ballsOuter = 0, ballsInner = 0;
+    if(this.shooting.isEmpty){
+      this.innerAvg = 0;
+      this.outerAvg = 0;
+      this.lowerAvg = 0;
+      return;
+    }
     this.shooting.forEach((e) {
       ballsShot += e.ballsShot;
       ballsInner += e.ballsInner;

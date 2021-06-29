@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ansicolor/ansicolor.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
@@ -8,6 +9,7 @@ import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
 import 'package:scouting_app_2/models/Match/PostGameData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
+import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
@@ -18,6 +20,8 @@ part 'gameform_state.dart';
 
 class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
   GameFormBloc() : super(GameformInitial());
+  AnsiPen _pen = AnsiPen()..red(bold: true,bg: false)..white(bg: true);
+  final _kTAG = "GAME FORM"; 
   int index;
   ScoutingMatch match;
   @override
@@ -110,6 +114,8 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
             match: this.match,
             error: "match data not valid, please provide correct match data.");
       } else {
+        print(_pen("$_kTAG: UPLOADING MATCH"));
+        var summery = ScoutingMatchSummery([this.match]);
         yield GameFormLoading();
         await ScoutingDataService.uploadMatch(this.match, event.user);
         yield GameFormExit();

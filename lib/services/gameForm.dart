@@ -18,7 +18,12 @@ class ScoutingDataService {
     await posts.set(match.toJson());
   }
 
-  static Future<List<ScoutingMatch>> fetchData(){
-    return null;
+  static Future<List<ScoutingMatch>> fetchMatches(List<String> ids)async{
+    List<ScoutingMatch> matches = [];
+    ids.forEach((e) async {
+      var snapshot = await _ref.child("posts/$e").once();
+      matches.add(ScoutingMatch.formJson(snapshot.value));
+    });
+    return matches;
   } 
 }
