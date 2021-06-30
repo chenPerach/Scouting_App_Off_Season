@@ -5,26 +5,26 @@ import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 
 class SummeryPage extends StatelessWidget {
   final ScoutingMatchSummery summery;
+  final controller = PageController(
+    initialPage: 0,
+  );
   SummeryPage(this.summery);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MidStageWidget(
-              title: "Autonomus",
-              data: summery.matchData.auto,
-            ),
-            MidStageWidget(
-              title: "Teleop",
-              data: summery.matchData.teleop,
-            ),
-          ],
+        body: PageView(
+          scrollDirection: Axis.vertical,
+      children: [
+        MidStageWidget(
+          title: "Autonumos",
+          data: summery.matchData.auto,
         ),
-      ),
-    );
+        MidStageWidget(
+          title: "Teleop",
+          data: summery.matchData.auto,
+        ),
+      ],
+    ));
   }
 }
 
@@ -35,6 +35,7 @@ class MidStageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -45,15 +46,22 @@ class MidStageWidget extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(height: 2,),
+        SizedBox(
+          height: 2,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(color: Colors.grey,height: 1,width: MediaQuery.of(context).size.width*0.9,)
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MediaQuery.of(context).size.width * 0.9,
+            )
           ],
         ),
-        SizedBox(height: 1,),
-
+        SizedBox(
+          height: 1,
+        ),
         MidGameStageWidget(data),
       ],
     );

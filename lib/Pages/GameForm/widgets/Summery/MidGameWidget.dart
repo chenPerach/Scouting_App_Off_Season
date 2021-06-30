@@ -31,28 +31,33 @@ class RolletCycleWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
               child: Text("Rollet:"),
             ),
-            SummeryRow(
-              title: Text("Rotation"),
-              item: Text("${summery.rotationNumber}")
-            ),
-            SummeryRow(
-              title: Text("Position:"),
-              item: Text("${summery.positionNumber}")
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Container(
-                color: Colors.grey,
-                height: 1,
-                width: MediaQuery.of(context).size.width * 0.9,
-              ),
-            )
           ],
         ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        ),
+        SummeryRow(
+            title: Text("Rotation"), item: Text("${summery.rotationNumber}")),
+        SummeryRow(
+            title: Text("Position:"), item: Text("${summery.positionNumber}")),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        )
       ],
     );
   }
 }
+
 class BallsCycleWidget extends StatelessWidget {
   final BallsCyclesSummery summery;
   BallsCycleWidget(this.summery);
@@ -66,25 +71,33 @@ class BallsCycleWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
               child: Text("Balls:"),
             ),
-            SummeryRow(
-              title: Text("Avg picked:"),
-              item: Text("${summery.avgPicked}"),
-            ),
-            SummeryRow(
-              title: Text("avg tranch passes:"),
-              item: Text("${summery.tranchPasses / summery.balls.length}"),
-            ),
-            ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Container(
-                color: Colors.grey,
-                height: 1,
-                width: MediaQuery.of(context).size.width * 0.9,
-              ),
-            )
           ],
         ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        ),
+        SummeryRow(
+          title: Text("Avg picked:"),
+          item: Text("${summery.avgPicked}"),
+        ),
+        SummeryRow(
+          title: Text("avg tranch passes:"),
+          item: Text("${summery.tranchPasses / summery.balls.length}"),
+        ),
+        ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        )
       ],
     );
   }
@@ -123,11 +136,11 @@ class ShootingCycleWidget extends StatelessWidget {
         ),
         ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
           child: Container(
             color: Colors.grey,
             height: 1,
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width * 0.95,
           ),
         )
       ],
