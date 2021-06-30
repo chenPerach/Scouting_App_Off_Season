@@ -12,11 +12,47 @@ class MidGameStageWidget extends StatelessWidget {
       children: [
         ShootingCycleWidget(data.shooting),
         BallsCycleWidget(data.balls),
+        RolletCycleWidget(data.rollet)
       ],
     );
   }
 }
 
+class RolletCycleWidget extends StatelessWidget {
+  final RolletCyclesSummery summery;
+  RolletCycleWidget(this.summery);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Text("Rollet:"),
+            ),
+            SummeryRow(
+              title: Text("Rotation"),
+              item: Text("${summery.rotationNumber}")
+            ),
+            SummeryRow(
+              title: Text("Position:"),
+              item: Text("${summery.positionNumber}")
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Container(
+                color: Colors.grey,
+                height: 1,
+                width: MediaQuery.of(context).size.width * 0.9,
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
 class BallsCycleWidget extends StatelessWidget {
   final BallsCyclesSummery summery;
   BallsCycleWidget(this.summery);
@@ -30,6 +66,23 @@ class BallsCycleWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
               child: Text("Balls:"),
             ),
+            SummeryRow(
+              title: Text("Avg picked:"),
+              item: Text("${summery.avgPicked}"),
+            ),
+            SummeryRow(
+              title: Text("avg tranch passes:"),
+              item: Text("${summery.tranchPasses / summery.balls.length}"),
+            ),
+            ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Container(
+                color: Colors.grey,
+                height: 1,
+                width: MediaQuery.of(context).size.width * 0.9,
+              ),
+            )
           ],
         ),
       ],

@@ -32,17 +32,16 @@ class ScoutingMatchSummery {
 class PostGameDataSummery {
   List<Comment> comments;
   WinningStateCounter winningStateCounter;
-  
+
   PostGameDataSummery(List<PostGameData> postGameData, this.comments) {
     this.winningStateCounter = WinningStateCounter(List.generate(
         postGameData.length, (i) => postGameData[i].winningState));
-    
   }
 }
 
-class PlayingTypeCounter{
-  int deffensive,offensive;
-  PlayingTypeCounter(List<PlayingType> l){
+class PlayingTypeCounter {
+  int deffensive, offensive;
+  PlayingTypeCounter(List<PlayingType> l) {
     deffensive = 0;
     offensive = 0;
     l.forEach((e) {
@@ -51,13 +50,14 @@ class PlayingTypeCounter{
           deffensive++;
           break;
         case PlayingType.kOFFENSIVE:
-        offensive++;
-        break;
+          offensive++;
+          break;
         default:
       }
     });
   }
 }
+
 class WinningStateCounter {
   int win, draw, lose;
   WinningStateCounter(List<WinningState> l) {
@@ -161,8 +161,10 @@ class BallsCyclesSummery {
     double ballsPicked = 0;
     this.tranchPasses = 0;
     balls.forEach((e) {
-      ballsPicked += e.numPicked;
-      this.tranchPasses += e.tranch ? 1 : 0;
+      if (e != null) {
+        ballsPicked += e.numPicked;
+        this.tranchPasses += e.tranch ? 1 : 0;
+      }
     });
     this.avgPicked = ballsPicked.toDouble() / balls.length.toDouble();
   }
@@ -174,10 +176,12 @@ class RolletCyclesSummery {
     rotationNumber = 0;
     positionNumber = 0;
     l.forEach((e) {
-      if (e.type == RolletCycle.rotation)
-        rotationNumber++;
-      else
-        positionNumber++;
+      if (e != null) {
+        if (e.type == RolletCycle.rotation)
+          rotationNumber++;
+        else
+          positionNumber++;
+      }
     });
   }
 }
@@ -186,8 +190,7 @@ class ShootingCyclesSummery {
   List<ShootingCycle> shooting;
   double lowerAvg, outerAvg, innerAvg, accuracy;
   ShootingCyclesSummery(this.shooting) {
-    
-    if(this.shooting.isEmpty){
+    if (this.shooting.isEmpty) {
       this.innerAvg = 0;
       this.outerAvg = 0;
       this.lowerAvg = 0;
@@ -196,10 +199,12 @@ class ShootingCyclesSummery {
     double ballsShot = 0;
     double ballsLower = 0, ballsOuter = 0, ballsInner = 0;
     this.shooting.forEach((e) {
-      ballsShot += e.ballsShot;
-      ballsInner += e.ballsInner;
-      ballsLower += e.ballsLower;
-      ballsOuter += e.ballsOuter;
+      if (e != null) {
+        ballsShot += e.ballsShot;
+        ballsInner += e.ballsInner;
+        ballsLower += e.ballsLower;
+        ballsOuter += e.ballsOuter;
+      }
     });
 
     this.innerAvg = ballsInner.toDouble() / shooting.length.toDouble();

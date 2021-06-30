@@ -38,8 +38,10 @@ class Cycles extends StatelessWidget {
             onPressed: () async {
               var c = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => ShotBalls()));
-              BlocProvider.of<GameFormBloc>(context).add(
-                  GameFormAddShootingCycle(cycle: c, type: type.toUpperCase()));
+              if (c != null)
+                BlocProvider.of<GameFormBloc>(context).add(
+                    GameFormAddShootingCycle(
+                        cycle: c, type: type.toUpperCase()));
             },
             child: Text("shot balls"),
           ),
@@ -47,8 +49,9 @@ class Cycles extends StatelessWidget {
             onPressed: () async {
               var c = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => CollectedBalls()));
-              BlocProvider.of<GameFormBloc>(context).add(
-                  GameFormAddBallsCycle(cycle: c, type: type.toUpperCase()));
+              if (c != null)
+                BlocProvider.of<GameFormBloc>(context).add(
+                    GameFormAddBallsCycle(cycle: c, type: type.toUpperCase()));
             },
             child: Text("collect balls"),
           ),
@@ -56,8 +59,9 @@ class Cycles extends StatelessWidget {
             onPressed: () async {
               var c = await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => RolletCyclePage()));
-              BlocProvider.of<GameFormBloc>(context).add(
-                  GameFormAddRolletCycle(cycle: c, type: type.toUpperCase()));
+              if (c != null)
+                BlocProvider.of<GameFormBloc>(context).add(
+                    GameFormAddRolletCycle(cycle: c, type: type.toUpperCase()));
             },
             child: Text("rollet"),
           )
