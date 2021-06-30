@@ -18,7 +18,7 @@ class SummeryRow extends StatelessWidget {
               ),
               color: Colors.black12,
             ),
-            flex: 1,
+            flex: 2,
             fit: FlexFit.tight,
           ),
           Flexible(child: Padding(child: item,padding: EdgeInsets.fromLTRB(10, 5, 0, 5),), flex: 3, fit: FlexFit.tight),

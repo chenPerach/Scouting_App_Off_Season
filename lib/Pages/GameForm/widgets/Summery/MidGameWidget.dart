@@ -3,13 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryRow.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 
-class MidGameStageWidget extends StatelessWidget {
+
+class MidStageWidget extends StatelessWidget {
+  final String title;
   final MidGameDataSummery data;
-  MidGameStageWidget(this.data);
+  MidStageWidget({this.title, this.data});
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              child: Text("$title:"),
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 2,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MediaQuery.of(context).size.width * 0.9,
+            )
+          ],
+        ),
+        SizedBox(
+          height: 1,
+        ),
         ShootingCycleWidget(data.shooting),
         BallsCycleWidget(data.balls),
         RolletCycleWidget(data.rollet)
@@ -42,7 +70,7 @@ class RolletCycleWidget extends StatelessWidget {
           ),
         ),
         SummeryRow(
-            title: Text("Rotation"), item: Text("${summery.rotationNumber}")),
+            title: Text("Rotation:"), item: Text("${summery.rotationNumber}")),
         SummeryRow(
             title: Text("Position:"), item: Text("${summery.positionNumber}")),
         Padding(
