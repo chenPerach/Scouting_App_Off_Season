@@ -18,7 +18,7 @@ class ShootingCycle implements Model {
       "outer": ballsOuter.toInt(),
       "inner": ballsInner.toInt(),
       "lower": ballsLower.toInt(),
-      "balls_shot": ballsShot,
+      "balls_shot": ballsShot.toInt(),
       "position": {"x": shootingPosition.x.toDouble(), "y": shootingPosition.y.toDouble()}
     };
   }

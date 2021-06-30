@@ -9,31 +9,53 @@ class SummeryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                child: Text("Autonomus: "),
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-              )
-            ],
-          ),
-          MidGameStageWidget(summery.matchData.auto),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                child: Text("Tele-Op: "),
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-              )
-            ],
-          ),
-          MidGameStageWidget(summery.matchData.teleop),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MidStageWidget(
+              title: "Autonomus",
+              data: summery.matchData.auto,
+            ),
+            MidStageWidget(
+              title: "Teleop",
+              data: summery.matchData.teleop,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class MidStageWidget extends StatelessWidget {
+  final String title;
+  final MidGameDataSummery data;
+  MidStageWidget({this.title, this.data});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              child: Text("$title:"),
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+            )
+          ],
+        ),
+        SizedBox(height: 2,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(color: Colors.grey,height: 1,width: MediaQuery.of(context).size.width*0.9,)
+          ],
+        ),
+        SizedBox(height: 1,),
+
+        MidGameStageWidget(data),
+      ],
     );
   }
 }
