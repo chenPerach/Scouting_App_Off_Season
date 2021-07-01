@@ -26,7 +26,7 @@ class PlayingType {
 }
 
 class PlayingTypeGenerator {
-  static int id = 0;
+  static int id = 1;
   static PlayingType next() {
     var type;
     switch (id) {
@@ -73,7 +73,7 @@ class WinningState {
 }
 
 class WinningStateGenerator {
-  static int _i = 0;
+  static int _i = 1;
   static WinningState next() {
     var obj;
     switch (_i) {

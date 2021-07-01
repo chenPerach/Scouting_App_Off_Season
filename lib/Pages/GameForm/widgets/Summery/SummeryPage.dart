@@ -20,6 +20,7 @@ class SummeryPage extends StatelessWidget {
         GeneralGameInfo(
           gameInfo: summery.info,
           postData: summery.postGame,
+          matchData: summery.matchData ,
         ),
         MidStageWidget(
           title: "Autonumos",

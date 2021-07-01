@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/HeatMap.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/MSPaint.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryRow.dart';
+import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
-
 
 class MidStageWidget extends StatelessWidget {
   final String title;
@@ -117,7 +119,40 @@ class BallsCycleWidget extends StatelessWidget {
           title: Text("avg tranch passes:"),
           item: Text("${summery.tranchPasses / summery.balls.length}"),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                (MaterialPageRoute(
+                  builder: (_) => HeatMap(
+                    painter: Painter<BallsCycle>(
+                      cycles: summery.balls,
+                      alpha: (c) {
+                        switch (c.numPicked) {
+                          case 1:
+                            return 50;
+                            break;
+                          case 2:
+                            return 100;
+                            break;
+                          case 3:
+                            return 150;
+                            break;
+                          case 4:
+                            return 200;
+                            break;
+                          case 5:
+                            return 250;
+                            break;
+                          default:
+                            return 0;
+                        }
+                      },
+                    ),
+                  ),
+                )),
+              );
+            },
+            child: Text("Heat Map")),
         Padding(
           padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
           child: Container(
@@ -162,7 +197,20 @@ class ShootingCycleWidget extends StatelessWidget {
           title: Text("Avg Lower:"),
           item: Text(cyclesSummery?.lowerAvg?.toStringAsFixed(2) ?? 0),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("Heat Map")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => HeatMap(
+                    painter: Painter<ShootingCycle>(cycles: cyclesSummery.shooting,alpha: (c) {
+                      var acc = (c.ballsLower+c.ballsInner+c.ballsOuter)/c.ballsShot;
+                      return acc*255;
+                    },),
+                  ),
+                ),
+              );
+            },
+            child: Text("Heat Map")),
         Padding(
           padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
           child: Container(

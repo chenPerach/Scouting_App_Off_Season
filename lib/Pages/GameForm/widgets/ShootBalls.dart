@@ -62,15 +62,15 @@ class _ShotBallsState extends State<ShotBalls> {
                 var pos = await Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => PositionPage()));
                 setState(() {
-                  this.c.shootingPosition = pos;
+                  this.c.position = pos;
                 });
               } ,
               child: Text("Shot Position"),
-              isActive: c.shootingPosition == Vector2d.zero,
+              isActive: c.position == Vector2d.zero,
             ),
             ElevatedButton(
                 onPressed: () async {
-                  if (c.ballsShot == 0 || c.shootingPosition == Vector2d.zero)
+                  if (c.ballsShot == 0 || c.position == Vector2d.zero)
                     return;
                   Navigator.of(context).pop(c);
                 },

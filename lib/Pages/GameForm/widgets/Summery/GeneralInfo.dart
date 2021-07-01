@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryRow.dart';
@@ -6,7 +8,8 @@ import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 class GeneralGameInfo extends StatelessWidget {
   final GameInfoSummery gameInfo;
   final PostGameDataSummery postData;
-  GeneralGameInfo({this.gameInfo, this.postData});
+  final MatchDataSummery matchData;
+  GeneralGameInfo({this.gameInfo, this.postData,this.matchData});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,45 +47,39 @@ class GeneralGameInfo extends StatelessWidget {
         ),
         SummeryRow(
           title: Text("Climb Score"),
-          item: Text("${0}"),
+          item: Text("${this.matchData.climbScore}"),
         ),
         SummeryRow(
           title: Text("Shooting Score"),
-          item: Text("${0}"),
+          item: Text("${this.matchData.shootingScore}"),
         ),
         SummeryRow(
-          title: Text("Win,Draw,Lose"),
+          title: Text("W-L-D"),
           item: Text(
-              "${postData.winningStateCounter.win},${postData.winningStateCounter.draw},${postData.winningStateCounter.lose}"),
+              "${postData.winningStateCounter.win},${postData.winningStateCounter.lose},${postData.winningStateCounter.draw}"),
         ),
-        !_isCommentSectionEmpty() ? Container(
-          height: 50*postData.comments.length.toDouble(),
-          child: ListView.builder(
-            itemCount: postData.comments.length,
-            itemBuilder: (context, i) {
-              return postData.comments[i].comment !=null ? ListTile(
-                title: Text(postData.comments[i].match.toString()),
-                subtitle: Text(postData.comments[i].comment),
-              ):Container();
-            },
-          ),
-        ) : Container()
-        // SummeryRow(
-        //   title: Text("Platform"),
-        //   item: Text("${summery.platformSum}"),
-        // ),
-        // SummeryRow(
-        //   title: Text("Nothing"),
-        //   item: Text("${summery.nothingSum}"),
-        // ),
-        // EndGameStageWidget(data),
+        !_isCommentSectionEmpty()
+            ? Container(
+                height: min(89 * postData.comments.length.toDouble(),300),
+                child: ListView.builder(
+                  itemCount: postData.comments.length,
+                  itemBuilder: (context, i) => Card(
+                    child: ListTile(
+                      title: Text(postData.comments[i].match.toString()),
+                      subtitle:  Text(postData.comments[i].comment),
+                      isThreeLine: true,
+                    ),
+                  ),
+                ),
+              )
+            : Container()
       ],
     );
   }
-  bool _isCommentSectionEmpty(){
-    for(var comment in postData.comments)
-      if(comment.comment != null)
-        return false;
+
+  bool _isCommentSectionEmpty() {
+    for (var comment in postData.comments)
+      if (comment.comment != null) return false;
     return true;
   }
 }

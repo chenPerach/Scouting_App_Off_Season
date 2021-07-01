@@ -74,6 +74,24 @@ class EndGameClimbType {
     }
     return EndGameClimbType(value: value, image: img);
   }
+  num getScore() {
+    switch (this.value) {
+      case EndGameClimbType.empty:
+        return 0;
+        break;
+      case EndGameClimbType.platform:
+        return 5;
+        break;
+      case EndGameClimbType.uneven:
+        return 25;
+        break;
+      case EndGameClimbType.even:
+        return 40;
+        break;
+      default:
+        return 0;
+    }
+  }
 }
 
 class MidGameStage extends GenericScoutingStageData {

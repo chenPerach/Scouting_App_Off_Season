@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
@@ -90,9 +88,12 @@ class Comment {
 class MatchDataSummery {
   MidGameDataSummery teleop, auto;
   EndGameSummery endGame;
+  num climbScore,shootingScore;
   MatchDataSummery(List<ScoutingMatchData> data) {
     List<MidGameStage> teleList = [], autoList = [];
     List<EndGameStage> endList = [];
+    this.climbScore = 0;
+    this.shootingScore = 0;
     data.forEach((e) {
       teleList.add(e.teleop);
       autoList.add(e.autonomus);
@@ -101,6 +102,22 @@ class MatchDataSummery {
     this.auto = MidGameDataSummery(autoList);
     this.teleop = MidGameDataSummery(teleList);
     this.endGame = EndGameSummery(endList);
+
+    /// climb score calc
+    data.forEach((e) {
+      climbScore += e.endGame.type.getScore();
+    });
+    climbScore /= data.length;
+
+    data.forEach((e) {
+      e.autonomus.shooting.forEach((c) { 
+        shootingScore += c.getScore()*2;
+      });
+      e.teleop.shooting.forEach((c) { 
+        shootingScore += c.getScore();
+      });
+    });
+    shootingScore /= data.length;
   }
 }
 

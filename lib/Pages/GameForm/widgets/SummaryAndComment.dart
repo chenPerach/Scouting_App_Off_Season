@@ -17,8 +17,13 @@ class CommentAndSummary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("winning state:",style: TextStyle(fontSize: 20),),
-            SizedBox(height: 5,),
+            Text(
+              "winning state:",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 5,
+            ),
             Container(
               width: 200,
               height: 200,
@@ -31,9 +36,16 @@ class CommentAndSummary extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 5,),
-            Text("playing type:",style: TextStyle(fontSize: 20),),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "playing type:",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 5,
+            ),
             Container(
               width: 200,
               height: 200,
@@ -52,14 +64,20 @@ class CommentAndSummary extends StatelessWidget {
                 decoration: InputDecoration(hintText: "comment"),
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                onChanged: (value) {
+                  data.comment = value;
+                  BlocProvider.of<GameFormBloc>(context)
+                      .add(GameFormUpdatePostGameData(this.data));
+                },
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                var user = Provider.of<UserContainer>(context,listen: false).user;
+                var user =
+                    Provider.of<UserContainer>(context, listen: false).user;
                 BlocProvider.of<GameFormBloc>(context)
                     .add(GameFormUploadMatch(user: user));
-                },
+              },
               child: Text("Submit"),
             )
           ],
