@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/EndStageWidget.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/GeneralInfo.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/MidGameWidget.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 
@@ -16,6 +17,10 @@ class SummeryPage extends StatelessWidget {
         body: PageView(
       scrollDirection: Axis.vertical,
       children: [
+        GeneralGameInfo(
+          gameInfo: summery.info,
+          postData: summery.postGame,
+        ),
         MidStageWidget(
           title: "Autonumos",
           data: summery.matchData.auto,
@@ -29,5 +34,3 @@ class SummeryPage extends StatelessWidget {
     ));
   }
 }
-
-
