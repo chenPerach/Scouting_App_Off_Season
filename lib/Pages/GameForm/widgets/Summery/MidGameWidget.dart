@@ -1,15 +1,20 @@
+import 'dart:ui'as ui;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/HeatMap.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/MSPaint.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryRow.dart';
+import 'package:scouting_app_2/Utils/FileLoader.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
+
 
 class MidStageWidget extends StatelessWidget {
   final String title;
   final MidGameDataSummery data;
-  MidStageWidget({this.title, this.data});
+  final bool isAuto;
+  MidStageWidget({this.title, this.data,this.isAuto=false});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,7 +45,7 @@ class MidStageWidget extends StatelessWidget {
         SizedBox(
           height: 1,
         ),
-        ShootingCycleWidget(data.shooting),
+        ShootingCycleWidget(cyclesSummery:  data.shooting,isAuto: this.isAuto ,),
         BallsCycleWidget(data.balls),
         RolletCycleWidget(data.rollet)
       ],
@@ -129,24 +134,24 @@ class BallsCycleWidget extends StatelessWidget {
                       alpha: (c) {
                         switch (c.numPicked) {
                           case 1:
-                            return 50;
+                            return 40;
                             break;
                           case 2:
-                            return 100;
+                            return 80;
                             break;
                           case 3:
-                            return 150;
+                            return 120;
                             break;
                           case 4:
-                            return 200;
+                            return 160;
                             break;
                           case 5:
-                            return 250;
+                            return 200;
                             break;
                           default:
                             return 0;
                         }
-                      },
+                      },img: FileLoader.img
                     ),
                   ),
                 )),
@@ -168,7 +173,8 @@ class BallsCycleWidget extends StatelessWidget {
 
 class ShootingCycleWidget extends StatelessWidget {
   final ShootingCyclesSummery cyclesSummery;
-  ShootingCycleWidget(this.cyclesSummery);
+  final bool isAuto;
+  ShootingCycleWidget({this.cyclesSummery,this.isAuto});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -203,9 +209,10 @@ class ShootingCycleWidget extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => HeatMap(
                     painter: Painter<ShootingCycle>(cycles: cyclesSummery.shooting,alpha: (c) {
-                      var acc = (c.ballsLower+c.ballsInner+c.ballsOuter)/c.ballsShot;
-                      return acc*255;
-                    },),
+                      
+                      // var acc = (c.ballsLower+c.ballsInner+c.ballsOuter)/c.ballsShot;
+                      return (c.getScore()*255~/(15*(isAuto ? 2 :1))).toInt();// what the fuck does ~/ mean? 
+                    },img: FileLoader.img),
                   ),
                 ),
               );

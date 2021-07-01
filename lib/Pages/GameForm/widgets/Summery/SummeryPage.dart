@@ -5,6 +5,7 @@ import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/GeneralInfo.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/MidGameWidget.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 
+
 class SummeryPage extends StatelessWidget {
   final ScoutingMatchSummery summery;
   final controller = PageController(
@@ -25,6 +26,7 @@ class SummeryPage extends StatelessWidget {
         MidStageWidget(
           title: "Autonumos",
           data: summery.matchData.auto,
+          isAuto: true,
         ),
         MidStageWidget(
           title: "Teleop",

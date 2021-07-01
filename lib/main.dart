@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
+import 'package:scouting_app_2/Utils/FileLoader.dart';
 import 'package:scouting_app_2/route_manager.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 import 'package:scouting_app_2/services/notification_service.dart';
@@ -18,6 +19,8 @@ void main() {
   );
   ansiColorDisabled = false;
   WidgetsFlutterBinding.ensureInitialized();
+  FileLoader.initilaize();
+
   runApp(App());
 }
 
