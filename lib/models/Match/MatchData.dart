@@ -24,9 +24,9 @@ class ScoutingMatchData extends Model {
   factory ScoutingMatchData.fromJson(Map<String, dynamic> json) =>
       ScoutingMatchData(
         startingPosition: json["start_position"],
-        autonomus: MidGameStage.fromJson(json["auto"]),
-        teleop: MidGameStage.fromJson(json["teleop"]),
-        endGame: EndGameStage.fromJson(json["end_game"]),
+        autonomus: MidGameStage.fromJson(Map<String,dynamic>.from(json["auto"] ?? {"balls_cycles":[],"shooting_cycles":[],"rollet_cycles":[]})),
+        teleop: MidGameStage.fromJson(Map<String,dynamic>.from(json["teleop"] ?? {"balls_cycles":[],"shooting_cycles":[],"rollet_cycles":[]})),
+        endGame: EndGameStage.fromJson(Map<String,dynamic>.from(json["end_game"])),
       );
 }
 
@@ -38,7 +38,7 @@ class EndGameStage extends GenericScoutingStageData {
   EndGameClimbType type;
   EndGameStage({this.type});
   factory EndGameStage.fromJson(Map<String, dynamic> json) {
-    return EndGameStage(type: json["type"]);
+    return EndGameStage(type: EndGameClimbType.generate(json["type"]));
   }
 
   @override
@@ -100,9 +100,9 @@ class MidGameStage extends GenericScoutingStageData {
   List<RolletCycle> rollet;
 
   MidGameStage({
-    this.balls,
-    this.rollet,
-    this.shooting,
+    @required this.balls,
+    @required this.rollet,
+    @required this.shooting,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -118,13 +118,15 @@ class MidGameStage extends GenericScoutingStageData {
     };
   }
 
-  factory MidGameStage.fromJson(Map<String, dynamic> json) => MidGameStage(
-        balls: SmartList.fromIterable<BallsCycle, Map<String, dynamic>>(
-            List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(e)),
-        shooting: SmartList.fromIterable<ShootingCycle, Map<String, dynamic>>(
-            List.from(json["shooring_cycles"]),
-            (e) => ShootingCycle.fromJson(e)),
-        rollet: SmartList.fromIterable<RolletCycle, Map<String, dynamic>>(
-            List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(e)),
-      );
+  factory MidGameStage.fromJson(Map<String, dynamic> json) {
+    
+    return  json == null ? MidGameStage(balls: [],rollet: [],shooting: []) :MidGameStage(
+      balls: SmartList.fromIterable<BallsCycle, Map<String, dynamic>>(
+          List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(e)),
+      shooting: SmartList.fromIterable<ShootingCycle, Map<String, dynamic>>(
+          List.from(json["shooting_cycles"]), (e) => ShootingCycle.fromJson(e)),
+      rollet: SmartList.fromIterable<RolletCycle, Map<String, dynamic>>(
+          List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(e)),
+    );
+  }
 }

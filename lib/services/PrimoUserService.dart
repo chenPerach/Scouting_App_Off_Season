@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
+import 'package:scouting_app_2/services/gameForm.dart';
 
 class PrimoUserService {
   static AnsiPen _pen = AnsiPen()..yellow(bold: true, bg: false);
@@ -92,6 +93,7 @@ class PrimoUserService {
   static void signOut() {
     _log("$_TAG: signing out, see ya!");
     clearStreamSubscriptions();
+    ScoutingDataService.clearStreamSubscriptions();
     FirebaseAuthService.instance.signOut();
   }
 

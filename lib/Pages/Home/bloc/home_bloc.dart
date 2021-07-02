@@ -8,6 +8,7 @@ import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
+import 'package:scouting_app_2/services/gameForm.dart';
 import 'package:scouting_app_2/services/notification_wrapper.dart';
 
 part 'home_event.dart';
@@ -36,6 +37,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if(m.compLevel == "qm" && event.uc.user.favoriteMatches.indexOf(m.matchNumber) != -1) // does match exist in favorite matches
           MatchNotificationScheduler.scheduleMatch(m);
       });
+      if(event.uc.user.isAdmin){
+        ScoutingDataService.init();
+      }
       yield HomeWithData(comp);
     }
 

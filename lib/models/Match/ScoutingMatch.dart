@@ -18,8 +18,8 @@ class ScoutingMatch extends Model {
   factory ScoutingMatch.formJson(Map<String, dynamic> json) {
     return ScoutingMatch(
         time: DateTime.fromMillisecondsSinceEpoch(json["time"]),
-        data: ScoutingMatchData.fromJson(json["data"]),
-        info: GameInfo.fromJson(json["general_info"]));
+        data: ScoutingMatchData.fromJson(Map.from(json["data"])),
+        info: GameInfo.fromJson(Map.from(json["general_info"])));
   }
 
   /// creates a copy of this object

@@ -47,13 +47,22 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       this.match.data = ScoutingMatchData();
       this.match.data.endGame =
           EndGameStage(type: EndGameClimbTypeGenerator.next());
+
       this.match.postGameData = PostGameData(
-          winningState: WinningStateGenerator.next(),
-          playingType: PlayingTypeGenerator.next());
-      this.match.data.autonomus =
-          MidGameStage(balls: [], rollet: [], shooting: []);
-      this.match.data.teleop =
-          MidGameStage(balls: [], rollet: [], shooting: []);
+        winningState: WinningStateGenerator.next(),
+        playingType: PlayingTypeGenerator.next(),
+      );
+      this.match.data.autonomus = MidGameStage(
+        balls: [],
+        rollet: [],
+        shooting: [],
+      );
+      this.match.data.teleop = MidGameStage(
+        balls: [],
+        rollet: [],
+        shooting: [],
+      );
+
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUpdateStartingPosition) {
@@ -131,8 +140,8 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       var summery = ScoutingMatchSummery([this.match]);
       yield GameFormLoading();
       await ScoutingDataService.uploadMatch(this.match, event.user);
-      yield GameFormShowSummery(summery);
-      // yield GameFormExit();
+      // yield GameFormShowSummery(summery);
+      yield GameFormExit();
     }
     if (event is GameFormUpdatePostGameData) {
       this.match.postGameData = event.data;

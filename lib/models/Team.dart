@@ -1,7 +1,15 @@
+import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
+import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
+
 class Team {
   int number;
   String nickname;
-  Team({this.nickname, this.number});
+  ScoutingMatchSummery statiscs;
+  List<ScoutingMatch> matches;
+  Team({this.nickname, this.number}){
+    this.matches = [];
+  }
+  
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(number: json["number"], nickname: json["nickname"]);
   }
