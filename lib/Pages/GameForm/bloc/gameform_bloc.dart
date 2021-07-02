@@ -21,8 +21,10 @@ part 'gameform_state.dart';
 
 class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
   GameFormBloc() : super(GameformInitial());
-  AnsiPen _pen = AnsiPen()..red(bold: true,bg: false)..white(bg: true);
-  final _kTAG = "GAME FORM"; 
+  AnsiPen _pen = AnsiPen()
+    ..red(bold: true, bg: false)
+    ..white(bg: true);
+  final _kTAG = "GAME FORM";
   int index;
   ScoutingMatch match;
   @override
@@ -107,21 +109,30 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUploadMatch) {
-      bool valid = isMatchData(this.match.info);
-      if (!valid) {
+      if (match.data.startingPosition == null ||
+          match.data.startingPosition.isEmpty) {
         this.index = 0;
         yield GameformPage(
             index: this.index,
             match: this.match,
-            error: "match data not valid, please provide correct match data.");
-      } else {
-        print(_pen("$_kTAG: UPLOADING MATCH"));
-        var summery = ScoutingMatchSummery([this.match]);
-        yield GameFormLoading();
-        await ScoutingDataService.uploadMatch(this.match, event.user);
-        yield GameFormShowSummery(summery);
-        // yield GameFormExit();
+            error: "please select starting position.");
+        return;
       }
+      if (!isMatchData(this.match.info)) {
+        this.index = 0;
+        yield GameformPage(
+            index: this.index,
+            match: this.match,
+            error:
+                "the match data provided does not correspond to any real match.");
+        return;
+      }
+      print(_pen("$_kTAG: UPLOADING MATCH"));
+      var summery = ScoutingMatchSummery([this.match]);
+      yield GameFormLoading();
+      await ScoutingDataService.uploadMatch(this.match, event.user);
+      yield GameFormShowSummery(summery);
+      // yield GameFormExit();
     }
     if (event is GameFormUpdatePostGameData) {
       this.match.postGameData = event.data;
