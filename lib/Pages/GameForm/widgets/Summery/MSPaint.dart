@@ -13,15 +13,15 @@ class Painter<T extends Cycle> extends CustomPainter {
   Painter({this.cycles,this.alpha,this.img});
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawImage(this.img,Offset.zero,Paint());
+    // canvas.drawImage(this.img,Offset.zero,Paint());
     
     var myPaint = Paint()
       ..style = PaintingStyle.fill
       ..color = Colors.red;
     cycles.forEach((e) {
       Vector2d pos = e.position * Vector2d(size.width, size.height);
-      myPaint = myPaint..color = Colors.red.withAlpha(255);
-      canvas.drawCircle(Offset(pos.x, pos.y), 100, myPaint);
+      myPaint = myPaint..color = Colors.red.withAlpha(alpha(e));
+      canvas.drawCircle(Offset(pos.x, pos.y), 15, myPaint);
     });
   }
 

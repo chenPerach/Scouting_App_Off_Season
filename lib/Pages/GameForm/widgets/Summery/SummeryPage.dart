@@ -30,7 +30,7 @@ class SummeryPage extends StatelessWidget {
         ),
         MidStageWidget(
           title: "Teleop",
-          data: summery.matchData.auto,
+          data: summery.matchData.teleop,
         ),
         EndStageWidget(summery.matchData.endGame),
       ],
