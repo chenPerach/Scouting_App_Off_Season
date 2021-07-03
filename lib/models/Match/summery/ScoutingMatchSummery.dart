@@ -86,16 +86,36 @@ class Comment {
   Comment({this.match, this.comment});
 }
 
+class StartingSideCounter{
+  num left,right,middle;
+  StartingSideCounter({this.left=0,this.middle=0,this.right=0});
+  void add(String startPos){
+    switch (startPos) {
+      case "Middle":
+        this.middle++;
+        break;
+        case "Left":
+        this.left++;
+        break;
+        case "Right":
+        this.right++;
+        break;      default:
+    }
+  }
+}
 class MatchDataSummery {
   MidGameDataSummery teleop, auto;
   EndGameSummery endGame;
   num climbScore,shootingScore;
+  StartingSideCounter startingSide;
   MatchDataSummery(List<ScoutingMatchData> data) {
+    this.startingSide = StartingSideCounter();
     List<MidGameStage> teleList = [], autoList = [];
     List<EndGameStage> endList = [];
     this.climbScore = 0;
     this.shootingScore = 0;
     data.forEach((e) {
+      
       teleList.add(e.teleop);
       autoList.add(e.autonomus);
       endList.add(e.endGame);

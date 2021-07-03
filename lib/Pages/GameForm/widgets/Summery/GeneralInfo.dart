@@ -58,6 +58,11 @@ class GeneralGameInfo extends StatelessWidget {
           item: Text(
               "${postData.winningStateCounter.win},${postData.winningStateCounter.lose},${postData.winningStateCounter.draw}"),
         ),
+        SummeryRow(
+          title: Text("Preffered Starting Side L-M-R"),
+          item: Text(
+              "${matchData.startingSide.left},${matchData.startingSide.middle},${matchData.startingSide.right}"),
+        ),
         !_isCommentSectionEmpty()
             ? Container(
                 height: min(89 * postData.comments.length.toDouble(),300),
