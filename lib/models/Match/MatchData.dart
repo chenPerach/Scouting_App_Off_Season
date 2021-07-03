@@ -24,8 +24,8 @@ class ScoutingMatchData extends Model {
   factory ScoutingMatchData.fromJson(Map<String, dynamic> json) =>
       ScoutingMatchData(
         startingPosition: json["start_position"],
-        autonomus: MidGameStage.fromJson(Map<String,dynamic>.from(json["auto"] ?? {"balls_cycles":[],"shooting_cycles":[],"rollet_cycles":[]})),
-        teleop: MidGameStage.fromJson(Map<String,dynamic>.from(json["teleop"] ?? {"balls_cycles":[],"shooting_cycles":[],"rollet_cycles":[]})),
+        autonomus: MidGameStage.fromJson(json["auto"] == null ? null : Map<String,dynamic>.from(json["auto"])),
+        teleop: MidGameStage.fromJson(json["teleop"] == null ? null : Map<String,dynamic>.from(json["teleop"])),
         endGame: EndGameStage.fromJson(Map<String,dynamic>.from(json["end_game"])),
       );
 }
@@ -120,13 +120,16 @@ class MidGameStage extends GenericScoutingStageData {
 
   factory MidGameStage.fromJson(Map<String, dynamic> json) {
     
-    return  json == null ? MidGameStage(balls: [],rollet: [],shooting: []) :MidGameStage(
-      balls: SmartList.fromIterable<BallsCycle, Map<String, dynamic>>(
-          List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(e)),
-      shooting: SmartList.fromIterable<ShootingCycle, Map<String, dynamic>>(
-          List.from(json["shooting_cycles"]), (e) => ShootingCycle.fromJson(e)),
-      rollet: SmartList.fromIterable<RolletCycle, Map<String, dynamic>>(
-          List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(e)),
+    var l =  json == null ? MidGameStage(balls: [],rollet: [],shooting: []) : MidGameStage(
+      balls: json["balls_cycle"] == null ? [] : SmartList.fromIterable<BallsCycle, dynamic>(
+          List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(Map<String,dynamic>.from(e))),
+      shooting:json["shooting_cycles"] == null ? [] : SmartList.fromIterable<ShootingCycle, dynamic>(
+          List.from(json["shooting_cycles"]), 
+          (e) => ShootingCycle.fromJson(Map<String,dynamic>.from(e))),
+      rollet: json["rollet_cycles"] == null ? [] :SmartList.fromIterable<RolletCycle,  dynamic>(
+          List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(Map<String,dynamic>.from(e))),
     );
+
+    return l;
   }
 }
