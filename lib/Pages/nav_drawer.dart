@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
+import 'package:scouting_app_2/Pages/SingleTeam/SingleTeam.dart';
 import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 
@@ -54,6 +55,14 @@ class NavDrawer extends StatelessWidget {
                 Navigator.of(context).pushNamed(FirebaseInitilaize.route);
               },
             ),
+
+            uc.user.isAdmin ?  ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Single Team View"),
+              onTap: () {
+                Navigator.of(context).pushNamed(SingleTeamAdminPage.route);
+              },
+            ):Container(),
             Expanded(child: Container()),
             ListTile(
               trailing: Text(kVERSION),

@@ -10,6 +10,7 @@ class ScoutingMatchSummery {
   MatchDataSummery matchData;
   PostGameDataSummery postGame;
   ScoutingMatchSummery(List<ScoutingMatch> matches) {
+    
     this.info =
         GameInfoSummery(List.generate(matches.length, (i) => matches[i].info));
     this.matchData =

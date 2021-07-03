@@ -3,11 +3,14 @@ import 'dart:convert';
 
 import 'package:ansicolor/ansicolor.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:scouting_app_2/models/Match/MatchData.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
-import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
+import 'package:scouting_app_2/models/Team.dart';
 import 'package:uuid/uuid.dart';
+
+// class MyMapEntry extends MapEntry,Equatble{
+
+// }
 
 class ScoutingDataService {
   static var _ref = FirebaseDatabase.instance.reference();
@@ -16,7 +19,7 @@ class ScoutingDataService {
     ..black(bg: true);
   static String _kTAG = "SCOUTING DATA SERVICE";
   static var uuid = Uuid();
-  static List<MapEntry<String, ScoutingMatch>> scoutingMatches = [];
+  static Set<MapEntry<String, ScoutingMatch>> scoutingMatches = Set();
   static List<StreamSubscription> _streamSubs = [];
 
   static void init() {
@@ -27,9 +30,22 @@ class ScoutingDataService {
       var m = Map<String,dynamic>.from(snap.value);
 
       scoutingMatches.add(MapEntry(event.snapshot.key, ScoutingMatch.formJson(m)));
-    }));
-  }
 
+    }));
+
+  }
+  static void calculateStatistics(){
+    var teams = TeamsConsts.teams;
+    
+    for(var m in scoutingMatches){
+      int number = m.value.info.teamNumber;
+      teams.where((e) => e.number == number).first.matches.add(m.value);
+    }
+
+    for(var team in teams){
+      team.createStatistics();
+    }
+  }
   static Future<void> uploadMatch(ScoutingMatch match, PrimoUser user) async {
     var submittionTime = DateTime.now();
     var id = uuid.v1();

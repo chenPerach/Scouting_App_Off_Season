@@ -10,12 +10,12 @@ class PostGameData extends Model {
   Map<String, dynamic> toJson() =>
       {"comment": comment, "game_result": winningState.type,"playing_type":playingType.type};
 
-  PostGameData fromJson(Map<String, dynamic> json) {
-    return PostGameData(
-      comment: json["comment"],
+  factory PostGameData.fromJson(Map<String, dynamic> json) {
+    return  PostGameData(
+      comment: json["comment"] ?? null,
       winningState: WinningState.generate(json["game_result"]),
       playingType: PlayingType(json["playing_type"])
-    );
+     );
   }
 }
 

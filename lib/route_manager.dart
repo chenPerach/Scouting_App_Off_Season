@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
+import 'package:scouting_app_2/Pages/SingleTeam/SingleTeam.dart';
 import 'package:scouting_app_2/main.dart';
 
 class RouteGenerator {
@@ -11,6 +12,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => FirebaseInitilaize());
       case GameForm.route:
         return MaterialPageRoute(builder: (_) => GameForm());
+      case SingleTeamAdminPage.route:
+        return MaterialPageRoute(builder: (_) => SingleTeamAdminPage());
+
       default:
     }
     return null;
