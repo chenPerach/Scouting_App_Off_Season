@@ -10,7 +10,6 @@ class ScoutingMatchSummery {
   MatchDataSummery matchData;
   PostGameDataSummery postGame;
   ScoutingMatchSummery(List<ScoutingMatch> matches) {
-    
     this.info =
         GameInfoSummery(List.generate(matches.length, (i) => matches[i].info));
     this.matchData =
@@ -86,27 +85,29 @@ class Comment {
   Comment({this.match, this.comment});
 }
 
-class StartingSideCounter{
-  num left,right,middle;
-  StartingSideCounter({this.left=0,this.middle=0,this.right=0});
-  void add(String startPos){
+class StartingSideCounter {
+  num left, right, middle;
+  StartingSideCounter({this.left = 0, this.middle = 0, this.right = 0});
+  void add(String startPos) {
     switch (startPos) {
       case "Middle":
         this.middle++;
         break;
-        case "Left":
+      case "Left":
         this.left++;
         break;
-        case "Right":
+      case "Right":
         this.right++;
-        break;      default:
+        break;
+      default:
     }
   }
 }
+
 class MatchDataSummery {
   MidGameDataSummery teleop, auto;
   EndGameSummery endGame;
-  num climbScore,shootingScore;
+  num climbScore, shootingScore;
   StartingSideCounter startingSide;
   MatchDataSummery(List<ScoutingMatchData> data) {
     this.startingSide = StartingSideCounter();
@@ -115,7 +116,7 @@ class MatchDataSummery {
     this.climbScore = 0;
     this.shootingScore = 0;
     data.forEach((e) {
-      
+      startingSide.add(e.startingPosition);
       teleList.add(e.teleop);
       autoList.add(e.autonomus);
       endList.add(e.endGame);
@@ -131,10 +132,10 @@ class MatchDataSummery {
     climbScore /= data.length;
 
     data.forEach((e) {
-      e.autonomus.shooting.forEach((c) { 
-        shootingScore += c.getScore()*2;
+      e.autonomus.shooting.forEach((c) {
+        shootingScore += c.getScore() * 2;
       });
-      e.teleop.shooting.forEach((c) { 
+      e.teleop.shooting.forEach((c) {
         shootingScore += c.getScore();
       });
     });
@@ -194,17 +195,25 @@ class MidGameDataSummery {
 class BallsCyclesSummery {
   List<BallsCycle> balls;
   double avgPicked;
-  int tranchPasses;
+  double avgTranchPasses;
   BallsCyclesSummery(this.balls) {
+    if (balls.isEmpty || balls == null) {
+      this.avgTranchPasses = 0;
+      this.avgPicked = 0;
+      return;
+    }
+
     double ballsPicked = 0;
-    this.tranchPasses = 0;
+    double tranchPasses = 0;
     balls.forEach((e) {
       if (e != null) {
         ballsPicked += e.numPicked;
-        this.tranchPasses += e.tranch ? 1 : 0;
+        tranchPasses += e.tranch ? 1 : 0;
       }
     });
+
     this.avgPicked = ballsPicked.toDouble() / balls.length.toDouble();
+    this.avgTranchPasses = tranchPasses /  balls.length.toDouble(); 
   }
 }
 

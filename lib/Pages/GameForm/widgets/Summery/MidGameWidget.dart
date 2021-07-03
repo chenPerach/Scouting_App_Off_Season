@@ -122,7 +122,7 @@ class BallsCycleWidget extends StatelessWidget {
         ),
         SummeryRow(
           title: Text("avg tranch passes:"),
-          item: Text("${summery.tranchPasses / summery.balls.length}"),
+          item: Text("${summery.avgTranchPasses}"),
         ),
         ElevatedButton(
             onPressed: () {
