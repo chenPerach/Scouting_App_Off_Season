@@ -16,6 +16,9 @@ class SingleTeamAdminPage extends StatefulWidget {
 
 class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
   final TextEditingController controller = TextEditingController();
+  Team t = TeamsConsts.teams
+                    .where((element) => element.number == 4586)
+                    .first;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,18 +41,19 @@ class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
                 selectedItem: TeamsConsts.teams
                     .where((element) => element.number == 4586)
                     .first,
+                onChanged: (value) {
+                  setState(() {
+                    t = value;
+                  });
+                },
               ),
             ),
             ElevatedButton(
                 onPressed: () {
                   ScoutingDataService.calculateStatistics();
-                  ScoutingMatchSummery data = TeamsConsts.teams
-                      .where((element) =>
-                          element.number == int.parse(controller.text))
-                      .first
-                      .statiscs;
+                  ScoutingMatchSummery data = t.statiscs;
                   if (data == null) {
-                    final sb = SnackBar(content: Text("no info on chosen team"));
+                    final sb = SnackBar(content: Text("no info for chosen team"));
                     ScaffoldMessenger.of(context).showSnackBar(sb);
                     return;
                   }
