@@ -24,8 +24,8 @@ class PrimoUserService {
     _log("$_TAG: getting user from firebase");
     var _userRef = _usersRef.child(user.uid);
     var snapshot = await _userRef.once().catchError((error, stackTrace) {
-      print(error);
-      print(stackTrace.toString());
+      _log(error);
+      _log(stackTrace.toString());
       return null;
     });
     _log("$_TAG: aquired snapshot from data base");
