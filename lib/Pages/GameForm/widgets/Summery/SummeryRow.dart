@@ -21,29 +21,57 @@ class SummeryRow extends StatelessWidget {
             flex: 2,
             fit: FlexFit.tight,
           ),
-          Flexible(child: Padding(child: item,padding: EdgeInsets.fromLTRB(10, 5, 0, 5),), flex: 3, fit: FlexFit.tight),
+          Flexible(
+            child: Padding(
+              child: item,
+              padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            ),
+            flex: 3,
+            fit: FlexFit.tight,
+          ),
+          
         ],
       ),
     );
   }
 }
 
-class SummeryRowDouble extends StatelessWidget {
-  final Widget title, first, second;
-  SummeryRowDouble({this.first, this.title, this.second});
+class TwoSummeryRow extends StatelessWidget {
+  final Widget title, item1, item2;
+  TwoSummeryRow({this.item1, this.item2, this.title});
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
-              child: Container(
+            child: Container(
+              child: Padding(
                 child: title,
-                color: Colors.black12,
+                padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
               ),
-              flex: 4),
-          Flexible(child: first, flex: 3),
-          Flexible(child: second, flex: 3),
+              color: Colors.black12,
+            ),
+            flex: 4,
+            fit: FlexFit.tight,
+          ),
+          Flexible(
+            child: Padding(
+              child: item1,
+              padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            ),
+            flex: 3,
+            fit: FlexFit.tight,
+          ),
+          Flexible(
+            child: Padding(
+              child: item2,
+              padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            ),
+            flex: 3,
+            fit: FlexFit.tight,
+          ),
         ],
       ),
     );

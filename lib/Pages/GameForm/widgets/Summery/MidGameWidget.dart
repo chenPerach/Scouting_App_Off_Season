@@ -230,3 +230,268 @@ class ShootingCycleWidget extends StatelessWidget {
     );
   }
 }
+
+class TwoMidStageWidget extends StatelessWidget {
+  final String title;
+  final MidGameDataSummery first,second;
+  final bool isAuto;
+  TwoMidStageWidget({this.title, this.first,this.second,this.isAuto=false});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              child: Text("$title:"),
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 2,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              color: Colors.grey,
+              height: 1,
+              width: MediaQuery.of(context).size.width * 0.9,
+            )
+          ],
+        ),
+        SizedBox(
+          height: 1,
+        ),
+        ShootingCycleWidget(cyclesSummery:  first.shooting,isAuto: this.isAuto ,),
+        BallsCycleWidget(first.balls),
+        RolletCycleWidget(first.rollet)
+      ],
+    );
+  }
+}
+
+class TwoRolletCycleWidget extends StatelessWidget {
+  final RolletCyclesSummery first,second;
+  TwoRolletCycleWidget(this.first,this.second);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Text("Rollet:"),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        ),
+        SummeryRow(
+            title: Text("Rotation:"), item: Text("${first.rotationNumber}")),
+        SummeryRow(
+            title: Text("Position:"), item: Text("${first.positionNumber}")),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class TwoBallsCycleWidget extends StatelessWidget {
+  final BallsCyclesSummery first,second;
+  TwoBallsCycleWidget(this.first,this.second);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Text("Balls:"),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        ),
+        TwoSummeryRow(
+          title: Text("Avg picked:"),
+          item1: Text("${first.avgPicked}"),
+          item2: Text("${second.avgPicked}"),
+        ),
+       TwoSummeryRow(
+          title: Text("avg tranch passes:"),
+          item1: Text("${first.avgTranchPasses}"),
+          item2: Text("${second.avgTranchPasses}"),
+
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    (MaterialPageRoute(
+                      builder: (_) => HeatMap(
+                        painter: Painter<BallsCycle>(
+                          cycles: first.balls,
+                          alpha: (c) {
+                            switch (c.numPicked) {
+                              case 1:
+                                return 40;
+                                break;
+                              case 2:
+                                return 80;
+                                break;
+                              case 3:
+                                return 120;
+                                break;
+                              case 4:
+                                return 160;
+                                break;
+                              case 5:
+                                return 200;
+                                break;
+                              default:
+                                return 0;
+                            }
+                          },img: FileLoader.img
+                        ),
+                      ),
+                    )),
+                  );
+                },
+                child: Text("Heat Map")),
+                ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    (MaterialPageRoute(
+                      builder: (_) => HeatMap(
+                        painter: Painter<BallsCycle>(
+                          cycles: second.balls,
+                          alpha: (c) {
+                            switch (c.numPicked) {
+                              case 1:
+                                return 40;
+                                break;
+                              case 2:
+                                return 80;
+                                break;
+                              case 3:
+                                return 120;
+                                break;
+                              case 4:
+                                return 160;
+                                break;
+                              case 5:
+                                return 200;
+                                break;
+                              default:
+                                return 0;
+                            }
+                          },img: FileLoader.img
+                        ),
+                      ),
+                    )),
+                  );
+                },
+                child: Text("Heat Map")),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class TwoShootingCycleWidget extends StatelessWidget {
+  final ShootingCyclesSummery first,second;
+  final bool isAuto;
+  TwoShootingCycleWidget({this.first,this.second,this.isAuto});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Text("Shooting:"),
+            ),
+          ],
+        ),
+        TwoSummeryRow(
+          title: Text("Accuracy:"),
+          item1: Text("${first?.accuracy?.toStringAsFixed(2) ?? 0}%"),
+          item2: Text("${second?.accuracy?.toStringAsFixed(2) ?? 0}%"),
+        ),
+        TwoSummeryRow(
+          title: Text("Avg Inner:"),
+          item1: Text(first?.innerAvg?.toStringAsFixed(2) ?? 0),
+          item2: Text(second?.innerAvg?.toStringAsFixed(2) ?? 0),
+        ),
+        TwoSummeryRow(
+          title: Text("Avg Outer:"),
+          item1: Text(first?.outerAvg?.toStringAsFixed(2) ?? 0),
+          item2: Text(second?.outerAvg?.toStringAsFixed(2) ?? 0),
+        ),
+        TwoSummeryRow(
+          title: Text("Avg Lower:"),
+          item1: Text(first?.lowerAvg?.toStringAsFixed(2) ?? 0),
+          item2: Text(second?.lowerAvg?.toStringAsFixed(2) ?? 0),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => HeatMap(
+                    painter: Painter<ShootingCycle>(cycles: first.shooting,alpha: (c) {
+                      return (c.getScore()*255~/(15*(isAuto ? 2 :1))).toInt();// what the fuck does ~/ mean? 
+                    },img: FileLoader.img),
+                  ),
+                ),
+              );
+            },
+            child: Text("Heat Map")),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.95,
+          ),
+        )
+      ],
+    );
+  }
+}
