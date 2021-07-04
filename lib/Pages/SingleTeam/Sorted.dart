@@ -73,7 +73,7 @@ class _SortedPageState extends State<SortedPage> {
                   return Card(
                     child: ListTile(
                       title: Text("${l[i].number} ${l[i].nickname}"),
-                      trailing: Text("score: ${score.toDouble()}"),
+                      trailing: Text("score: ${score.toDouble().toStringAsFixed(2)}"),
                       onLongPress: () {
                         var summery = l[i].statiscs;
                         if (summery == null) {
@@ -99,7 +99,6 @@ class _SortedPageState extends State<SortedPage> {
   int cmpClimb(Team a, Team b) {
     num s_a = a.statiscs?.matchData?.climbScore ?? 0,
         s_b = b.statiscs?.matchData?.climbScore ?? 0;
-
     return s_b.compareTo(s_a);
   }
 

@@ -97,7 +97,7 @@ class EndGameClimbType {
 class MidGameStage extends GenericScoutingStageData {
   List<ShootingCycle> shooting;
   List<BallsCycle> balls;
-  List<RolletCycle> rollet;
+  RolletCycle rollet;
 
   MidGameStage({
     @required this.balls,
@@ -107,27 +107,24 @@ class MidGameStage extends GenericScoutingStageData {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "shooting_cycles":
+      "shooting":
           SmartList.fromIterable<Map<String, dynamic>, ShootingCycle>(
               shooting, (e) => e.toJson()),
-      "balls_cycles": SmartList.fromIterable<Map<String, dynamic>, BallsCycle>(
+      "balls": SmartList.fromIterable<Map<String, dynamic>, BallsCycle>(
           this.balls, (e) => e.toJson()),
-      "rollet_cycles":
-          SmartList.fromIterable<Map<String, dynamic>, RolletCycle>(
-              this.rollet, (e) => e.toJson()),
+      "rollet": this.rollet.toJson(),
     };
   }
 
   factory MidGameStage.fromJson(Map<String, dynamic> json) {
     
-    var l =  json == null ? MidGameStage(balls: [],rollet: [],shooting: []) : MidGameStage(
-      balls: json["balls_cycle"] == null ? [] : SmartList.fromIterable<BallsCycle, dynamic>(
-          List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(Map<String,dynamic>.from(e))),
-      shooting:json["shooting_cycles"] == null ? [] : SmartList.fromIterable<ShootingCycle, dynamic>(
-          List.from(json["shooting_cycles"]), 
+    var l =  json == null ? MidGameStage(balls: [],rollet: RolletCycle(),shooting: []) : MidGameStage(
+      balls: json["balls"] == null ? [] : SmartList.fromIterable<BallsCycle, dynamic>(
+          List.from(json["balls"]), (e) => BallsCycle.fromJson(Map<String,dynamic>.from(e))),
+      shooting:json["shooting"] == null ? [] : SmartList.fromIterable<ShootingCycle, dynamic>(
+          List.from(json["shooting"]), 
           (e) => ShootingCycle.fromJson(Map<String,dynamic>.from(e))),
-      rollet: json["rollet_cycles"] == null ? [] :SmartList.fromIterable<RolletCycle,  dynamic>(
-          List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(Map<String,dynamic>.from(e))),
+      rollet: RolletCycle.fromJson(Map<String,dynamic>.from(json["rollet"])),
     );
 
     return l;

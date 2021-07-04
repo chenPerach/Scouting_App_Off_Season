@@ -12,9 +12,9 @@ import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 
 class MatchData extends StatefulWidget {
-  GameInfo info;
+  final GameInfo info;
   String pos;
-  String error;
+  final String error;
   MatchData({this.info, this.pos, this.error});
   MatchModel getInfoByTime(DateTime time) {
     MatchModel closestGame = HomeService.matchList.first;
@@ -25,10 +25,7 @@ class MatchData extends StatefulWidget {
         closestGame = game;
         dT = difference;
       }
-    }
-
-    List<int> l = List.generate(TeamsConsts.teams.length, (index) => TeamsConsts.teams[index].number);
-    
+    }    
 
     return closestGame;
   }

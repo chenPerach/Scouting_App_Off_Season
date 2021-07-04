@@ -183,7 +183,7 @@ class MidGameDataSummery {
     List<BallsCycle> balls = [];
     data.forEach((element) {
       shooting.addAll(element.shooting);
-      rollet.addAll(element.rollet);
+      rollet.add(element.rollet);
       balls.addAll(element.balls);
     });
     this.shooting = ShootingCyclesSummery(shooting);
@@ -213,7 +213,7 @@ class BallsCyclesSummery {
     });
 
     this.avgPicked = ballsPicked.toDouble() / balls.length.toDouble();
-    this.avgTranchPasses = tranchPasses /  balls.length.toDouble(); 
+    this.avgTranchPasses = tranchPasses / balls.length.toDouble();
   }
 }
 
@@ -223,12 +223,8 @@ class RolletCyclesSummery {
     rotationNumber = 0;
     positionNumber = 0;
     l.forEach((e) {
-      if (e != null) {
-        if (e.type == RolletCycle.rotation)
-          rotationNumber++;
-        else
-          positionNumber++;
-      }
+      rotationNumber += e.rotation ? 1 : 0;
+      positionNumber += e.position ? 1 : 0;
     });
   }
 }

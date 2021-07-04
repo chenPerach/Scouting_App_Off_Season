@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:ansicolor/ansicolor.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/Team.dart';
@@ -13,7 +14,7 @@ import 'package:uuid/uuid.dart';
 // }
 
 class ScoutingDataService {
-  static var _ref = FirebaseDatabase.instance.reference();
+  static var _ref = FirebaseDatabase.instance.reference().child(branch);
   static AnsiPen _pen = AnsiPen()
     ..cyan(bg: false, bold: true)
     ..black(bg: true);

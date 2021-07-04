@@ -64,15 +64,17 @@ class BallsCycle extends Cycle implements Model {
 }
 
 class RolletCycle implements Model {
-  String type;
-  static const String position = "POSITION", rotation = "ROTATION";
-  RolletCycle({this.type = position});
+  bool position, rotation;
+  RolletCycle({this.position = false, this.rotation = false});
 
   factory RolletCycle.fromJson(Map<String, dynamic> json) {
-    return RolletCycle(type: json["type"]);
+    return RolletCycle(position: json["position"], rotation: json["rotation"]);
   }
-
+  @override
+  RolletCycle operator +(RolletCycle other){
+    return RolletCycle(position: this.position || other.position, rotation: this.rotation || other.rotation);
+  }
   Map<String, dynamic> toJson() {
-    return {"type": type};
+    return {"position": position, "rotation": rotation};
   }
 }

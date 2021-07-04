@@ -15,6 +15,7 @@ class SummeryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
         body: PageView(
       scrollDirection: Axis.vertical,
       children: [

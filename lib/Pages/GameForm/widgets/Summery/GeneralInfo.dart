@@ -47,11 +47,11 @@ class GeneralGameInfo extends StatelessWidget {
         ),
         SummeryRow(
           title: Text("Climb Score"),
-          item: Text("${this.matchData.climbScore}"),
+          item: Text("${this.matchData.climbScore.toStringAsFixed(2)}"),
         ),
         SummeryRow(
           title: Text("Shooting Score"),
-          item: Text("${this.matchData.shootingScore}"),
+          item: Text("${this.matchData.shootingScore.toStringAsFixed(2)}"),
         ),
         SummeryRow(
           title: Text("W-L-D"),

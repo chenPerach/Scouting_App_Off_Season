@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ansicolor/ansicolor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
@@ -12,7 +13,7 @@ class PrimoUserService {
   static AnsiPen _pen = AnsiPen()..yellow(bold: true, bg: false);
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
-      FirebaseDatabase.instance.reference().child("users");
+      FirebaseDatabase.instance.reference().child(branch).child("users");
   static List<StreamSubscription> _streamSubs = [];
   static final Map<int, bool> initialFav = Map.fromIterable(
       TeamsConsts.teams_json,

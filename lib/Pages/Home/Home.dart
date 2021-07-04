@@ -51,6 +51,39 @@ class _HomePage extends StatelessWidget {
   }
 }
 
+class _NoData extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    UserContainer uc = Provider.of<UserContainer>(context);
+    if (uc.user != null) uc.setUpChangeListener();
+    return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        leading: IconButton(
+            icon: Icon(Icons.refresh_rounded),
+            onPressed: () =>
+                BlocProvider.of<HomeBloc>(context).add(HomeFetchGames(uc))),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.arrow_forward_ios),
+              onPressed: () async {
+                PrimoUser user = await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => Favorites(uc)));
+                BlocProvider.of<HomeBloc>(context).add(HomeUpdateUser(user));
+                uc.user = user;
+              }),
+        ],
+      ),
+      body: Center(
+        child: Text("no matches yet, please wait."),
+      ),
+    );
+  }
+}
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _BlocHandler();
@@ -77,6 +110,10 @@ class _BlocHandler extends StatelessWidget {
     }
     if (state is HomeWithData) {
       return _HomePage(state.matches);
+    }
+
+    if (state is HomeWithNoData) {
+      return _NoData();
     }
     return null;
   }

@@ -39,6 +39,5 @@ class ScoutingMatch extends Model with EquatableMixin{
   }
 
   @override
-  // TODO: implement props
   List<Object> get props => [toJson()];
 }
