@@ -23,7 +23,7 @@ class PositionPage extends StatelessWidget {
             var position = Vector2d(normalizedPoint.x, normalizedPoint.y) *
                 Vector2d(fieldWidth, fieldHeight);
             print(position);
-            Navigator.of(context).pop(position);
+            Navigator.of(context).pop(Vector2d(normalizedPoint.x, normalizedPoint.y));
           },
         ),
       ),

@@ -14,3 +14,7 @@ class GameformPage extends GameFormState {
 
 class GameFormLoading extends GameFormState {}
 class GameFormExit extends GameFormState {}
+class GameFormShowSummery extends GameFormState{
+  final ScoutingMatchSummery summery;
+  GameFormShowSummery(this.summery);
+}

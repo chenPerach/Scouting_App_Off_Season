@@ -24,9 +24,9 @@ class ScoutingMatchData extends Model {
   factory ScoutingMatchData.fromJson(Map<String, dynamic> json) =>
       ScoutingMatchData(
         startingPosition: json["start_position"],
-        autonomus: MidGameStage.fromJson(json["auto"]),
-        teleop: MidGameStage.fromJson(json["teleop"]),
-        endGame: EndGameStage.fromJson(json["end_game"]),
+        autonomus: MidGameStage.fromJson(json["auto"] == null ? null : Map<String,dynamic>.from(json["auto"])),
+        teleop: MidGameStage.fromJson(json["teleop"] == null ? null : Map<String,dynamic>.from(json["teleop"])),
+        endGame: EndGameStage.fromJson(Map<String,dynamic>.from(json["end_game"])),
       );
 }
 
@@ -38,7 +38,7 @@ class EndGameStage extends GenericScoutingStageData {
   EndGameClimbType type;
   EndGameStage({this.type});
   factory EndGameStage.fromJson(Map<String, dynamic> json) {
-    return EndGameStage(type: json["type"]);
+    return EndGameStage(type: EndGameClimbType.generate(json["type"]));
   }
 
   @override
@@ -74,39 +74,59 @@ class EndGameClimbType {
     }
     return EndGameClimbType(value: value, image: img);
   }
+  num getScore() {
+    switch (this.value) {
+      case EndGameClimbType.empty:
+        return 0;
+        break;
+      case EndGameClimbType.platform:
+        return 5;
+        break;
+      case EndGameClimbType.uneven:
+        return 25;
+        break;
+      case EndGameClimbType.even:
+        return 40;
+        break;
+      default:
+        return 0;
+    }
+  }
 }
 
 class MidGameStage extends GenericScoutingStageData {
   List<ShootingCycle> shooting;
   List<BallsCycle> balls;
-  List<RolletCycle> rollet;
+  RolletCycle rollet;
 
   MidGameStage({
-    this.balls,
-    this.rollet,
-    this.shooting,
+    @required this.balls,
+    @required this.rollet,
+    @required this.shooting,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
-      "shooting_cycles":
+      "shooting":
           SmartList.fromIterable<Map<String, dynamic>, ShootingCycle>(
               shooting, (e) => e.toJson()),
-      "balls_cycles": SmartList.fromIterable<Map<String, dynamic>, BallsCycle>(
+      "balls": SmartList.fromIterable<Map<String, dynamic>, BallsCycle>(
           this.balls, (e) => e.toJson()),
-      "rollet_cycles":
-          SmartList.fromIterable<Map<String, dynamic>, RolletCycle>(
-              this.rollet, (e) => e.toJson()),
+      "rollet": this.rollet.toJson(),
     };
   }
 
-  factory MidGameStage.fromJson(Map<String, dynamic> json) => MidGameStage(
-        balls: SmartList.fromIterable<BallsCycle, Map<String, dynamic>>(
-            List.from(json["balls_cycles"]), (e) => BallsCycle.fromJson(e)),
-        shooting: SmartList.fromIterable<ShootingCycle, Map<String, dynamic>>(
-            List.from(json["shooring_cycles"]),
-            (e) => ShootingCycle.fromJson(e)),
-        rollet: SmartList.fromIterable<RolletCycle, Map<String, dynamic>>(
-            List.from(json["rollet_cycles"]), (e) => RolletCycle.fromJson(e)),
-      );
+  factory MidGameStage.fromJson(Map<String, dynamic> json) {
+    
+    var l =  json == null ? MidGameStage(balls: [],rollet: RolletCycle(),shooting: []) : MidGameStage(
+      balls: json["balls"] == null ? [] : SmartList.fromIterable<BallsCycle, dynamic>(
+          List.from(json["balls"]), (e) => BallsCycle.fromJson(Map<String,dynamic>.from(e))),
+      shooting:json["shooting"] == null ? [] : SmartList.fromIterable<ShootingCycle, dynamic>(
+          List.from(json["shooting"]), 
+          (e) => ShootingCycle.fromJson(Map<String,dynamic>.from(e))),
+      rollet: RolletCycle.fromJson(Map<String,dynamic>.from(json["rollet"])),
+    );
+
+    return l;
+  }
 }

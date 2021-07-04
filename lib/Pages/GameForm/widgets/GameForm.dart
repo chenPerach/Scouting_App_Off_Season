@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/BottomNavigation.dart';
-import 'package:scouting_app_2/Pages/GameForm/widgets/ExitPage.dart';
+import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryPage.dart';
 import 'package:scouting_app_2/Pages/WaitingPage/Waiting.dart';
 import 'package:scouting_app_2/Utils/BlocCreator.dart';
 
@@ -16,7 +15,10 @@ class GameFormBlocCreator extends StatelessWidget {
       child: PageBlocCreator<GameFormEvent, GameFormState, GameFormBloc>(
         create: (_) => GameFormBloc(),
         builder: _builder,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is GameFormExit)
+            Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -36,8 +38,12 @@ class GameFormBlocCreator extends StatelessWidget {
       return Waiting();
     }
     if(state is GameFormExit){
-      return Exit();
+      return Scaffold();
     }
+    if(state is GameFormShowSummery){
+      return SummeryPage(state.summery);
+    }
+    return Container();
   }
 
   Future<bool> _onWillPop(BuildContext c) async {

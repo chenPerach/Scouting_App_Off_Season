@@ -11,7 +11,7 @@ class GameInfo extends Model {
       alliance: json["alliance"],
       teamNumber: json["team_number"],
       matchNumber: json["match_number"],
-      compLevel: json["comp_level"]);
+      compLevel: CompLevel.simple(json["comp_level"]),);
 
   @override
   Map<String, dynamic> toJson() {

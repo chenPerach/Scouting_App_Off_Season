@@ -22,16 +22,21 @@ class RolletCyclePageState extends State<RolletCyclePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 PrimoSwitchButton(
-                  onPressed: () =>
-                      setState(() => cycle.type = RolletCycle.position),
+                  onPressed: () => setState(() {
+                    cycle.position = true;
+                    cycle.rotation = false;
+                  }),
                   child: Text("position"),
-                  isActive: cycle.type == RolletCycle.position,
+                  isActive: cycle.position,
                 ),
                 PrimoSwitchButton(
                   onPressed: () =>
-                      setState(() => cycle.type = RolletCycle.rotation),
+                      setState(() {
+                    cycle.position = false;
+                    cycle.rotation = true;
+                  }),
                   child: Text("rotation"),
-                  isActive: cycle.type == RolletCycle.rotation,
+                  isActive: cycle.rotation,
                 ),
               ],
             ),

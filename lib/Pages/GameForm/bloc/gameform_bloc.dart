@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ansicolor/ansicolor.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/Cycle.dart';
@@ -20,8 +21,10 @@ part 'gameform_state.dart';
 
 class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
   GameFormBloc() : super(GameformInitial());
-  AnsiPen _pen = AnsiPen()..red(bold: true,bg: false)..white(bg: true);
-  final _kTAG = "GAME FORM"; 
+  AnsiPen _pen = AnsiPen()
+    ..red(bold: true, bg: false)
+    ..white(bg: true);
+  final _kTAG = "GAME FORM";
   int index;
   ScoutingMatch match;
   @override
@@ -44,13 +47,22 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       this.match.data = ScoutingMatchData();
       this.match.data.endGame =
           EndGameStage(type: EndGameClimbTypeGenerator.next());
+
       this.match.postGameData = PostGameData(
-          winningState: WinningStateGenerator.next(),
-          playingType: PlayingTypeGenerator.next());
-      this.match.data.autonomus =
-          MidGameStage(balls: [], rollet: [], shooting: []);
-      this.match.data.teleop =
-          MidGameStage(balls: [], rollet: [], shooting: []);
+        winningState: WinningStateGenerator.next(),
+        playingType: PlayingTypeGenerator.next(),
+      );
+      this.match.data.autonomus = MidGameStage(
+        balls: [],
+        rollet: RolletCycle(),
+        shooting: [],
+      );
+      this.match.data.teleop = MidGameStage(
+        balls: [],
+        rollet: RolletCycle(),
+        shooting: [],
+      );
+
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUpdateStartingPosition) {
@@ -65,11 +77,11 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       if (event.type == "AUTO") {
         if (match.data.autonomus == null)
           match.data.autonomus =
-              MidGameStage(balls: [], rollet: [], shooting: []);
+              MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
         match.data.autonomus.shooting.add(event.cycle);
       } else {
         if (match.data.teleop == null)
-          match.data.teleop = MidGameStage(balls: [], rollet: [], shooting: []);
+          match.data.teleop = MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
         match.data.teleop.shooting.add(event.cycle);
       }
       yield GameformPage(index: index, match: this.match);
@@ -77,27 +89,27 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
 
     if (event is GameFormAddBallsCycle) {
       if (event.type == "AUTO") {
-        if (match.data.autonomus == null)
-          match.data.autonomus =
-              MidGameStage(balls: [], rollet: [], shooting: []);
+        // if (match.data.autonomus == null)
+        //   match.data.autonomus =
+        //       MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
         match.data.autonomus.balls.add(event.cycle);
       } else {
-        if (match.data.teleop == null)
-          match.data.teleop = MidGameStage(balls: [], rollet: [], shooting: []);
+        // if (match.data.teleop == null)
+        //   match.data.teleop = MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
         match.data.teleop.balls.add(event.cycle);
       }
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormAddRolletCycle) {
       if (event.type == "AUTO") {
-        if (match.data.autonomus == null)
-          match.data.autonomus =
-              MidGameStage(balls: [], rollet: [], shooting: []);
-        match.data.autonomus.rollet.add(event.cycle);
+        // if (match.data.autonomus == null)
+        //   match.data.autonomus =
+        //       MidGameStage(balls: [], rollet: [], shooting: []);
+        match.data.autonomus.rollet += event.cycle;
       } else {
-        if (match.data.teleop == null)
-          match.data.teleop = MidGameStage(balls: [], rollet: [], shooting: []);
-        match.data.teleop.rollet.add(event.cycle);
+        // if (match.data.teleop == null)
+        //   match.data.teleop = MidGameStage(balls: [], rollet: [], shooting: []);
+        match.data.teleop.rollet+= event.cycle;
       }
       yield GameformPage(index: index, match: this.match);
     }
@@ -106,20 +118,30 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       yield GameformPage(index: index, match: this.match);
     }
     if (event is GameFormUploadMatch) {
-      bool valid = isMatchData(this.match.info);
-      if (!valid) {
+
+      /// Form validation
+      if (match.data.startingPosition == null ||
+          match.data.startingPosition.isEmpty) {
         this.index = 0;
         yield GameformPage(
             index: this.index,
             match: this.match,
-            error: "match data not valid, please provide correct match data.");
-      } else {
-        print(_pen("$_kTAG: UPLOADING MATCH"));
-        var summery = ScoutingMatchSummery([this.match]);
-        yield GameFormLoading();
-        await ScoutingDataService.uploadMatch(this.match, event.user);
-        yield GameFormExit();
+            error: "please select starting position.");
+        return;
       }
+      if (!isMatchData(this.match.info)) {
+        this.index = 0;
+        yield GameformPage(
+            index: this.index,
+            match: this.match,
+            error:
+                "the match data provided does not correspond to any real match.");
+        return;
+      }
+      print(_pen("$_kTAG: UPLOADING MATCH"));
+      yield GameFormLoading();
+      await ScoutingDataService.uploadMatch(this.match, event.user);
+      yield GameFormExit();
     }
     if (event is GameFormUpdatePostGameData) {
       this.match.postGameData = event.data;

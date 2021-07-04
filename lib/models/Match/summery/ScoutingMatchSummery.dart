@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:scouting_app_2/models/Match/Cycle.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
@@ -32,17 +30,16 @@ class ScoutingMatchSummery {
 class PostGameDataSummery {
   List<Comment> comments;
   WinningStateCounter winningStateCounter;
-  
+
   PostGameDataSummery(List<PostGameData> postGameData, this.comments) {
     this.winningStateCounter = WinningStateCounter(List.generate(
         postGameData.length, (i) => postGameData[i].winningState));
-    
   }
 }
 
-class PlayingTypeCounter{
-  int deffensive,offensive;
-  PlayingTypeCounter(List<PlayingType> l){
+class PlayingTypeCounter {
+  int deffensive, offensive;
+  PlayingTypeCounter(List<PlayingType> l) {
     deffensive = 0;
     offensive = 0;
     l.forEach((e) {
@@ -51,13 +48,14 @@ class PlayingTypeCounter{
           deffensive++;
           break;
         case PlayingType.kOFFENSIVE:
-        offensive++;
-        break;
+          offensive++;
+          break;
         default:
       }
     });
   }
 }
+
 class WinningStateCounter {
   int win, draw, lose;
   WinningStateCounter(List<WinningState> l) {
@@ -87,13 +85,38 @@ class Comment {
   Comment({this.match, this.comment});
 }
 
+class StartingSideCounter {
+  num left, right, middle;
+  StartingSideCounter({this.left = 0, this.middle = 0, this.right = 0});
+  void add(String startPos) {
+    switch (startPos) {
+      case "Middle":
+        this.middle++;
+        break;
+      case "Left":
+        this.left++;
+        break;
+      case "Right":
+        this.right++;
+        break;
+      default:
+    }
+  }
+}
+
 class MatchDataSummery {
   MidGameDataSummery teleop, auto;
   EndGameSummery endGame;
+  num climbScore, shootingScore;
+  StartingSideCounter startingSide;
   MatchDataSummery(List<ScoutingMatchData> data) {
+    this.startingSide = StartingSideCounter();
     List<MidGameStage> teleList = [], autoList = [];
     List<EndGameStage> endList = [];
+    this.climbScore = 0;
+    this.shootingScore = 0;
     data.forEach((e) {
+      startingSide.add(e.startingPosition);
       teleList.add(e.teleop);
       autoList.add(e.autonomus);
       endList.add(e.endGame);
@@ -101,6 +124,22 @@ class MatchDataSummery {
     this.auto = MidGameDataSummery(autoList);
     this.teleop = MidGameDataSummery(teleList);
     this.endGame = EndGameSummery(endList);
+
+    /// climb score calc
+    data.forEach((e) {
+      climbScore += e.endGame.type.getScore();
+    });
+    climbScore /= data.length;
+
+    data.forEach((e) {
+      e.autonomus.shooting.forEach((c) {
+        shootingScore += c.getScore() * 2;
+      });
+      e.teleop.shooting.forEach((c) {
+        shootingScore += c.getScore();
+      });
+    });
+    shootingScore /= data.length;
   }
 }
 
@@ -144,7 +183,7 @@ class MidGameDataSummery {
     List<BallsCycle> balls = [];
     data.forEach((element) {
       shooting.addAll(element.shooting);
-      rollet.addAll(element.rollet);
+      rollet.add(element.rollet);
       balls.addAll(element.balls);
     });
     this.shooting = ShootingCyclesSummery(shooting);
@@ -156,15 +195,25 @@ class MidGameDataSummery {
 class BallsCyclesSummery {
   List<BallsCycle> balls;
   double avgPicked;
-  int tranchPasses;
+  double avgTranchPasses;
   BallsCyclesSummery(this.balls) {
-    int ballsPicked = 0;
-    this.tranchPasses = 0;
+    if (balls.isEmpty || balls == null) {
+      this.avgTranchPasses = 0;
+      this.avgPicked = 0;
+      return;
+    }
+
+    double ballsPicked = 0;
+    double tranchPasses = 0;
     balls.forEach((e) {
-      ballsPicked += e.numPicked;
-      this.tranchPasses += e.tranch ? 1 : 0;
+      if (e != null) {
+        ballsPicked += e.numPicked;
+        tranchPasses += e.tranch ? 1 : 0;
+      }
     });
+
     this.avgPicked = ballsPicked.toDouble() / balls.length.toDouble();
+    this.avgTranchPasses = tranchPasses / balls.length.toDouble();
   }
 }
 
@@ -174,10 +223,8 @@ class RolletCyclesSummery {
     rotationNumber = 0;
     positionNumber = 0;
     l.forEach((e) {
-      if (e.type == RolletCycle.rotation)
-        rotationNumber++;
-      else
-        positionNumber++;
+      rotationNumber += e.rotation ? 1 : 0;
+      positionNumber += e.position ? 1 : 0;
     });
   }
 }
@@ -186,19 +233,21 @@ class ShootingCyclesSummery {
   List<ShootingCycle> shooting;
   double lowerAvg, outerAvg, innerAvg, accuracy;
   ShootingCyclesSummery(this.shooting) {
-    int ballsShot = 0;
-    int ballsLower = 0, ballsOuter = 0, ballsInner = 0;
-    if(this.shooting.isEmpty){
+    if (this.shooting.isEmpty) {
       this.innerAvg = 0;
       this.outerAvg = 0;
       this.lowerAvg = 0;
       return;
     }
+    double ballsShot = 0;
+    double ballsLower = 0, ballsOuter = 0, ballsInner = 0;
     this.shooting.forEach((e) {
-      ballsShot += e.ballsShot;
-      ballsInner += e.ballsInner;
-      ballsLower += e.ballsLower;
-      ballsOuter += e.ballsOuter;
+      if (e != null) {
+        ballsShot += e.ballsShot;
+        ballsInner += e.ballsInner;
+        ballsLower += e.ballsLower;
+        ballsOuter += e.ballsOuter;
+      }
     });
 
     this.innerAvg = ballsInner.toDouble() / shooting.length.toDouble();
@@ -206,6 +255,7 @@ class ShootingCyclesSummery {
     this.lowerAvg = ballsLower.toDouble() / shooting.length.toDouble();
     this.accuracy = (ballsInner + ballsOuter + ballsLower).toDouble() /
         ballsShot.toDouble();
+    this.accuracy *= 100;
   }
 }
 
