@@ -5,6 +5,7 @@ import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
 import 'package:scouting_app_2/Pages/SingleTeam/SingleTeam.dart';
 import 'package:scouting_app_2/Pages/SingleTeam/Sorted.dart';
+import 'package:scouting_app_2/Pages/SingleTeam/TeamComparePage.dart';
 import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 
@@ -69,6 +70,13 @@ class NavDrawer extends StatelessWidget {
               title: Text("Sorted"),
               onTap: () {
                 Navigator.of(context).pushNamed(SortedPage.route);
+              },
+            ):Container(),
+            uc.user.isAdmin ?  ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Compare"),
+              onTap: () {
+                Navigator.of(context).pushNamed(TeamCompare.route);
               },
             ):Container(),
             Expanded(child: Container()),

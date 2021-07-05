@@ -113,7 +113,6 @@ class TwoEndStageWidget extends StatelessWidget {
           item1: Text("${first.nothingSum}"),
           item2: Text("${second.nothingSum}"),
         ),
-        // EndGameStageWidget(data),
       ],
     );
   }

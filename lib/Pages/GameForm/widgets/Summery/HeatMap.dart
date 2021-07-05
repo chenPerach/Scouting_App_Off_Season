@@ -15,18 +15,17 @@ class HeatMap extends StatelessWidget {
       body: Center(
         child: Stack(
           children: [
+            //TODO: does not display the data properly, needs to be fixed.
             Image.asset(
               "assets/images/PlayingField/playing_field_minimaized.jpg",
-              width: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.height *0.51762,
               height: MediaQuery.of(context).size.height,
             ),
-            FittedBox(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.height / 2,
-                height: MediaQuery.of(context).size.height,
-                child: CustomPaint(
-                  painter: painter,
-                ),
+            SizedBox(
+              width: MediaQuery.of(context).size.height *0.51762,
+              height: MediaQuery.of(context).size.height,
+              child: CustomPaint(
+                painter: painter,
               ),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/GameFormEntrence.dart';
 import 'package:scouting_app_2/Pages/SingleTeam/SingleTeam.dart';
 import 'package:scouting_app_2/Pages/SingleTeam/Sorted.dart';
+import 'package:scouting_app_2/Pages/SingleTeam/TeamComparePage.dart';
 import 'package:scouting_app_2/main.dart';
 
 class RouteGenerator {
@@ -17,6 +18,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SingleTeamAdminPage());
       case SortedPage.route:
         return MaterialPageRoute(builder: (_) => SortedPage());
+      case TeamCompare.route:
+        return MaterialPageRoute(builder: (_) => TeamCompare());
       default:
     }
     return null;

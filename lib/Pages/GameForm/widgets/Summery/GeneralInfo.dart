@@ -150,9 +150,9 @@ class TwoGeneralGameInfo extends StatelessWidget {
           item2: Text(
               "${second.matchData.startingSide.left},${second.matchData.startingSide.middle},${second.matchData.startingSide.right}"),
         ),
-        Card(
-          child: Text("${first.info.teamNumber} comments"),
-        ),
+        !_isCommentSectionEmpty(first.postGame.comments) ?Card(
+          child: Text("${first.info.teamNumber}'s comments"),
+        ): Container(),
         !_isCommentSectionEmpty(first.postGame.comments)
             ? Container(
                 height: min(
@@ -169,9 +169,9 @@ class TwoGeneralGameInfo extends StatelessWidget {
                 ),
               )
             : Container(),
-        Card(
-          child: Text("${second.info.teamNumber} comments"),
-        ),
+        !_isCommentSectionEmpty(second.postGame.comments) ?Card(
+          child: Text("${second.info.teamNumber}'s comments"),
+        ): Container(),
         !_isCommentSectionEmpty(second.postGame.comments)
             ? Container(
                 height: min(
