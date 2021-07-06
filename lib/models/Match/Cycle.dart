@@ -92,16 +92,20 @@ class RolletType {
 class RolletGenerator {
   static int _id = 0;
   static RolletType next() {
+    var r;
     switch (_id) {
       case 0:
-        return RolletType(
+        r = RolletType(
             img: Image.asset("assets/images/GamePieces/CPRC.png"),
             cycle: Rollet(rotation: true));
+        break;
       case 1:
-        return RolletType(
+        r = RolletType(
             img: Image.asset("assets/images/GamePieces/CPPC.png"),
             cycle: Rollet(position: true));
+        break;
     }
     _id = (++_id)%2;
+    return r;
   }
 }
