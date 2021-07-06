@@ -34,7 +34,7 @@ class GameFormAddBallsCycle extends GameFormEvent {
 
 class GameFormAddRolletCycle extends GameFormEvent {
   final String type;
-  final RolletCycle cycle;
+  final Rollet cycle;
   GameFormAddRolletCycle({this.cycle, this.type});
 }
 

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Cycles.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/EndGame.dart';
-import 'package:scouting_app_2/Pages/GameForm/widgets/ExamplePage.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/MatchData.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/SummaryAndComment.dart';
 import 'package:scouting_app_2/models/Match/ScoutingMatch.dart';
@@ -58,8 +57,6 @@ class GameFormBottomNavPage extends StatelessWidget {
       case 4:
         return CommentAndSummary(data: match.postGameData);
         break;
-      default:
-        return GameFormExamplePage();
     }
   }
 }

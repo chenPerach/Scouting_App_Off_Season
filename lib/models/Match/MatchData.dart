@@ -97,7 +97,7 @@ class EndGameClimbType {
 class MidGameStage extends GenericScoutingStageData {
   List<ShootingCycle> shooting;
   List<BallsCycle> balls;
-  RolletCycle rollet;
+  Rollet rollet;
 
   MidGameStage({
     @required this.balls,
@@ -118,13 +118,13 @@ class MidGameStage extends GenericScoutingStageData {
 
   factory MidGameStage.fromJson(Map<String, dynamic> json) {
     
-    var l =  json == null ? MidGameStage(balls: [],rollet: RolletCycle(),shooting: []) : MidGameStage(
+    var l =  json == null ? MidGameStage(balls: [],rollet: Rollet(),shooting: []) : MidGameStage(
       balls: json["balls"] == null ? [] : SmartList.fromIterable<BallsCycle, dynamic>(
           List.from(json["balls"]), (e) => BallsCycle.fromJson(Map<String,dynamic>.from(e))),
       shooting:json["shooting"] == null ? [] : SmartList.fromIterable<ShootingCycle, dynamic>(
           List.from(json["shooting"]), 
           (e) => ShootingCycle.fromJson(Map<String,dynamic>.from(e))),
-      rollet: RolletCycle.fromJson(Map<String,dynamic>.from(json["rollet"])),
+      rollet: Rollet.fromJson(Map<String,dynamic>.from(json["rollet"])),
     );
 
     return l;

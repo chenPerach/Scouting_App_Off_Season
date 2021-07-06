@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:scouting_app_2/Utils/Vector.dart';
 import 'package:scouting_app_2/models/model.dart';
 
@@ -63,18 +64,44 @@ class BallsCycle extends Cycle implements Model {
   }
 }
 
-class RolletCycle implements Model {
+class Rollet implements Model {
   bool position, rotation;
-  RolletCycle({this.position = false, this.rotation = false});
+  Rollet({this.position = false, this.rotation = false});
 
-  factory RolletCycle.fromJson(Map<String, dynamic> json) {
-    return RolletCycle(position: json["position"], rotation: json["rotation"]);
+  factory Rollet.fromJson(Map<String, dynamic> json) {
+    return Rollet(position: json["position"], rotation: json["rotation"]);
   }
   @override
-  RolletCycle operator +(RolletCycle other){
-    return RolletCycle(position: this.position || other.position, rotation: this.rotation || other.rotation);
+  Rollet operator +(Rollet other) {
+    return Rollet(
+        position: this.position || other.position,
+        rotation: this.rotation || other.rotation);
   }
+
   Map<String, dynamic> toJson() {
     return {"position": position, "rotation": rotation};
+  }
+}
+
+class RolletType {
+  Image img;
+  Rollet cycle;
+  RolletType({@required this.img, @required this.cycle});
+}
+
+class RolletGenerator {
+  static int _id = 0;
+  static RolletType next() {
+    switch (_id) {
+      case 0:
+        return RolletType(
+            img: Image.asset("assets/images/GamePieces/CPRC.png"),
+            cycle: Rollet(rotation: true));
+      case 1:
+        return RolletType(
+            img: Image.asset("assets/images/GamePieces/CPPC.png"),
+            cycle: Rollet(position: true));
+    }
+    _id = (++_id)%2;
   }
 }

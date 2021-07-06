@@ -54,12 +54,12 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       );
       this.match.data.autonomus = MidGameStage(
         balls: [],
-        rollet: RolletCycle(),
+        rollet: Rollet(),
         shooting: [],
       );
       this.match.data.teleop = MidGameStage(
         balls: [],
-        rollet: RolletCycle(),
+        rollet: Rollet(),
         shooting: [],
       );
 
@@ -77,11 +77,11 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       if (event.type == "AUTO") {
         if (match.data.autonomus == null)
           match.data.autonomus =
-              MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
+              MidGameStage(balls: [], rollet: Rollet(), shooting: []);
         match.data.autonomus.shooting.add(event.cycle);
       } else {
         if (match.data.teleop == null)
-          match.data.teleop = MidGameStage(balls: [], rollet: RolletCycle(), shooting: []);
+          match.data.teleop = MidGameStage(balls: [], rollet: Rollet(), shooting: []);
         match.data.teleop.shooting.add(event.cycle);
       }
       yield GameformPage(index: index, match: this.match);

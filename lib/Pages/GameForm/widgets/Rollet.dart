@@ -9,7 +9,7 @@ class RolletCyclePage extends StatefulWidget {
 }
 
 class RolletCyclePageState extends State<RolletCyclePage> {
-  RolletCycle cycle = RolletCycle();
+  RolletType cycleType = RolletGenerator.next();
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +18,12 @@ class RolletCyclePageState extends State<RolletCyclePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                PrimoSwitchButton(
-                  onPressed: () => setState(() {
-                    cycle.position = true;
-                    cycle.rotation = false;
-                  }),
-                  child: Text("position"),
-                  isActive: cycle.position,
-                ),
-                PrimoSwitchButton(
-                  onPressed: () =>
-                      setState(() {
-                    cycle.position = false;
-                    cycle.rotation = true;
-                  }),
-                  child: Text("rotation"),
-                  isActive: cycle.rotation,
-                ),
-              ],
-            ),
+            ElevatedButton(onPressed: ()=>
+              setState(() =>
+                cycleType = RolletGenerator.next())
+            , child: cycleType.img),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(cycle),
+              onPressed: () => Navigator.of(context).pop(cycleType.cycle),
               child: Text("submit"),
             )
           ],

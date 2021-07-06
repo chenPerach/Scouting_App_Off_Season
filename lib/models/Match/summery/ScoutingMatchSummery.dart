@@ -179,7 +179,7 @@ class MidGameDataSummery {
 
   MidGameDataSummery(List<MidGameStage> data) {
     List<ShootingCycle> shooting = [];
-    List<RolletCycle> rollet = [];
+    List<Rollet> rollet = [];
     List<BallsCycle> balls = [];
     data.forEach((element) {
       shooting.addAll(element.shooting);
@@ -219,7 +219,7 @@ class BallsCyclesSummery {
 
 class RolletCyclesSummery {
   int rotationNumber, positionNumber;
-  RolletCyclesSummery(List<RolletCycle> l) {
+  RolletCyclesSummery(List<Rollet> l) {
     rotationNumber = 0;
     positionNumber = 0;
     l.forEach((e) {
