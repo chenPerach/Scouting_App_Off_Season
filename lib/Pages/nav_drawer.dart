@@ -18,11 +18,11 @@ class NavDrawer extends StatelessWidget {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(uc.user.user.displayName ?? "Loading..."),
-              accountEmail: Text(uc.user.user.email),
+              accountName: Text(uc?.user?.user?.displayName ?? "Loading..."),
+              accountEmail: Text(uc?.user?.user?.email ?? "Loading..."),
               currentAccountPicture: CircleAvatar(
                 child: ClipOval(
-                  child: uc.user.user.photoURL == null
+                  child: uc?.user?.user?.photoURL == null
                       ? Image.asset(
                           "assets/images/default-profile-picture.png",
                           width: 90,
@@ -42,41 +42,41 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.house),
               title: Text("Home"),
               onTap: () =>
-                  Navigator.of(context).pushNamed(FirebaseInitilaize.route),
+                  Navigator.of(context).pushReplacementNamed(FirebaseInitilaize.route),
             ),
             ListTile(
               leading: Icon(Icons.book),
               title: Text("Game Form"),
-              onTap: () => Navigator.of(context).pushNamed(GameForm.route),
+              onTap: () => Navigator.of(context).pushReplacementNamed(GameForm.route),
             ),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text("Sign out"),
               onTap: () {
                 PrimoUserService.signOut();
-                Navigator.of(context).pushNamed(FirebaseInitilaize.route);
+                Navigator.of(context).pushReplacementNamed(FirebaseInitilaize.route);
               },
             ),
 
-            uc.user.isAdmin ?  ListTile(
+            uc?.user?.isAdmin ?? false ?  ListTile(
               leading: Icon(Icons.logout),
               title: Text("Single Team View"),
               onTap: () {
-                Navigator.of(context).pushNamed(SingleTeamAdminPage.route);
+                Navigator.of(context).pushReplacementNamed(SingleTeamAdminPage.route);
               },
             ):Container(),
-            uc.user.isAdmin ?  ListTile(
+            uc?.user?.isAdmin ?? false ?  ListTile(
               leading: Icon(Icons.logout),
               title: Text("Sorted"),
               onTap: () {
-                Navigator.of(context).pushNamed(SortedPage.route);
+                Navigator.of(context).pushReplacementNamed(SortedPage.route);
               },
             ):Container(),
-            uc.user.isAdmin ?  ListTile(
+            uc?.user?.isAdmin ?? false ?  ListTile(
               leading: Icon(Icons.logout),
               title: Text("Compare"),
               onTap: () {
-                Navigator.of(context).pushNamed(TeamCompare.route);
+                Navigator.of(context).pushReplacementNamed(TeamCompare.route);
               },
             ):Container(),
             Expanded(child: Container()),

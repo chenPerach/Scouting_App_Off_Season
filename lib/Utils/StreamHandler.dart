@@ -20,7 +20,4 @@ class StreamHandler{
   StreamHandler(){
     _streamSubscriptions = Set();
   }
-
-
-  
 }

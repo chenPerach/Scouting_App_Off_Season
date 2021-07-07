@@ -8,13 +8,15 @@ import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
 import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/Utils/StreamHandler.dart';
 
 class PrimoUserService {
   static AnsiPen _pen = AnsiPen()..yellow(bold: true, bg: false);
   static const String _TAG = "PRIMO USER SERVICE";
   static DatabaseReference _usersRef =
       FirebaseDatabase.instance.reference().child(branch).child("users");
-  static List<StreamSubscription> _streamSubs = [];
+
+  static StreamHandler _streams = StreamHandler();
   static final Map<int, bool> initialFav = Map.fromIterable(
       TeamsConsts.teams_json,
       key: (e) => e["number"],
@@ -69,14 +71,13 @@ class PrimoUserService {
       {void onError(msg), void onDone()}) {
     var _userRef = _usersRef.child(user.user.uid);
 
-    _streamSubs.add(_userRef.onChildChanged
+    _streams.addStream(_userRef.onChildChanged
         .listen(onData, onError: onError, onDone: onDone));
   }
 
   static void clearStreamSubscriptions() {
     _log("$_TAG: clearing stream subscriptions");
-    _streamSubs.forEach((e) => e.cancel());
-    _streamSubs = [];
+    _streams.cancelAll();
   }
 
   static void handleSnapShot(PrimoUser user, DataSnapshot snapshot) {
@@ -99,7 +100,7 @@ class PrimoUserService {
   }
 
   static void addSubscription(StreamSubscription sub) {
-    _streamSubs.add(sub);
+    _streams.addStream(sub);
   }
 
   static void _log(String msg) {
