@@ -175,7 +175,7 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
     if (closestGame != null)
       for (var game in HomeService.matchList) {
         var difference = time.difference(game.time).abs();
-        if (difference.compareTo(dT) <= 0) {
+        if (difference.compareTo(dT).abs() <= 0) {
           closestGame = game;
           dT = difference;
         }

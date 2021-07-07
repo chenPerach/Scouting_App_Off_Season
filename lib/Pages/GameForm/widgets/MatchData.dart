@@ -50,6 +50,10 @@ class _MatchDataState extends State<MatchData> {
 
   @override
   Widget build(BuildContext ctx) {
+    Set<int> numbers = Set();
+    HomeService.matchList.forEach((e) {
+      numbers.add(e.matchNumber);
+    });
     return Form(
       key: _key,
       child: Column(
@@ -97,10 +101,10 @@ class _MatchDataState extends State<MatchData> {
               hint: Text("select game type"),
               value: widget.info.matchNumber,
               items: List<DropdownMenuItem<int>>.generate(
-                HomeService.matchList.where((e) => e.compLevel == "qm").length,
+                numbers.length,
                 (i) => DropdownMenuItem(
-                  child: Text((i + 1).toString()),
-                  value: i + 1,
+                  child: Text((numbers.toList()[i]).toString()),
+                  value: numbers.toList()[i],
                 ),
               ),
               onChanged: (value) {
