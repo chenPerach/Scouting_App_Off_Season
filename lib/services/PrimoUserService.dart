@@ -29,7 +29,7 @@ class PrimoUserService {
       return null;
     });
     _log("$_TAG: aquired snapshot from data base");
-    if (snapshot.value == null) {
+    if (snapshot?.value == null) {
       _log("$_TAG: wasn't able to get firebase user.");
       return null;
     }

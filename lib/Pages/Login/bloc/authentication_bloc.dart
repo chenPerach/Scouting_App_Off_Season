@@ -36,6 +36,7 @@ class AuthenticationBloc
         PrimoUser u = await FirebaseAuthService.instance
             .createUserWithEmailAndPassword(event.email, event.password,
                 name: event.name);
+        if(u == null) yield AuthError(AuthException(message: "wasn't able to login/register",happendOn: "REGISTER"));
         yield Authenticated(u);
       } on AuthException catch (e) {
         e.happendOn = "REGISTER";

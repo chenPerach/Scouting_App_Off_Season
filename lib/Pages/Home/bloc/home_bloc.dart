@@ -25,7 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoading();
       if (event.uc.user != null) event.uc.setUpChangeListener();
       List<MatchModel> matches = await HomeService.getMatches();
-      if (matches == null ) {
+      if (matches == null) {
         yield HomeWithNoData();
       } else {
         var comp = CompotitionModel(
@@ -36,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
         matches.forEach((m) {
           if (m.compLevel == "qm" &&
+              event.uc.user?.favoriteMatches != null &&
               event.uc.user.favoriteMatches.indexOf(m.matchNumber) !=
                   -1) // does match exist in favorite matches
             MatchNotificationScheduler.scheduleMatch(m);

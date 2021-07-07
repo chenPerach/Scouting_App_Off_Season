@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:scouting_app_2/Utils/StreamHandler.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
@@ -9,15 +10,21 @@ import 'package:scouting_app_2/services/firebase_auth_service.dart';
 //this is a test
 class UserContainer extends ChangeNotifier {
   PrimoUser _user;
-  static StreamSubscription<User> _subscription;
+  static StreamHandler streams = StreamHandler();
   UserContainer() {
-    PrimoUserService.addSubscription(FirebaseAuthService.instance.userChanges.listen((user) async {
+
+    streams.addStream(
+        FirebaseAuthService.instance.userChanges.listen((user) async {
       print("handling user changes");
-      if (user == null || user.displayName == null) return;
+      if (user == null) {
+        _user = null;
+        notifyListeners();
+        return;
+      }
+      if (user.displayName == null) return;
       _user = await syncWithDB(user);
       notifyListeners();
     }));
-        
   }
   set user(PrimoUser user) {
     this._user = user;
@@ -33,7 +40,7 @@ class UserContainer extends ChangeNotifier {
 
   PrimoUser get user => this._user;
   static void cancelSubscription() {
-    _subscription.cancel();
+    streams.cancelAll();
   }
 
   Future<PrimoUser> syncWithDB(User user) async {

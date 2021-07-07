@@ -14,6 +14,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   Stream<User> get userChanges => _firebaseAuth.userChanges();
+  Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();  
   @override
   Future<PrimoUser> createUserWithEmailAndPassword(
       String email, String password,
@@ -38,7 +39,8 @@ class FirebaseAuthService implements AuthService {
           break;
       }
     } catch (e) {}
-    User u = result.user;
+    User u = result?.user;
+    if(u == null) return null;
     await u.updateDisplayName(name);
     // await u.updateProfile(displayName: name, photoURL: photoUrl);
 
@@ -46,7 +48,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Stream<User> authState() => _firebaseAuth.authStateChanges();
+  // Stream<User> get authState => _firebaseAuth.authStateChanges();
   @override
   void dispose() {}
 

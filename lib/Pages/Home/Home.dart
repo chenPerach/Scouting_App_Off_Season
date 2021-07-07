@@ -95,9 +95,7 @@ class _BlocHandler extends StatelessWidget {
     return PageBlocCreator<HomeEvent, HomeState, HomeBloc>(
       create: (_) => HomeBloc(),
       builder: _build,
-      listener: (context, state) {
-        
-      },
+      listener: (context, state) {},
     );
   }
 
@@ -106,8 +104,8 @@ class _BlocHandler extends StatelessWidget {
       return Waiting();
     }
     if (state is HomeInitial) {
-      BlocProvider.of<HomeBloc>(context)
-          .add(HomeFetchGames(Provider.of<UserContainer>(context)));
+      var uc = Provider.of<UserContainer>(context);
+      if(uc.user != null) BlocProvider.of<HomeBloc>(context).add(HomeFetchGames(uc));
       return Waiting();
     }
     if (state is HomeWithData) {

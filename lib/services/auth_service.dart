@@ -22,7 +22,7 @@ abstract class AuthService {
   void signOut();
   void dispose();
 
-  Stream<User> authState();
+  Stream<User> get authStateChanges;
 }
 
 class AuthException implements Exception {

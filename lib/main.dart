@@ -65,7 +65,7 @@ class FirebaseInitilaize extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done)
                 return StreamBuilder(
-                  stream: FirebaseAuthService.instance.authState(),
+                  stream: FirebaseAuthService.instance.authStateChanges,
                   builder: (context, snapshot) {
                     if (snapshot.data == null) {
                       return LoginScreen();
