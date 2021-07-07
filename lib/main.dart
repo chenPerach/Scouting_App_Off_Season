@@ -12,7 +12,7 @@ import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
 String branch = "2020isde1";
-String kVERSION = "1.0.1";
+String kVERSION = "1.0.2";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService.initalize(
