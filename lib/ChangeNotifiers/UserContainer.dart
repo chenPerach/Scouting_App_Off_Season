@@ -11,12 +11,13 @@ class UserContainer extends ChangeNotifier {
   PrimoUser _user;
   static StreamSubscription<User> _subscription;
   UserContainer() {
-    _subscription =
-        FirebaseAuthService.instance.userChanges.listen((user) async {
+    PrimoUserService.addSubscription(FirebaseAuthService.instance.userChanges.listen((user) async {
+      print("handling user changes");
       if (user == null || user.displayName == null) return;
-      _user = await _syncWithDB(user);
+      _user = await syncWithDB(user);
       notifyListeners();
-    });
+    }));
+        
   }
   set user(PrimoUser user) {
     this._user = user;
@@ -35,7 +36,7 @@ class UserContainer extends ChangeNotifier {
     _subscription.cancel();
   }
 
-  Future<PrimoUser> _syncWithDB(User user) async {
+  Future<PrimoUser> syncWithDB(User user) async {
     var puser = await PrimoUserService.getUser(user);
     if (puser == null) {
       puser = FirebaseAuthService.instance.toPrimoUser(user);

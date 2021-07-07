@@ -39,7 +39,8 @@ class FirebaseAuthService implements AuthService {
       }
     } catch (e) {}
     User u = result.user;
-    await u.updateProfile(displayName: name, photoURL: photoUrl);
+    await u.updateDisplayName(name);
+    // await u.updateProfile(displayName: name, photoURL: photoUrl);
 
     return toPrimoUser(u);
   }

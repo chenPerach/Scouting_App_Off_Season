@@ -10,6 +10,7 @@ import 'package:scouting_app_2/services/notification_service.dart';
 
 import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
+
 String branch = "2020isde1";
 String kVERSION = "1.0.0";
 void main() {
@@ -35,18 +36,14 @@ class _AppState extends State<App> {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => UserContainer())],
       child: MaterialApp(
-        builder: (context, child) => MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.15), child: child),
+        builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.15),
+            child: child),
         theme: ThemeData.dark(),
         initialRoute: FirebaseInitilaize.route,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    UserContainer.cancelSubscription();
-    super.dispose();
   }
 }
 
@@ -57,7 +54,7 @@ class FirebaseInitilaize extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: NotificationService.initalize(
-        onSelectNotification: (payload) async{
+        onSelectNotification: (payload) async {
           Navigator.of(context).pushNamed(FirebaseInitilaize.route);
         },
       ),
@@ -73,7 +70,15 @@ class FirebaseInitilaize extends StatelessWidget {
                     if (snapshot.data == null) {
                       return LoginScreen();
                     } else {
-                      return Home();
+                      return FutureBuilder(
+                        future: Provider.of<UserContainer>(context).syncWithDB(snapshot.data),
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData){
+                            // Provider.of<UserContainer>(context).user = snapshot.data;
+                            return Home();
+                          }else return _WaitingApp();
+                        },
+                      );
                     }
                   },
                 );

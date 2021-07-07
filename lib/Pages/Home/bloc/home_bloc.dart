@@ -23,30 +23,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     if (event is HomeFetchGames) {
       yield HomeLoading();
-
       if (event.uc.user != null) event.uc.setUpChangeListener();
       List<MatchModel> matches = await HomeService.getMatches();
-      if (matches == null) {
+      if (matches == null ) {
         yield HomeWithNoData();
-        return;
+      } else {
+        var comp = CompotitionModel(
+          finals: _getList("f", matches),
+          semi: _getList("sf", matches),
+          quarter: _getList("qf", matches),
+          quals: _getList("qm", matches),
+        );
+        matches.forEach((m) {
+          if (m.compLevel == "qm" &&
+              event.uc.user.favoriteMatches.indexOf(m.matchNumber) !=
+                  -1) // does match exist in favorite matches
+            MatchNotificationScheduler.scheduleMatch(m);
+        });
+        if (event.uc.user.isAdmin) {
+          ScoutingDataService.init();
+        }
+        yield HomeWithData(comp);
       }
-      await Future.doWhile(() => event.uc?.user?.user?.displayName == null);
-      var comp = CompotitionModel(
-        finals: _getList("f", matches),
-        semi: _getList("sf", matches),
-        quarter: _getList("qf", matches),
-        quals: _getList("qm", matches),
-      );
-      matches.forEach((m) {
-        if (m.compLevel == "qm" &&
-            event.uc.user.favoriteMatches.indexOf(m.matchNumber) !=
-                -1) // does match exist in favorite matches
-          MatchNotificationScheduler.scheduleMatch(m);
-      });
-      if (event.uc.user.isAdmin) {
-        ScoutingDataService.init();
-      }
-      yield HomeWithData(comp);
     }
 
     if (event is HomeUpdateUser) {

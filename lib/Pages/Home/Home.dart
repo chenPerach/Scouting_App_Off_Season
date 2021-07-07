@@ -95,7 +95,9 @@ class _BlocHandler extends StatelessWidget {
     return PageBlocCreator<HomeEvent, HomeState, HomeBloc>(
       create: (_) => HomeBloc(),
       builder: _build,
-      listener: (context, state) {},
+      listener: (context, state) {
+        
+      },
     );
   }
 
