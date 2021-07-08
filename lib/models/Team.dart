@@ -25,7 +25,6 @@ class TeamsConsts {
     {"nickname": "MisCar", "number": 1574},
     {"nickname": "Voltrix", "number": 1576},
     {"nickname": "Steampunk", "number": 1577},
-    {"nickname": "Steampunk", "number": 1577},
     {"nickname": "The Blue Monkeys", "number": 1580},
     {"nickname": "Hamosad", "number": 1657},
     {"nickname": "Orbit", "number": 1690},
