@@ -11,8 +11,8 @@ import 'package:scouting_app_2/services/notification_service.dart';
 import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
-String branch = "2020isde1";
-String kVERSION = "1.0.2";
+String branch = "2021isjo";
+String kVERSION = "1.2.0";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService.initalize(
