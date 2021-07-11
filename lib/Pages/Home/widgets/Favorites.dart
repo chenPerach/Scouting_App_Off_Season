@@ -27,7 +27,7 @@ class _FavoritesState extends State<Favorites> {
           )),
       body: Center(
         child: ListView.builder(
-          itemCount: favorites.length,
+          itemCount: TeamsConsts.teams.length,
           itemBuilder: (context, index) {
             String teamNickName = TeamsConsts.teams[index].nickname;
             int teamNumber = TeamsConsts.teams[index].number;
