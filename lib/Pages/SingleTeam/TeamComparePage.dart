@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryPage.dart';
 import 'package:scouting_app_2/Pages/nav_drawer.dart';
 import 'package:scouting_app_2/models/Team.dart';
-import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/services/gameFormService.dart';
 
 class TeamCompare extends StatefulWidget {
   static const route = "team_compare";

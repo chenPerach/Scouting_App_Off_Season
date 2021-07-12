@@ -6,7 +6,7 @@ import 'package:scouting_app_2/Pages/nav_drawer.dart';
 import 'package:scouting_app_2/models/Match/MatchData.dart';
 import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 import 'package:scouting_app_2/models/Team.dart';
-import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/services/gameFormService.dart';
 
 class SingleTeamAdminPage extends StatefulWidget {
   static const route = "/single_team_view";

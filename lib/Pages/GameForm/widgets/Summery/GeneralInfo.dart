@@ -67,7 +67,7 @@ class GeneralGameInfo extends StatelessWidget {
                 height: min(89 * postData.comments.length.toDouble(), 300),
                 child: ListView.builder(
                   itemCount: postData.comments.length,
-                  itemBuilder: (context, i) => Card(
+                  itemBuilder: (context, i) => ["",null].contains(postData.comments[i].comment) ? Container() : Card(
                     child: ListTile(
                       title: Text(postData.comments[i].match.toString()),
                       subtitle: Text(postData.comments[i].comment),
@@ -195,5 +195,31 @@ class TwoGeneralGameInfo extends StatelessWidget {
   bool _isCommentSectionEmpty(List<Comment> l) {
     for (var comment in l) if (comment.comment != null) return false;
     return true;
+  }
+}
+
+class CommentSection extends StatelessWidget {
+  bool show;
+  bool Function(Comment comment) showComment;
+  List<Comment> comments;
+  CommentSection({this.showComment,this.show,this.comments});
+  @override
+  Widget build(BuildContext context) {
+    return show
+            ? Container(
+                height: min(
+                    89 * this.comments.length.toDouble(), 300),
+                child: ListView.builder(
+                  itemCount: comments.length,
+                  itemBuilder: (context, i) => ["",null].contains(comments[i].comment) ? Container(): Card(
+                    child: ListTile(
+                      title: Text(comments[i].match.toString()),
+                      subtitle: Text(comments[i].comment),
+                      isThreeLine: true,
+                    ),
+                  ),
+                ),
+              )
+            : Container();
   }
 }

@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:image/image.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/CompLevel.dart';
 import 'package:scouting_app_2/models/Match/GameInfo.dart';
@@ -12,7 +13,7 @@ import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 
 class MatchData extends StatefulWidget {
-  final GameInfo info;
+  GameInfo info;
   String pos;
   final String error;
   MatchData({this.info, this.pos, this.error});
@@ -25,7 +26,7 @@ class MatchData extends StatefulWidget {
         closestGame = game;
         dT = difference;
       }
-    }    
+    }
 
     return closestGame;
   }
@@ -36,7 +37,15 @@ class MatchData extends StatefulWidget {
 
 class _MatchDataState extends State<MatchData> {
   final int pageNumber = 0;
-
+  // MapEntry mt = MapEntry(
+  //     "B1",
+  //     HomeService.matchList
+  //         .where((e) => e.compLevel == "qm")
+  //         .toList()
+  //         .where((e) => e.matchNumber == widget.info.matchNumber)
+  //         .first
+  //         .blueAllience
+  //         .teamNumbers[0]);
   final Key _key = GlobalKey<FormState>();
 
   final List<CompLevel> _matchTypes = [
@@ -47,6 +56,30 @@ class _MatchDataState extends State<MatchData> {
   ];
 
   final List<String> _allianceTypes = ["red", "blue"];
+  List<MapEntry<String, int>> calcl(MatchModel m) {
+    List<MapEntry<String, int>> lst = [];
+    int c = 1;
+    m.redAllience.teamNumbers.forEach((element) {
+      lst.add(MapEntry("R${c}", element));
+      c++;
+    });
+    c = 1;
+    m.blueAllience.teamNumbers.forEach((element) {
+      lst.add(MapEntry("B${c}", element));
+      c++;
+    });
+    return lst;
+  }
+  List< int> calc2(MatchModel m) {
+    List< int> lst = [];
+    m.redAllience.teamNumbers.forEach((element) {
+      lst.add( element);
+    });
+    m.blueAllience.teamNumbers.forEach((element) {
+      lst.add( element);
+    });
+    return lst;
+  }
 
   @override
   Widget build(BuildContext ctx) {
@@ -54,6 +87,8 @@ class _MatchDataState extends State<MatchData> {
     HomeService.matchList.forEach((e) {
       numbers.add(e.matchNumber);
     });
+    List<MatchModel> matches =
+        HomeService.matchList.where((e) => e.compLevel == "qm").toList();
     return Form(
       key: _key,
       child: Column(
@@ -76,85 +111,139 @@ class _MatchDataState extends State<MatchData> {
           SizedBox(
             height: 3,
           ),
-          _DropDownRow(
-            child: Text("Match Type"),
-            dropDown: DropdownButtonFormField<CompLevel>(
-              hint: Text("select game type"),
-              value: widget.info.compLevel,
-              items: List<DropdownMenuItem<CompLevel>>.generate(
-                _matchTypes.length,
-                (i) => DropdownMenuItem(
-                  child: Text(_matchTypes[i].detailed),
-                  value: _matchTypes[i],
-                ),
-              ),
-              onChanged: (value) {
-                widget.info.compLevel = value;
-                BlocProvider.of<GameFormBloc>(ctx)
-                    .add(GameFormUpdateGameInfo(widget.info));
-              },
-            ),
-          ),
+          // _DropDownRow(
+          //   child: Text("Match Type"),
+          //   dropDown: DropdownButtonFormField<CompLevel>(
+          //     hint: Text("select game type"),
+          //     value: widget.info.compLevel,
+          //     items: List<DropdownMenuItem<CompLevel>>.generate(
+          //       _matchTypes.length,
+          //       (i) => DropdownMenuItem(
+          //         child: Text(_matchTypes[i].detailed),
+          //         value: _matchTypes[i],
+          //       ),
+          //     ),
+          //     onChanged: (value) {
+          //       widget.info.compLevel = value;
+          //       BlocProvider.of<GameFormBloc>(ctx)
+          //           .add(GameFormUpdateGameInfo(widget.info));
+          //     },
+          //   ),
+          // ),
           _DropDownRow(
             child: Text("Match Number"),
             dropDown: DropdownButtonFormField<int>(
-              hint: Text("select game type"),
               value: widget.info.matchNumber,
               items: List<DropdownMenuItem<int>>.generate(
-                numbers.length,
+                matches.length,
                 (i) => DropdownMenuItem(
-                  child: Text((numbers.toList()[i]).toString()),
-                  value: numbers.toList()[i],
+                  child: Text((matches[i].matchNumber).toString()),
+                  value: matches[i].matchNumber,
                 ),
               ),
               onChanged: (value) {
-                widget.info.matchNumber = value;
+                widget.info = GameInfo(
+                    compLevel: CompLevel.simple("qm"),
+                    matchNumber: value,
+                    alliance: "blue",
+                    teamNumber: matches
+                        .where((e) => e.matchNumber == widget.info.matchNumber)
+                        .first
+                        .blueAllience
+                        .teamNumbers[0]);
                 BlocProvider.of<GameFormBloc>(ctx)
                     .add(GameFormUpdateGameInfo(widget.info));
               },
             ),
           ),
-          _DropDownRow(
-            child: Text("Allience"),
-            dropDown: DropdownButtonFormField<String>(
-              hint: Text("select Alliance"),
-              value: widget.info.alliance,
-              items: List<DropdownMenuItem<String>>.generate(
-                _allianceTypes.length,
-                (i) => DropdownMenuItem(
-                  child: Container(
-                    width: 100,
-                    height: 15,
-                    color:
-                        _allianceTypes[i] == "red" ? Colors.red : Colors.blue,
+          // widget.info.matchNumber != null ? _DropDownRow(
+          //   child: Text("Allience"),
+          //   dropDown: DropdownButtonFormField<String>(
+          //     hint: Text("select Alliance"),
+          //     value: widget.info.alliance ?? "blue",
+          //     items: List<DropdownMenuItem<String>>.generate(
+          //       _allianceTypes.length,
+          //       (i) => DropdownMenuItem(
+          //         child: Container(
+          //           width: 100,
+          //           height: 15,
+          //           color:
+          //               _allianceTypes[i] == "red" ? Colors.red : Colors.blue,
+          //         ),
+          //         value: _allianceTypes[i],
+          //       ),
+          //     ),
+          //     onChanged: (value) {
+          //       int number = widget.info.matchNumber;
+          //       widget.info = GameInfo(
+          //         matchNumber: number,
+          //         alliance: value
+          //       );
+          //       BlocProvider.of<GameFormBloc>(ctx)
+          //           .add(GameFormUpdateGameInfo(widget.info));
+          //     },
+          //   ),
+          // ) : Container(),
+          widget.info.teamNumber != null
+              ? _DropDownRow(
+                  child: Text("team"),
+                  dropDown: DropdownSearch<MapEntry<String, int>>(
+                    items: calcl(matches
+                        .where((e) => e.matchNumber == widget.info.matchNumber)
+                        .first),
+                    mode: Mode.BOTTOM_SHEET,
+                    searchBoxDecoration:
+                        InputDecoration(hintText: "search team"),
+                    showSearchBox: true,
+                    dropdownSearchDecoration:
+                        InputDecoration(border: InputBorder.none),
+                    itemAsString: (item) => "${item.key} - ${item.value}",
+                    onChanged: (value) {
+                      int number = widget.info.matchNumber;
+                      widget.info = GameInfo(
+                          matchNumber: number,
+                          compLevel: CompLevel.simple("qm"),
+                          alliance: value.key.startsWith("R") ? "red" : "blue",
+                          teamNumber: value.value);
+                      BlocProvider.of<GameFormBloc>(ctx)
+                          .add(GameFormUpdateGameInfo(widget.info));
+                    },
+                    selectedItem: widget.info.matchNumber == null || !calc2(matches
+                        .where((e) => e.matchNumber == widget.info.matchNumber)
+                        .first).contains(widget.info.teamNumber)
+
+                        ? MapEntry(
+                            "B1",
+                            matches
+                                .where((e) =>
+                                    e.matchNumber == widget.info.matchNumber)
+                                .first
+                                .blueAllience
+                                .teamNumbers[0])
+                        : calcl(matches
+                        .where((e) => e.matchNumber == widget.info.matchNumber)
+                        .first).where((e) => e.value == widget.info.teamNumber).first,
                   ),
-                  value: _allianceTypes[i],
-                ),
-              ),
-              onChanged: (value) {
-                widget.info.alliance = value;
-                BlocProvider.of<GameFormBloc>(ctx)
-                    .add(GameFormUpdateGameInfo(widget.info));
-              },
-            ),
-          ),
-          _DropDownRow(
-            child: Text("Team"),
-            dropDown: DropdownSearch<Team>(
-              items: TeamsConsts.teams,
-              mode:Mode.BOTTOM_SHEET,
-              searchBoxDecoration: InputDecoration(hintText: "search team"),
-              showSearchBox: true,
-              dropdownSearchDecoration: InputDecoration(border: InputBorder.none),
-              itemAsString: (item) => "${item.number} ${item.nickname}",
-              onChanged: (value) {
-                widget.info.teamNumber = value.number;
-                BlocProvider.of<GameFormBloc>(ctx)
-                    .add(GameFormUpdateGameInfo(widget.info));
-              },
-              selectedItem: TeamsConsts.teams.where((element) => element.number == widget.info.teamNumber).first,
-            ),
-          ),
+                )
+              : Container(),
+          // _DropDownRow(
+          //   child: Text("Team"),
+          // dropDown: DropdownSearch<Team>(
+          //   items: TeamsConsts.teams,
+          //   mode:Mode.BOTTOM_SHEET,
+          //   searchBoxDecoration: InputDecoration(hintText: "search team"),
+          //   showSearchBox: true,
+          //   dropdownSearchDecoration: InputDecoration(border: InputBorder.none),
+          //   itemAsString: (item) => "${item.number} ${item.nickname}",
+          //   onChanged: (value) {
+          //     widget.info.teamNumber = value.number;
+          //     BlocProvider.of<GameFormBloc>(ctx)
+          //         .add(GameFormUpdateGameInfo(widget.info));
+          //   },
+          //   selectedItem: TeamsConsts.teams.where((element) => element.number == widget.info.teamNumber).first,
+          // ),
+          // ),
+
           SizedBox(height: 50),
           Expanded(
             child: SingleChildScrollView(
@@ -177,7 +266,8 @@ class _MatchDataState extends State<MatchData> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    _updateStartingLinePosition(context, "Left");
+                                    _updateStartingLinePosition(
+                                        context, "Left");
                                   },
                                   child: Text("Left"),
                                   style: ButtonStyle(
@@ -202,7 +292,8 @@ class _MatchDataState extends State<MatchData> {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    _updateStartingLinePosition(context, "Right");
+                                    _updateStartingLinePosition(
+                                        context, "Right");
                                   },
                                   child: Text("Right"),
                                   style: ButtonStyle(

@@ -14,46 +14,49 @@ class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
     var favorites = widget._user.user.favoriteTeams;
-    return Scaffold(
-      appBar: AppBar(
-          shadowColor: Colors.transparent,
-          foregroundColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop(widget._user.user);
-            },
-          )),
-      body: Center(
-        child: ListView.builder(
-          itemCount: TeamsConsts.teams.length,
-          itemBuilder: (context, index) {
-            String teamNickName = TeamsConsts.teams[index].nickname;
-            int teamNumber = TeamsConsts.teams[index].number;
-            return Card(
-              child: ListTile(
-                title: Text(teamNickName),
-                subtitle: Text(teamNumber.toString()),
-                trailing: IconButton(
-                  icon: favorites[teamNumber]
-                      ? Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : Icon(Icons.favorite_border),
-                  onPressed: () {
-                    setState(() {
-                      var user = widget._user.user;
-                      user.favoriteTeams[teamNumber] =
-                          !user.favoriteTeams[teamNumber];
-                      widget._user.user = user;
-                    });
-                  },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+            shadowColor: Colors.transparent,
+            foregroundColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop(widget._user.user);
+              },
+            )),
+        body: Center(
+          child: ListView.builder(
+            itemCount: TeamsConsts.teams.length,
+            itemBuilder: (context, index) {
+              String teamNickName = TeamsConsts.teams[index].nickname;
+              int teamNumber = TeamsConsts.teams[index].number;
+              return Card(
+                child: ListTile(
+                  title: Text(teamNickName),
+                  subtitle: Text(teamNumber.toString()),
+                  trailing: IconButton(
+                    icon: favorites[teamNumber]
+                        ? Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : Icon(Icons.favorite_border),
+                    onPressed: () {
+                      setState(() {
+                        var user = widget._user.user;
+                        user.favoriteTeams[teamNumber] =
+                            !user.favoriteTeams[teamNumber];
+                        widget._user.user = user;
+                      });
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

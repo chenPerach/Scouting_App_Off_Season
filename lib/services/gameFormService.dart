@@ -51,9 +51,9 @@ class ScoutingDataService {
     var userRef = _ref.child("users/$userId/posts/$id");
     var teamRef = _ref.child("teams/${match.info.teamNumber}/posts/$id");
     var posts = _ref.child("posts/$id");
-    await userRef.set(submittionTime.millisecondsSinceEpoch);
-    await teamRef.set(submittionTime.millisecondsSinceEpoch);
-    await posts.set(match.toJson());
+    userRef.set(submittionTime.millisecondsSinceEpoch);
+    teamRef.set(submittionTime.millisecondsSinceEpoch);
+    posts.set(match.toJson());
   }
 
   static Future<List<ScoutingMatch>> fetchMatches(List<String> ids) async {

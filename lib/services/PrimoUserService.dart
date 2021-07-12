@@ -7,7 +7,7 @@ import 'package:scouting_app_2/main.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/firebase_auth_service.dart';
-import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/services/gameFormService.dart';
 import 'package:scouting_app_2/Utils/StreamHandler.dart';
 
 class PrimoUserService {

@@ -8,7 +8,7 @@ import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
 import 'package:scouting_app_2/services/PrimoUserService.dart';
-import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/services/gameFormService.dart';
 import 'package:scouting_app_2/services/notification_wrapper.dart';
 
 part 'home_event.dart';

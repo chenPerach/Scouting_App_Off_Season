@@ -14,7 +14,7 @@ import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 import 'package:scouting_app_2/models/PrimoUser.dart';
 import 'package:scouting_app_2/models/matchModel.dart';
 import 'package:scouting_app_2/services/HomeService.dart';
-import 'package:scouting_app_2/services/gameForm.dart';
+import 'package:scouting_app_2/services/gameFormService.dart';
 
 part 'gameform_event.dart';
 part 'gameform_state.dart';
