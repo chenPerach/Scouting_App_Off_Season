@@ -133,7 +133,7 @@ class MatchDataSummery {
 
     data.forEach((e) {
       e.autonomus.shooting.forEach((c) {
-        shootingScore += c.getScore() * 2;
+        shootingScore += c.getScore();
       });
       e.teleop.shooting.forEach((c) {
         shootingScore += c.getScore();

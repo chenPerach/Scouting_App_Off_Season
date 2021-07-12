@@ -21,7 +21,7 @@ class PrimoSlider extends StatelessWidget {
           width: 5,
         ),
         Slider(
-          label: title,
+          label: "${getValue()}",
           min: 0,
           max: 5,
           divisions: 5,

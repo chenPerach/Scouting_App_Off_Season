@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2/Pages/GameForm/widgets/Summery/SummeryPage.dart';
 import 'package:scouting_app_2/Pages/nav_drawer.dart';
-import 'package:scouting_app_2/models/Match/summery/ScoutingMatchSummery.dart';
 import 'package:scouting_app_2/models/Team.dart';
 import 'package:scouting_app_2/services/gameFormService.dart';
 
@@ -42,11 +41,11 @@ class _SortedPageState extends State<SortedPage> {
                       value: state,
                       items: [
                         DropdownMenuItem(
-                          child: Text(climbS),
+                          child: Text(climbS.toLowerCase()),
                           value: climbS,
                         ),
                         DropdownMenuItem(
-                          child: Text(shootS),
+                          child: Text(shootS.toLowerCase()),
                           value: shootS,
                         )
                       ],
@@ -65,15 +64,17 @@ class _SortedPageState extends State<SortedPage> {
               child: ListView.builder(
                 itemCount: l.length,
                 itemBuilder: (context, i) {
-                  num score = 0;
+                  num score;
                   if (l[i].statiscs != null)
                     score = state == climbS
                         ? l[i].statiscs.matchData.climbScore
                         : l[i].statiscs.matchData.shootingScore;
+                  else 
+                  score = null;
                   return Card(
                     child: ListTile(
                       title: Text("${l[i].number} ${l[i].nickname}"),
-                      trailing: Text("score: ${score.toDouble().toStringAsFixed(2)}"),
+                      trailing: Text("${score?.toDouble()?.toStringAsFixed(2) ?? "no data"}"),
                       onLongPress: () {
                         var summery = l[i].statiscs;
                         if (summery == null) {

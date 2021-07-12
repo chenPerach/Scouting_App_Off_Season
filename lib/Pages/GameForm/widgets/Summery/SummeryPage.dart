@@ -59,7 +59,7 @@ class TwoSummeryPage extends StatelessWidget {
               title: "Autonumos",
               first: first.matchData.auto,
               second: second.matchData.auto,
-              isAuto: true,
+              isAuto: false,
             ),
             TwoMidStageWidget(
               title: "Teleop",

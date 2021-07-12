@@ -214,7 +214,7 @@ class ShootingCycleWidget extends StatelessWidget {
                         cycles: cyclesSummery.shooting,
                         alpha: (c) {
                           // var acc = (c.ballsLower+c.ballsInner+c.ballsOuter)/c.ballsShot;
-                          return (c.getScore() * 255 ~/ (15 * (isAuto ? 2 : 1)))
+                          return (50 + c.getScore() * 205 ~/ (15 * (isAuto ? 2 : 1)))
                               .toInt(); // what the fuck does ~/ mean?
                         },
                         img: FileLoader.img),
