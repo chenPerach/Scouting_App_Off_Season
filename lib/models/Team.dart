@@ -229,6 +229,9 @@ class TeamsConsts {
     {
         "nickname": "Mariners",
         "number": 8223
+    },{
+        "nickname": "unnamed",
+        "number": 9999
     }
 ];
   static List<Team> teams =

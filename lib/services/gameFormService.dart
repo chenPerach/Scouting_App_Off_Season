@@ -36,6 +36,7 @@ class ScoutingDataService {
 
     for (var m in scoutingMatches) {
       int number = m.value.info.teamNumber;
+
       teams.where((e) => e.number == number).first.matches.add(m.value);
     }
 
