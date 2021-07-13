@@ -12,7 +12,7 @@ import 'Pages/Home/Home.dart';
 import 'Pages/Login/widgets/LoginScreen.dart';
 
 String branch = "2021isjo";
-String kVERSION = "1.2.5";
+String kVERSION = "1.3.5";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService.initalize(
