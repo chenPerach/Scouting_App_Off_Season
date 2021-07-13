@@ -16,9 +16,7 @@ class SingleTeamAdminPage extends StatefulWidget {
 
 class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
   final TextEditingController controller = TextEditingController();
-  Team t = TeamsConsts.teams
-                    .where((element) => element.number == 4586)
-                    .first;
+  Team t = TeamsConsts.teams.where((element) => element.number == 4586).first;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +25,6 @@ class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Container(
               width: 200,
               child: DropdownSearch<Team>(
@@ -35,7 +32,8 @@ class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
                 mode: Mode.BOTTOM_SHEET,
                 searchBoxDecoration: InputDecoration(hintText: "search team"),
                 showSearchBox: true,
-                dropdownSearchDecoration: InputDecoration(border: InputBorder.none),
+                dropdownSearchDecoration:
+                    InputDecoration(border: InputBorder.none),
                 itemAsString: (item) => "${item.number} ${item.nickname}",
                 searchBoxController: controller,
                 selectedItem: TeamsConsts.teams
@@ -49,18 +47,19 @@ class _SingleTeamAdminPageState extends State<SingleTeamAdminPage> {
               ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  ScoutingDataService.calculateStatistics();
-                  ScoutingMatchSummery data = t.statiscs;
-                  if (data == null) {
-                    final sb = SnackBar(content: Text("no info for chosen team"));
-                    ScaffoldMessenger.of(context).showSnackBar(sb);
-                    return;
-                  }
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => SummeryPage(data)));
-                },
-                child: Text("see statistics"))
+              onPressed: () {
+                ScoutingDataService.calculateStatistics();
+                ScoutingMatchSummery data = t.statiscs;
+                if (data == null) {
+                  final sb = SnackBar(content: Text("no info for chosen team"));
+                  ScaffoldMessenger.of(context).showSnackBar(sb);
+                  return;
+                }
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => SummeryPage(data)));
+              },
+              child: Text("see statistics"),
+            )
           ],
         ),
       ),

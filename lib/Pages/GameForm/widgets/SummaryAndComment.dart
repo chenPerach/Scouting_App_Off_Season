@@ -6,11 +6,20 @@ import 'package:scouting_app_2/ChangeNotifiers/UserContainer.dart';
 import 'package:scouting_app_2/Pages/GameForm/bloc/gameform_bloc.dart';
 import 'package:scouting_app_2/models/Match/PostGameData.dart';
 
-class CommentAndSummary extends StatelessWidget {
+class CommentAndSummary extends StatefulWidget {
   final PostGameData data;
   CommentAndSummary({this.data});
+
+  @override
+  _CommentAndSummaryState createState() => _CommentAndSummaryState();
+}
+
+class _CommentAndSummaryState extends State<CommentAndSummary> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    controller = TextEditingController(text: widget?.data?.comment ?? "");
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -28,11 +37,11 @@ class CommentAndSummary extends StatelessWidget {
               width: 200,
               height: 200,
               child: ElevatedButton(
-                child: data.winningState.image,
+                child: widget.data.winningState.image,
                 onPressed: () {
-                  this.data.winningState = WinningStateGenerator.next();
+                  this.widget.data.winningState = WinningStateGenerator.next();
                   BlocProvider.of<GameFormBloc>(context)
-                      .add(GameFormUpdatePostGameData(this.data));
+                      .add(GameFormUpdatePostGameData(this.widget.data));
                 },
               ),
             ),
@@ -50,11 +59,11 @@ class CommentAndSummary extends StatelessWidget {
               width: 200,
               height: 200,
               child: ElevatedButton(
-                child: Text(data.playingType.type),
+                child: Text(widget.data.playingType.type),
                 onPressed: () {
-                  this.data.playingType = PlayingTypeGenerator.next();
+                  this.widget.data.playingType = PlayingTypeGenerator.next();
                   BlocProvider.of<GameFormBloc>(context)
-                      .add(GameFormUpdatePostGameData(this.data));
+                      .add(GameFormUpdatePostGameData(this.widget.data));
                 },
               ),
             ),
@@ -64,10 +73,14 @@ class CommentAndSummary extends StatelessWidget {
                 decoration: InputDecoration(hintText: "comment"),
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                controller: controller,
                 onChanged: (value) {
-                  data.comment = value;
+                  // widget.data.comment = value;
+                  
                   BlocProvider.of<GameFormBloc>(context)
-                      .add(GameFormUpdatePostGameData(this.data));
+                      .add(GameFormAddComment(value));
+                  // BlocProvider.of<GameFormBloc>(context)
+                  //     .add(GameFormUpdatePostGameData(this.data));
                 },
               ),
             ),
@@ -75,8 +88,12 @@ class CommentAndSummary extends StatelessWidget {
               onPressed: () {
                 var user =
                     Provider.of<UserContainer>(context, listen: false).user;
+                widget.data.comment = controller.text;
+                BlocProvider.of<GameFormBloc>(context)
+                      .add(GameFormAddComment(controller.text));
                 BlocProvider.of<GameFormBloc>(context)
                     .add(GameFormUploadMatch(user: user));
+
               },
               child: Text("Submit"),
             )

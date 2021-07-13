@@ -143,6 +143,9 @@ class GameFormBloc extends Bloc<GameFormEvent, GameFormState> {
       await ScoutingDataService.uploadMatch(this.match, event.user);
       yield GameFormExit();
     }
+    if(event is GameFormAddComment){
+      this.match.postGameData.comment = event.comment;
+    }
     if (event is GameFormUpdatePostGameData) {
       this.match.postGameData = event.data;
 

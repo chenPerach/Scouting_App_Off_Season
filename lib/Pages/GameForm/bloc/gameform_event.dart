@@ -42,7 +42,10 @@ class GameFormUpdateEndGame extends GameFormEvent {
   final EndGameStage data;
   GameFormUpdateEndGame(this.data);
 }
-
+class GameFormAddComment extends GameFormEvent{
+  String comment;
+  GameFormAddComment(this.comment);
+}
 class GameFormUpdatePostGameData extends GameFormEvent {
   final PostGameData data;
   GameFormUpdatePostGameData(this.data);
