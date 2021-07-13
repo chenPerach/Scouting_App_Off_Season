@@ -16,7 +16,11 @@ class CommentAndSummary extends StatefulWidget {
 
 class _CommentAndSummaryState extends State<CommentAndSummary> {
   TextEditingController controller = TextEditingController();
-
+  @override
+  void dispose() {
+    controller.dispose(); 
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     controller = TextEditingController(text: widget?.data?.comment ?? "");
